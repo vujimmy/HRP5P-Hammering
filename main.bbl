@@ -1,0 +1,392 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{mcrtc}{misc}{}{}
+      \field{sortinit}{}
+      \field{sortinithash}{495dc9894017a8b12cafa9c619d10c0c}
+      \field{note}{The mc\_rtc framework}
+      \verb{urlraw}
+      \verb https://jrl.cnrs.fr/mc_rtc/
+      \endverb
+      \verb{url}
+      \verb https://jrl.cnrs.fr/mc_rtc/
+      \endverb
+    \endentry
+    \entry{NDCURVESLIB}{misc}{}{}
+      \field{sortinit}{}
+      \field{sortinithash}{495dc9894017a8b12cafa9c619d10c0c}
+      \field{note}{The ndcurves library}
+      \verb{urlraw}
+      \verb https://github.com/loco-3d/ndcurves/blob/devel/doc/curves.pdf
+      \endverb
+      \verb{url}
+      \verb https://github.com/loco-3d/ndcurves/blob/devel/doc/curves.pdf
+      \endverb
+    \endentry
+    \entry{aghazadehInjuriesDueHandtools1987}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=e5d53a9ece16accdf168ad7bad1f7811}{%
+           family={Aghazadeh},
+           familyi={A\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+        {{hash=a09f67f42913c18374854838a12108a7}{%
+           family={Mital},
+           familyi={M\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{be8cfea592f6e553cb9a8c9ade4d3712}
+      \strng{fullhash}{be8cfea592f6e553cb9a8c9ade4d3712}
+      \strng{fullhashraw}{be8cfea592f6e553cb9a8c9ade4d3712}
+      \strng{bibnamehash}{be8cfea592f6e553cb9a8c9ade4d3712}
+      \strng{authorbibnamehash}{be8cfea592f6e553cb9a8c9ade4d3712}
+      \strng{authornamehash}{be8cfea592f6e553cb9a8c9ade4d3712}
+      \strng{authorfullhash}{be8cfea592f6e553cb9a8c9ade4d3712}
+      \strng{authorfullhashraw}{be8cfea592f6e553cb9a8c9ade4d3712}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{A questionnaire was mailed to various federal and state agencies in the United States to determine the frequency, severity and annual cost of handtool-related injuries in industry and to identify problem areas with regard to tool type, accident type, nature of injury, parts of body affected, type of industry and characteristics of the injured worker. The responses of various state and regional agencies were tabulated and analysed. This paper summarises the findings.}
+      \field{journaltitle}{Applied Ergonomics}
+      \field{month}{12}
+      \field{number}{4}
+      \field{shorttitle}{Injuries Due to Handtools}
+      \field{title}{Injuries Due to Handtools: {{Results}} of a Questionnaire}
+      \field{volume}{18}
+      \field{year}{1987}
+      \field{pages}{273\bibrangedash 278}
+      \range{pages}{6}
+      \keyw{handtools,Injuries,questionnaire}
+    \endentry
+    \entry{balendraEffectHammerMass2017}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=72b0412bbcf00ba5e0aeee676541b99c}{%
+           family={Balendra},
+           familyi={B\bibinitperiod},
+           given={Nilanthy},
+           giveni={N\bibinitperiod}}}%
+        {{hash=3788e1ac5b918d8a9c5d875d934aaaed}{%
+           family={Langenderfer},
+           familyi={L\bibinitperiod},
+           given={Joseph\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{f089d05c7f612e58ff75eb88c8c13bbe}
+      \strng{fullhash}{f089d05c7f612e58ff75eb88c8c13bbe}
+      \strng{fullhashraw}{f089d05c7f612e58ff75eb88c8c13bbe}
+      \strng{bibnamehash}{f089d05c7f612e58ff75eb88c8c13bbe}
+      \strng{authorbibnamehash}{f089d05c7f612e58ff75eb88c8c13bbe}
+      \strng{authornamehash}{f089d05c7f612e58ff75eb88c8c13bbe}
+      \strng{authorfullhash}{f089d05c7f612e58ff75eb88c8c13bbe}
+      \strng{authorfullhashraw}{f089d05c7f612e58ff75eb88c8c13bbe}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This study used an OpenSim inverse-dynamics musculoskeletal model scaled to subject-specific anthropometrics to calculate three-dimensional intersegmental moments at the shoulder, elbow and wrist while 10 subjects used 1 and 2 lb hammers to drive nails. Motion data were collected via an optoelectronic system and the interaction of the hammer with nails was recorded with a force plate. The larger hammer caused substantial increases (50--150\%) in moments, although increases differed by joint, anatomical component, and significance of the effect. Moment increases were greater in cocking and strike/follow-through phases as opposed to swinging and may indicate greater potential for injury. Compared to shoulder, absolute increases in peak moments were smaller for elbow and wrist, but there was a trend toward larger relative increases for distal joints. Shoulder rotation, elbow varus-valgus and pronation-supination, and wrist radial-ulnar deviation and rotation demonstrated large relative moment increases. Trial and phase durations were greater for the larger hammer. Changes in moments and timing indicate greater loads on musculoskeletal tissues for an extended period with the larger hammer. Additionally, greater variability in timing with the larger hammer, particularly for cocking phase, suggests differences in control of the motion. Increased relative moments for distal joints may be particularly important for understanding disorders of the elbow and wrist associated with hammer use.}
+      \field{journaltitle}{Applied Ergonomics}
+      \field{month}{4}
+      \field{title}{Effect of Hammer Mass on Upper Extremity Joint Moments}
+      \field{volume}{60}
+      \field{year}{2017}
+      \field{pages}{231\bibrangedash 239}
+      \range{pages}{9}
+      \keyw{Inverse-dynamics,Kinetics}
+    \endentry
+    \entry{chenOptimalEffectiveWorking2018}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=5577cfedfc67b4dcc1eef64f204b017c}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Yuan-Ho},
+           giveni={Y\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=92fe9bd2e106ea6aa69e34added6737b}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Yi-Lang},
+           giveni={Y\bibinithyphendelim L\bibinitperiod}}}%
+      }
+      \strng{namehash}{165384dae5e1f5f0542f34a3d8d2de7b}
+      \strng{fullhash}{165384dae5e1f5f0542f34a3d8d2de7b}
+      \strng{fullhashraw}{165384dae5e1f5f0542f34a3d8d2de7b}
+      \strng{bibnamehash}{165384dae5e1f5f0542f34a3d8d2de7b}
+      \strng{authorbibnamehash}{165384dae5e1f5f0542f34a3d8d2de7b}
+      \strng{authornamehash}{165384dae5e1f5f0542f34a3d8d2de7b}
+      \strng{authorfullhash}{165384dae5e1f5f0542f34a3d8d2de7b}
+      \strng{authorfullhashraw}{165384dae5e1f5f0542f34a3d8d2de7b}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{BACKGROUND: Hammering is a functional task in which the wrist generally follows a path of motion, however, previous studies paid relatively little attention to it. OBJECTIVE: The main objective of this study is to determine the optimal working height while using a straight-handled hammer to perform the hammering task. METHODS: Ten participants performed the hammering tasks on three different working heights (64, 80, and 96 cm) using three subjective hammering forces (light, medium, and heavy). RESULTS: The results revealed that there were linear increasing trends of shoulder abduction, which increased with the increased working height when hammering and the trunk flexion revealed a contrary result. However, the ulnar deviation and trunk lateral bending were insensitive to the working heights. The hammering forces merely resulted in trunk flexion and lateral bending and no posture differences at upper extremities. CONCLUSION: The trade-off between acceptable trunk flexion and shoulder abduction was considered to determine a reasonable effective working height (by measuring downward from worker's elbow height) in the range from 25 cm to 35 cm with a mean 30 cm. This range will be valuable for hammering job design.}
+      \field{journaltitle}{Work}
+      \field{langid}{english}
+      \field{month}{11}
+      \field{number}{2}
+      \field{title}{An Optimal Effective Working Height for Hammering Tasks}
+      \field{volume}{61}
+      \field{year}{2018}
+      \field{pages}{181\bibrangedash 187}
+      \range{pages}{7}
+    \endentry
+    \entry{coteDifferencesMultijointKinematic2005}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=01602b3e3ee194ff6733af5da1d988ff}{%
+           family={Côté},
+           familyi={C\bibinitperiod},
+           given={Julie\bibnamedelima N.},
+           giveni={J\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=ed507716605ce1ee9b0cdeecf25a0074}{%
+           family={Raymond},
+           familyi={R\bibinitperiod},
+           given={Denis},
+           giveni={D\bibinitperiod}}}%
+        {{hash=63f304d12a291700db5dc8f4b311dce8}{%
+           family={Mathieu},
+           familyi={M\bibinitperiod},
+           given={Pierre\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=09fe0af190a80a149dd11f4cc7745d49}{%
+           family={Feldman},
+           familyi={F\bibinitperiod},
+           given={Anatol\bibnamedelima G.},
+           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=5f92860701399a93dd2822f20d13b37a}{%
+           family={Levin},
+           familyi={L\bibinitperiod},
+           given={Mindy\bibnamedelima F.},
+           giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \strng{namehash}{9e25c8636712fc97ad5811474eb49ceb}
+      \strng{fullhash}{f7b2827f1c09e39468a137a6c741074c}
+      \strng{fullhashraw}{f7b2827f1c09e39468a137a6c741074c}
+      \strng{bibnamehash}{9e25c8636712fc97ad5811474eb49ceb}
+      \strng{authorbibnamehash}{9e25c8636712fc97ad5811474eb49ceb}
+      \strng{authornamehash}{9e25c8636712fc97ad5811474eb49ceb}
+      \strng{authorfullhash}{f7b2827f1c09e39468a137a6c741074c}
+      \strng{authorfullhashraw}{f7b2827f1c09e39468a137a6c741074c}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Background. Work-related musculo-skeletal disorders have been previously related to movement repetition, inadequate postures, non-ergonomic environments, muscular imbalance and fatigue. However, no direct link between fatigue and injury has been experimentally shown. To address this problem, we compared the effects of fatigue and injury on the kinematics of repetitive hammering. Methods. Healthy subjects (n=30) hammered repetitively both before and after fatigue. Fatigue was induced by a combination of static and dynamic procedures. Shoulder-injured subjects (n=15) hammered for 30s without fatigue. Kinematics of motion was recorded. Findings. The movement time and shoulder range of motion during hammering were not affected by either fatigue or shoulder injury. When fatigued, the healthy subjects displayed decreased range of joint motion, peak velocity and peak acceleration of elbow motion during hammering as well as reduced grip strength. Shoulder-injured individuals had a smaller hammer trajectory amplitude than healthy controls with or without fatigue. They also had lower wrist range of motion, elbow peak velocity, and peak wrist and elbow acceleration compared to healthy subjects hammering without fatigue but only lower wrist peak acceleration compared to healthy subjects hammering with fatigue. Interpretation. Results showed that fatigue affects elbow motion while shoulder injury affects both wrist and elbow motions during hammering. However, shoulder kinematics were not changed by either fatigue or shoulder injury. These changes at the wrist and elbow may reflect strategies used by individuals with shoulder injury to maintain constant movement duration and shoulder kinematics during movement.}
+      \field{journaltitle}{Clinical Biomechanics}
+      \field{month}{7}
+      \field{number}{6}
+      \field{title}{Differences in Multi-Joint Kinematic Patterns of Repetitive Hammering in Healthy, Fatigued and Shoulder-Injured Individuals}
+      \field{volume}{20}
+      \field{year}{2005}
+      \field{pages}{581\bibrangedash 590}
+      \range{pages}{10}
+      \keyw{Compensation,Fatigue,Human,Multi-joint coordination,Work-related muscular skeletal disorders}
+    \endentry
+    \entry{ComputerGraphics}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=4cbbfb1f08c83a1f4c29334892722524}{%
+           family={{David Salomon}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{4cbbfb1f08c83a1f4c29334892722524}
+      \strng{fullhash}{4cbbfb1f08c83a1f4c29334892722524}
+      \strng{fullhashraw}{4cbbfb1f08c83a1f4c29334892722524}
+      \strng{bibnamehash}{4cbbfb1f08c83a1f4c29334892722524}
+      \strng{authorbibnamehash}{4cbbfb1f08c83a1f4c29334892722524}
+      \strng{authornamehash}{4cbbfb1f08c83a1f4c29334892722524}
+      \strng{authorfullhash}{4cbbfb1f08c83a1f4c29334892722524}
+      \strng{authorfullhashraw}{4cbbfb1f08c83a1f4c29334892722524}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Computer Graphics \& Geometric Modeling}
+    \endentry
+    \entry{kanekoHumanoidRobotHRP5P2019}{article}{}{}
+      \name{author}{7}{}{%
+        {{hash=56edb87a656507ea508a70e4b5708d7b}{%
+           family={Kaneko},
+           familyi={K\bibinitperiod},
+           given={Kenji},
+           giveni={K\bibinitperiod}}}%
+        {{hash=a08afe0975a657de3858fda0b38a3da9}{%
+           family={Kaminaga},
+           familyi={K\bibinitperiod},
+           given={Hiroshi},
+           giveni={H\bibinitperiod}}}%
+        {{hash=ed5b1069fb3098757af46a258f9e54a6}{%
+           family={Sakaguchi},
+           familyi={S\bibinitperiod},
+           given={Takeshi},
+           giveni={T\bibinitperiod}}}%
+        {{hash=26b4b6c6afae0ed0bbba0b59039c7054}{%
+           family={Kajita},
+           familyi={K\bibinitperiod},
+           given={Shuuji},
+           giveni={S\bibinitperiod}}}%
+        {{hash=d661d52f2e03f6a0b1cca260eec00425}{%
+           family={Morisawa},
+           familyi={M\bibinitperiod},
+           given={Mitsuharu},
+           giveni={M\bibinitperiod}}}%
+        {{hash=66c045390950e100fdc912e074fae2d3}{%
+           family={Kumagai},
+           familyi={K\bibinitperiod},
+           given={Iori},
+           giveni={I\bibinitperiod}}}%
+        {{hash=5d95f4f2fdd8841fb742a382e8b71e29}{%
+           family={Kanehiro},
+           familyi={K\bibinitperiod},
+           given={Fumio},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{a1404d2744bada3e4101a417337cf46f}
+      \strng{fullhash}{ad7ea0fbc924cb8cc5826900d1022356}
+      \strng{fullhashraw}{ad7ea0fbc924cb8cc5826900d1022356}
+      \strng{bibnamehash}{a1404d2744bada3e4101a417337cf46f}
+      \strng{authorbibnamehash}{a1404d2744bada3e4101a417337cf46f}
+      \strng{authornamehash}{a1404d2744bada3e4101a417337cf46f}
+      \strng{authorfullhash}{ad7ea0fbc924cb8cc5826900d1022356}
+      \strng{authorfullhashraw}{ad7ea0fbc924cb8cc5826900d1022356}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{IEEE Robotics and Automation Letters}
+      \field{month}{4}
+      \field{number}{2}
+      \field{shorttitle}{Humanoid {{Robot HRP-5P}}}
+      \field{title}{Humanoid {{Robot HRP-5P}}: {{An Electrically Actuated Humanoid Robot With High-Power}} and {{Wide-Range Joints}}}
+      \field{volume}{4}
+      \field{year}{2019}
+      \field{pages}{1431\bibrangedash 1438}
+      \range{pages}{8}
+    \endentry
+    \entry{petricHammeringDoesNot2017}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=21b70094540a63f94ce20737ae432250}{%
+           family={Petrič},
+           familyi={P\bibinitperiod},
+           given={Tadej},
+           giveni={T\bibinitperiod}}}%
+        {{hash=14d1b0b35673c136d49a93419f7d33d8}{%
+           family={Simpson},
+           familyi={S\bibinitperiod},
+           given={Cole\bibnamedelima S.},
+           giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=be7a83fd0911ef1a3b4ad0717130bbc8}{%
+           family={Ude},
+           familyi={U\bibinitperiod},
+           given={Aleš},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d9ac53d5d60ef8ec6f16f287d8578292}{%
+           family={Ijspeert},
+           familyi={I\bibinitperiod},
+           given={Auke\bibnamedelima J.},
+           giveni={A\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Frontiers}%
+      }
+      \strng{namehash}{e142927ed4c568a28ff1ee06e834fa8b}
+      \strng{fullhash}{7e37478ba687abdb624342a961b882a0}
+      \strng{fullhashraw}{7e37478ba687abdb624342a961b882a0}
+      \strng{bibnamehash}{e142927ed4c568a28ff1ee06e834fa8b}
+      \strng{authorbibnamehash}{e142927ed4c568a28ff1ee06e834fa8b}
+      \strng{authornamehash}{e142927ed4c568a28ff1ee06e834fa8b}
+      \strng{authorfullhash}{7e37478ba687abdb624342a961b882a0}
+      \strng{authorfullhashraw}{7e37478ba687abdb624342a961b882a0}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{While movement is essential to human wellbeing, we are still unable to reproduce the deftness and robustness of human movement in automatons or completely restore function to individuals with many types of motor impairment. To better understand how the human nervous system plans and controls movements, neuromechanists employ simple tasks such as upper extremity reaches and isometric force tasks. However, these simple tasks rarely consider impacts and may not capture aspects of motor control that arise from real-world complexity. Here we compared existing models of motor control with the results of a periodic targeted impact task extended from Bernstein's seminal work: hammering a nail into wood. We recorded impact forces and kinematics from 10 subjects hammering at different frequencies and with hammers with different physical properties (mass and face area). We found few statistical differences in most measures between different types of hammer, demonstrating human robustness to minor changes in dynamics. Because human motor control is thought to obey optimality principles, we also developed a feedforward optimal simulation with a neuromechanically inspired cost function that reproduces the experimental data. However, Fitts' Law, which relates movement time to distance traveled and target size, did not match our experimental data. We therefore propose a new model in which the distance moved is a logarithmic function of the time to move that yields better results (R{\textasciicircum}2 {$>$} 0.99 compared to R{\textasciicircum}2 {$>$} 0.88). These results support the argument that humans control movement in an optimal way, but suggest that Fitts' Law may not generalize to periodic impact tasks.}
+      \field{journaltitle}{Frontiers in Computational Neuroscience}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{title}{Hammering {{Does Not Fit Fitts}}' {{Law}}}
+      \field{volume}{11}
+      \field{year}{2017}
+      \keyw{arm movement,Biomechanics,Fitts' law,impact,motor control,optimal control,Upper Extremity}
+    \endentry
+    \entry{schneiderMusculoskeletalInjuriesConstruction2001}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c27b9a7d61002a2ced4827a1f39c0020}{%
+           family={Schneider},
+           familyi={S\bibinitperiod},
+           given={Scott\bibnamedelima P.},
+           giveni={S\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{c27b9a7d61002a2ced4827a1f39c0020}
+      \strng{fullhash}{c27b9a7d61002a2ced4827a1f39c0020}
+      \strng{fullhashraw}{c27b9a7d61002a2ced4827a1f39c0020}
+      \strng{bibnamehash}{c27b9a7d61002a2ced4827a1f39c0020}
+      \strng{authorbibnamehash}{c27b9a7d61002a2ced4827a1f39c0020}
+      \strng{authornamehash}{c27b9a7d61002a2ced4827a1f39c0020}
+      \strng{authorfullhash}{c27b9a7d61002a2ced4827a1f39c0020}
+      \strng{authorfullhashraw}{c27b9a7d61002a2ced4827a1f39c0020}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The rst step in addressing any problem is recognition of the problem and a measure of its size and scope. There have been few reviews to date of the evidence of a musculoskeletal disorders problem in construction, particularly in the United States. Construction contractors in the United States have questioned the existence of a musculoskeletal disorders problem in construction, so a review of the evidence is warranted. The types of evidence reviewed include: 1) historical evidence, 2) injury data, 3) workers' compensation data, 4) medical exam data, 5) survey data, and 6) exposure data. Injury data generally represent injuries that the employers have identi ed as work-related and recorded or reported. Workers' compensation data are from cases that have been led by workers for compensation and quite often represent only ``closed'' cases where compensation has been awarded. Medical exam data are from physical examinations of workers. Symptom survey data are the most inclusive and show the number of workers who self-report musculoskeletal problems. Exposure data include measurements made of exposure to musculoskeletal risk factors. The existing data show construction workers to be at signi cant risk of musculoskeletal injury, speci cally related to the work they do. Their risk of musculoskeletal injury is much higher than that of other workers who have less heavy work, about 50 percent higher than all other workers. Several trades have been extensively studied, while others have been studied to a lesser extent. While the exact relationship between exposures and injuries is complex and often multifaceted, it would be dif cult to deny the existence of the problem and the fact that these injuries are, to a great extent, related to the work that construction workers perform.}
+      \field{journaltitle}{Applied Occupational and Environmental Hygiene}
+      \field{langid}{english}
+      \field{month}{11}
+      \field{number}{11}
+      \field{shorttitle}{Musculoskeletal {{Injuries}} in {{Construction}}}
+      \field{title}{Musculoskeletal {{Injuries}} in {{Construction}}: {{A Review}} of the {{Literature}}}
+      \field{volume}{16}
+      \field{year}{2001}
+      \field{pages}{1056\bibrangedash 1064}
+      \range{pages}{9}
+    \endentry
+    \entry{STRONGE}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=5b168f9981620e039260e4984e6542c0}{%
+           family={Stronge},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi J.},
+           giveni={W\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{5b168f9981620e039260e4984e6542c0}
+      \strng{fullhash}{5b168f9981620e039260e4984e6542c0}
+      \strng{fullhashraw}{5b168f9981620e039260e4984e6542c0}
+      \strng{bibnamehash}{5b168f9981620e039260e4984e6542c0}
+      \strng{authorbibnamehash}{5b168f9981620e039260e4984e6542c0}
+      \strng{authornamehash}{5b168f9981620e039260e4984e6542c0}
+      \strng{authorfullhash}{5b168f9981620e039260e4984e6542c0}
+      \strng{authorfullhashraw}{5b168f9981620e039260e4984e6542c0}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{title}{Impact Mechanics}
+      \field{year}{2018}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
