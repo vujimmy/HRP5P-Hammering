@@ -325,7 +325,7 @@ QP is more suited for minimization, we can turn (\ref{max problem}) into a minim
     \arg \min_\mathbf{\ddot q} -\nabla m_{e,\mathbf{n}}^\mathbf{T}(\mathbf{q})  \mathbf{\ddot q}
 \label{minimization problem}
 \end{equation}
-Let's call this problem the Effective Mass Maximization Task (EMMT). The goal of this task is to increase as much as possible the EMR at the next iteration of the controller without its value dropping down. However, we are cannot assert that the result will be a global maximum because our problem is not convex. If we want to try to find a global maximum, we might need to use other methods, however these methods are generally much slower. 
+Let's call this problem the Effective Mass Maximization Task (EMMT). The goal of this task is to increase as much as possible the EMR at the next iteration of the controller without its value dropping down. However, we cannot assert that the result will be a global maximum because our problem is not convex. If we want to try to find a global maximum, we might need to use other methods, however these methods are generally much slower. 
 \subsection{Linear QP constraints to be respected}
 Our linear constraints for the QP solver are described as i) joint limits, ii) joint velocity limits, iii) joint acceleration limits and iv) joint torque limits :
 \begin{equation}
