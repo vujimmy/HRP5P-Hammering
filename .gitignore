@@ -17,3 +17,7 @@ GhitaArticleRef.tex
 *.url 
 *.svn 
 *.toc
+*.fls
+*.fdb_latexmk
+*.bcf
+*.bbl-SAVE-ERROR
