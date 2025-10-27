@@ -64,7 +64,7 @@ where $\mathbf{q, \dot q, \ddot q} \in \mathbb{R}^n$ are, respectively, the conf
      $\mathbf{J_i} \in \mathbb{R}^{6 \times n}$ is the absolute Jacobian of the point of application of $\mathbf{F_i}$ and $\{ \cdot \}^\mathbf{T}$ is the matrix transpose operator.
      
 \subsection{Jacobian of the robot}
-Let $\mathbf{J} \in \mathbb{R}^{6 \times n}$ be the Jacobian matrix of the end-effector defined such that :
+Let $\mathbf{J} \in \mathbb{R}^{6 \times n}$ be the Jacobian matrix of the end-effector pose defined such that :
 \begin{equation}
     \mathbf{\dot x} = \mathbf{J(q) \dot q}
 \label{map xdot qdot}
@@ -419,7 +419,7 @@ where $\mathbf{J}_\omega \in \mathbb{R}^{3\times n}$ is the angular part of $ \m
 \begin{equation}
 \left[ \mathbf{a} \right]_{\times} = 
 \begin{bmatrix}
-    0 & - a_x & a_y \\
+    0 & - a_z & a_y \\
     a_z & 0 & -a_x \\
     -a_y &  a_x & 0
 \end{bmatrix}
