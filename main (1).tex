@@ -1,0 +1,483 @@
+\documentclass[a4paper, 10pt, conference]{ieeeconf}
+\IEEEoverridecommandlockouts
+\overrideIEEEmargins
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{stmaryrd}
+\usepackage{cite}
+\usepackage[pdftex]{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\graphicspath{{./fig/}}
+\newcommand{\bvec}[1]{\mbox{\boldmath $ #1 $}}
+\newcommand{\eqnref}[1]{(\ref{#1})}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+
+
+\begin{document}
+
+\title{\LARGE \bf CoM-Jacobian-Based Locomotion Control of an Annular Pneumatic Robot} 
+
+\author{%
+    Ghita Tazeroualt Tlamçani$^{\dagger}$,
+    Seanan Vilfroy$^{\dagger}$,
+    Rafael Cisneros-Limón$^{\dagger}$$^{*}$,
+    and Hiroshi Kaminaga$^{\dagger}$%
+    \thanks{$^{\dagger}$CNRS-AIST JRL (Joint Robotics Laboratory), IRL3218, National Institute of Advanced Industrial Science and Technology (AIST), Tsukuba, Japan. Emails: ghita.tazeroualt@ensta.fr, seanan.vilfroy@ensam.eu, \{rafael.cisneros, hiroshi.kaminaga\}@aist.go.jp}%
+		\thanks{$^{*}$Corresponding author}%
+}
+
+\maketitle
+
+\begin{abstract}
+
+Inflatable habitat modules are good options for space exploration because they are light and easy to pack. However, controlling their shape and movement is difficult due to their soft materials and complex behavior. This work presents a rigid analog platform designed to capture the dominant dynamic behavior of such modules and allowing to design a model-based control represented by a second-order inverse-Jacobian control combined with null-space optimization. This control strategy allows the robot to maintain a shape leaning toward a circular shape while rolling in a controlled direction towards a target, improving rolling speed compared to traditional sequential control methods without compromising structural integrity. Simulations show significant improvements in speed and demonstrate the importance of maintaining the near-circular shape for enhanced performance. This approach provides a foundation for more advanced control schemes applicable to soft robotic systems.
+
+\end{abstract}
+
+
+
+
+\begin{keywords}
+pneumatic actuation, rolling locomotion, inverse Jacobian control, null-space optimization, modular robots
+\end{keywords}
+
+\section{Introduction}
+
+Space exploration has been of interest for humans for a long time, and the creation of moon bases continues this enduring fascination\cite{b17}. This work is conducted as part of the Japanese Science and Technology Agency's Moonshot Research and Development Program, an ambitious initiative aimed at achieving breakthrough innovations for society by 2050. One goal of the program is to enable a sustainable human presence in space using advanced robotic systems. Within the space exploration domain of this program, multiple robotic platforms are being developed to address different aspects of lunar habitat deployment and maintenance\footnote{MoonBot: Modular and On-demand Reconfigurable Robot -- Moon Base Construction Demo in JAXA [Video]. YouTube. \url{https://www.youtube.com/watch?v=TilwjMgt0ek}}. HIDAS, Homeostatic Inflatable Decentralized Autonomous Structure, represents one of such platforms, specifically designed to serve as an autonomous habitat module that can transport itself across lunar terrain and assemble into larger structures. This project brings up several inquiries regarding transportation, since the habitats must be lightweight, compact, and able to assemble autonomously.
+
+To transport these modules efficiently, HIDAS must be equipped with robotic capabilities that allow it to move autonomously and reliably across rugged and uneven ground. Conventional wheeled robots are highly effective for energy-efficient, rapid movement on smooth terrains. Nonetheless, their performance declines sharply on uneven surfaces. To address this limitation, researchers have developed wheel-like segmented robots composed of multiple interconnected segments. These robots are capable of morphing their shape to facilitate traversal over obstacles with greater ease \cite{b1}. Some of these systems employ sequential control methods that rotate segments until they make ground contact in the intended direction, allowing them to navigate difficult terrain by altering their overall shape. However, these alterations in shape frequently diminish the benefits of a genuine wheel form, restricting speed and maneuverability~\cite{b1}.
+
+
+Simultaneously, progress in soft robotics has shown that flexible robots equipped with internal power sources can attain versatile movement by altering their shapes, improving mobility in chaotic surroundings \cite{b2}. Moreover, robots featuring deformable outer surfaces have been created to adjust rolling dynamics; nevertheless, these shapes are frequently elliptical and restrict the ability to navigate obstacles \cite{b3}. Recent advancements in rolling robots utilizing flexible materials and compact actuators have enhanced shape flexibility for rolling movement. Yet, managing these robots continues to be difficult because of the heightened intricacy of their movements \cite{b4, b5}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{equivalent.png}
+    \caption{Design simplification from HIDAS inflatable module to a kinematic chain composed by rigid segments driven by pneumatic actuators (the annular pneumatic robot).}
+    \label{fig:equivalent}
+\end{figure}
+
+
+Building on these foundations, our work investigates pneumatic actuation in a segmented annular robot, a ring-shaped robot composed of sixteen rigid links connected by joints forming a closed loop, designed to  emulate the dynamic behavior of inflatable. We aim to achieve rapid and stable rolling locomotion through a second-order inverse Jacobian-based control combined with null-space optimization. This approach seeks to maintain the robot’s circular shape—which facilitates efficient rolling—while applying it to a segmented structure. By preserving shape integrity and enhancing rolling speed, this method addresses prior control challenges, facilitating autonomous alignment and deployment of habitat modules in space environments.
+
+\section{Design and Modeling of a Pneumatic Annular Robot}
+\subsection{Design Strategy and Simplification of HIDAS}
+
+HIDAS is an inflatable annular robot composed of three longitudinal rings, each consisting of sixteen modules arranged circumferentially (\figref{fig:Hidas}). It achieves forward locomotion through the sequential inflation and deflation of its modules. However, the complex nonlinear interactions between the soft structure, internal air dynamics, and ground contact make it extremely difficult to derive an accurate analytical model of the system\cite{b17}.
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{HIDAS.png}
+    \caption{The original HIDAS robot.}
+    \label{fig:Hidas}
+\end{figure}
+
+To address this challenge, we developed a simplified rigid-segment robot that preserves HIDAS’s modular actuation concept in the motion plane while allowing straightforward implementation of model-based control. A key design decision was to retain pneumatic actuation in order to reproduce the actuation profile to control HIDAS' inflation/deflation process. We therefore employed springless single-acting pneumatic actuators, which behave analogously to inflatable chambers (\figref{fig:equivalent}): applying pressure causes extension, while releasing pressure through the exhaust results in passive retraction without restoring spring-like forces. 
+
+\subsection{Mechanical Architecture}
+
+The simplified robot is made of sixteen rigid links connected in a closed loop by  rotational joints (\figref{fig:kinematics})\cite{b7}. Each link and joint can change its stiffness using pneumatic actuators~\cite{b6}, which helps the robot adjust its shape dynamically to maintain stability and improve rolling performance. This design is inspired by previous work~\cite{b8} on a ten-module loop robot that could roll dynamically. In that work, the robot used sensors and control to change its shape at the right time, lifting and moving its center of mass to roll forward smoothly while keeping structure stability. They showed that keeping a shape close to circular reduces resistance and helps the robot move faster. This supports the design choices made in our segmented robot.
+
+The actuators are placed in an alternating pattern, switching direction at each joint to create a balanced layout around the loop. This prevents uneven performance when rolling in different directions. By changing the length of the actuators, the angles between links change, letting the robot bend its circular shape, move its center of mass, and roll forward. This setup keeps the actuation spread out and allows the robot to move smoothly while keeping the design simple to control.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{kinematics.png}
+    \caption{Kinematic model of the annular robot.}
+    \label{fig:kinematics}
+\end{figure}
+
+
+\subsection{Notation and Kinematic Modelling}
+
+To describe the motion of the annular robot,  we assume the plane of motion to be oriented such that the horizontal axis is denoted by $Y$ and the vertical axis by $Z$ \cite{b7}. A set of notations and reference frames is first defined. 
+
+Vectors are expressed with their associated reference frame indicated as a left superscript. For simplicity, when a vector is expressed in the world frame, the superscript is omitted.
+
+Frame $\mathcal{W}$ is the global coordinate system fixed to the ground and used as the main reference frame. Each physical link $\hat{i}$ is associated with a local frame $\mathcal{F}_{\hat{i}}$, placed at the joint connecting it to link $\hat{i}+1$ and aligned with the longitudinal link axis.  
+
+For control computations, we introduce a \textit{logical indexing system}: the link currently in contact with the ground is labeled $i=1$, and the remaining links are numbered sequentially around the loop. The joint angle $\theta_i$ denotes the relative orientation between links $i-1$ and $i$ in this logical frame, measured counterclockwise (\figref{fig:kinematics}).  
+
+The center of mass (CoM) of link $i$, expressed in its local frame $\mathcal{F}_i$, is defined as:
+\begin{equation}
+    {}^{i}\mathbf{G}_i =
+    \begin{bmatrix}
+        -\alpha L\\
+        0
+    \end{bmatrix},
+\end{equation}
+where the left superscript $i$ indicates that the coordinates are expressed in $\mathcal{F}_i$, $L$ is the link length, and $\alpha$ is the normalized position of the CoM along the link $(0 \leq \alpha \leq 1)$. In our simulation, we assume $\alpha = 1/2$ for simplicity.  
+
+We also assume that the contact link ($i=1$) is perfectly flat on the ground, which defines the orientation of the moving base frame $\mathcal{F}_1$. As the robot rolls and another physical link $\hat{i}$ makes ground contact, the logical indexing resets so that this new link becomes $i=1$, while the physical numbering $(\hat{i} = 1, 2, \ldots, N)$ remains unchanged. This dynamic re-indexing ensures consistent mathematical treatment throughout motion.  
+
+Under this assumption, the position of the CoM of any link $i \in [2, N]$ in frame $\mathcal{F}_1$ is given by:
+
+
+\begin{equation}
+    {}^{1}\!\mathbf{G}_i =
+    \begin{bmatrix}
+        \displaystyle \sum_{k=2}^{i}\cos(\beta_{k}) - \alpha\cos(\beta_{i}) \\
+        \displaystyle \sum_{k=2}^{i}\sin(\beta_{k}) - \alpha\sin(\beta_{i})
+    \end{bmatrix},
+\end{equation}
+\noindent
+where $\beta_k$ represents the absolute orientation of link $k$ relative to the horizontal axis, which can be expressed as:
+
+\begin{equation}
+    \beta_k = \sum_{j=2}^{k} \theta_j .
+\end{equation}
+\noindent
+This allows us to get the CoM of the whole module as follows:
+
+\begin{equation}
+    {}^{1}\mathbf{G} = \frac{\sum_{i=1}^{N} m{}^{1}\mathbf{G}_i}{\sum_{i=1}^{N} m},
+\end{equation}
+\noindent
+where $m$ is the mass of each link, considered constant and equal for all links.
+This leads us to the following expression for ${}^{1}\math{G}$: 
+
+\begin{equation}
+    {}^{1}\mathbf{G} =
+    \frac{L}{N}
+    \begin{bmatrix}
+        -\frac{1}{2} + \displaystyle\sum_{i=2}^{N} \cos(\beta_{i})\big(N-i+1-\alpha\big) \\[8pt]
+        -\frac{1}{2} + \displaystyle\sum_{i=2}^{N} \sin(\beta_{i})\big(N-i+1-\alpha\big)
+    \end{bmatrix}.
+		\label{eq:5}
+\end{equation}
+\noindent
+From \cite{b3}, we know that shifting the center of mass (CoM) can initiate a tipping motion which, combined with an approximately circular shape, enables the robot --- with a diameter of about \(0.28\,\mathrm{m}\) --- to achieve significant speeds of up to \(1.6\,\mathrm{m/s}\) \cite{b11}. The robots studied in these works are continuous, soft, or deformable structures that can smoothly redistribute their mass to generate rolling locomotion. In contrast, our focus is on segmented designs composed of a discrete number of rigid links connected by joints. We believe that the CoM-shifting strategy demonstrated for continuous robots can be applied to such segmented architectures, preserving both the adaptability to various terrains and the potential for high-speed locomotion characteristic of these systems.
+
+\section{Model-Based Control Using Center of Mass Jacobian}
+
+\subsection{Center of Mass Jacobian}
+
+The Jacobian matrix links the speeds of the joints to the movement speed of the robot’s center of mass (CoM). In our model, the CoM’s position depends only on the joint angles, which we control by changing the lengths of the pistons between each consecutive segments. In this way, the Jacobian shows how changing these joint angles moves the CoM in space.
+
+In this paper, the CoM Jacobian matrix is defined as:
+
+\begin{equation}
+    J_G(\mathbf{q}) = \frac{\partial \, {}^{1}\mathbf{G}}{\partial \mathbf{q}}(\mathbf{q})
+		\label{eq:6}
+\end{equation}
+\noindent
+where the joint angle vector $\mathbf{q}$ is given by:
+
+\begin{equation}
+    \mathbf{q} =
+    \begin{bmatrix}
+        \theta_1, \theta_2, \dots, \theta_N
+    \end{bmatrix}^\top .
+\end{equation}
+\noindent
+By applying \eqref{eq:6} to our CoM vector \eqref{eq:5}, we get the following equation:
+
+\begin{equation}
+J_G = [\mathbf{J}_1 \quad \dots \quad \mathbf{J}_k \quad \dots \quad \mathbf{J}_N] \in \mathbb{R}^{2 \times N},
+\end{equation}
+\noindent
+with each column \(J_k\) given by:
+
+\begin{equation}
+\mathbf{J}_k = \frac{L}{N}
+\begin{bmatrix} 
+-\displaystyle\sum_{i=k}^{N}\sin(\beta_i)(N - i + 1 - \alpha) \\[6pt]
+ \displaystyle\sum_{i=k}^{N}\cos(\beta_i)(N - i + 1 - \alpha)
+\end{bmatrix}.
+\end{equation}
+\noindent
+
+
+\subsection{Control Design Based on CoM Jacobian}
+
+To achieve controlled rolling with a segmented annular robot, we need to shift its center of mass (CoM) to cause tipping and forward movement. Our control method uses a simple kinematic model and the CoM Jacobian to convert desired CoM motions into joint commands. This model-based approach allows the pneumatic cylinders to work together efficiently \cite{b10}, improving on basic sequential control methods \cite{b1}, while keeping the robot’s nearly circular shape during rolling.
+
+Specifically, we employ a second-order kinematic approach to regulate the CoM acceleration and convert it into corresponding joint accelerations \(\ddot{\mathbf{q}}\). This method facilitates smooth rolling motion while accounting for the coupled dynamics of the segments. By utilizing the CoM Jacobian \(J_G\) and its time derivative \(\dot{J}_G\), the control law establishes a direct relationship between the desired CoM acceleration and the joint-space acceleration commands, ensuring coordinated actuation of all pneumatic cylinders for efficient rolling.
+
+The desired CoM acceleration \(\ddot{\mathbf{x}}\) itself is computed using a proportional-derivative (PD) controller, defined as:
+
+\begin{equation}
+    \ddot{\mathbf{x}} = K_p \mathbf{e} + K_d \dot{\mathbf{e}},
+\end{equation}
+\noindent
+where \(\mathbf{e}\) is the position error and \(\dot{\mathbf{e}}\) its time derivative. The gain matrices \(K_p\), \(K_d\) \in \(\mathbb{R}^{2 \times N}\) positive definite diagonal matrices, with \(K_d = 2 \sqrt{K_p}\).
+
+Finally, the joint accelerations \(\ddot{\mathbf{q}}\) required to produce the desired CoM acceleration are computed as:
+
+\begin{equation}
+    \ddot{\mathbf{q}} = J_G^{\#}\big(\ddot{\mathbf{x}} - \dot{J}_G \dot{\mathbf{q}}\big),
+\end{equation}
+\noindent
+where \(J_G^{\#}\) denotes the Moore-Penrose pseudoinverse of the CoM Jacobian.
+
+
+In this context, we also require the time derivative of the CoM Jacobian, expressed as:
+
+\begin{equation}
+\dot{J}_G = [\dot{\mathbf{J}}_1 \; \dots \; \dot{\mathbf{J}}_k \; \dots \; \dot{\mathbf{J}}_N],
+\end{equation}
+\noindent
+where each column $\dot{J}_k$ is given by:	
+\begin{equation}
+\dot{\mathbf{J}}_k = -\frac{L}{N}
+\begin{bmatrix} 
+ \displaystyle\sum_{{i=k}}^{N}\dot{\beta}_i\cos{(\beta_i)}\big(N-i+1-\alpha\big) \\[6pt]
+ \displaystyle\sum_{{i=k}}^{N}\dot{\beta}_i\sin{(\beta_i)}\big(N-i+1-\alpha\big)
+\end{bmatrix}.
+\end{equation}
+
+\subsection{Secondary Task Optimization in Null-Space}
+Our system exhibits a high degree of kinematic redundancy, meaning that multiple joint configurations can achieve the same desired CoM trajectory. This redundancy can be exploited through a null-space projection \cite{b9}, which allows secondary objectives to be fulfilled without interfering with the primary CoM control task. In particular, maintaining the robot’s circular shape is important for stable and efficient rolling locomotion~\cite{b3}. To accomplish this, we project an additional corrective action into the null space of the CoM Jacobian. The projection matrix \( P_{\text{null}} \) is defined as:
+
+\begin{equation}
+P_{\text{null}} = I_N - J_G^{\#} J_G,
+\end{equation}
+\noindent
+where \( I_N \) is the identity matrix of size \( N \) and \( J_G^{\#} \) denotes the Moore-Penrose pseudoinverse of the CoM Jacobian \( J_G \).
+
+The secondary task is formulated as a joint correction vector \( \mathbf{z} \) that attracts the robot’s configuration \( \mathbf{q} \) towards a reference circular configuration \( \mathbf{q}_{\text{ref}} \):
+
+\begin{equation}
+\mathbf{z} = K_{\text{null}} (\mathbf{q}_{\text{ref}} - \mathbf{q}),
+\end{equation}
+\noindent
+where \( K_{\text{null}} \) is a positive scalar gain. Since our robot is composed of \( N \) joints, to form a circle, each joint angle should be \( \frac{\pi}{8}\,\mathrm{rad} \). Therefore, \( \mathbf{q}_{\text{ref}} \in \mathbb{R}^N \) is the vector
+\[
+\mathbf{q}_{\text{ref}} = \left[ \frac{\pi}{8}, \frac{\pi}{8}, \dots, \frac{\pi}{8} \right]^T.
+\]
+
+This null-space contribution is combined with the primary inverse-Jacobian control law to obtain the following final joint acceleration command :
+
+\begin{equation}
+    \ddot{\mathbf{q}} = J_G^{\#}\big(\ddot{\mathbf{x}} - \dot{J}_G \dot{\mathbf{q}}\big) + P_{\text{null}}\mathbf{z} .
+		\label{eq:16}
+\end{equation}
+
+
+\subsection{Simplified Torque-to-Pressure Conversion}
+
+In this work, the control input for each joint ultimately takes the form of a pressure command sent through proportional actuator valves to the air cylinders. Ideally, the desired joint angular accelerations would be mapped into actuator torques by accounting for the robot’s full dynamic behavior. This dynamic model includes the effects of inertia, Coriolis and centrifugal forces, as well as gravity, all of which influence the joint torques required for precise control.
+
+However, accurately identifying and implementing this dynamic model is particularly challenging due to the high number of joints in the segmented annular robot. Each joint’s dynamics are coupled with those of the others, making the full dynamic characterization and control complex. 
+
+In our prototype, the links are lightweight and the robot primarily moves in the horizontal plane. As a result, the gravitational torques at the joints are relatively small compared to the actuator-generated torques. Neglecting the gravity component simplifies the control design without significantly impacting performance. This assumption is valid for the planned motions of our prototype, but may need to be reconsidered for future applications involving vertical motion or heavier links.
+
+Therefore, as a practical simplification, we approximate the required actuator torque \( \tau \) using:
+\begin{equation}
+    \boldsymbol{\tau} = I \ddot{\mathbf{q}},
+    \label{eq:17}
+\end{equation}
+\noindent
+where \( I \) is the moment of inertia of the link relative to the joint axis. Since all links are identical, \(I\) is treated as a constant scalar. This formulation assumes that inertial effects dominate and neglects Coriolis, centrifugal, and gravity components within the control timescale of interest.
+
+The torque vector is converted into the corresponding actuator force vector using element-wise division by the lever-arm lengths:
+\begin{equation}
+    \mathbf{F} = \boldsymbol{\tau} \oslash \mathbf{L}_{\text{lever}},
+    \qquad \boldsymbol{\tau},\, \mathbf{L}_{\text{lever}} \in \mathbb{R}^{N},
+    \label{eq:18}
+\end{equation}
+where $\oslash$ denotes element-wise division, i.e., $F_i = \tau_i / L_{\text{lever,i}}$ for $i=1,\dots,N$.
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{Lever_arm.png}
+    \caption{Schematic of the lever arm geometry.}
+    \label{fig:Lever}
+\end{figure}
+
+As illustrated in Fig.~\ref{fig:Lever}, \(L_{\text{lever}}\) is the perpendicular distance from the joint axis to the actuator’s line of action. It can be obtained from the right triangle defined by the link of length \(L\) (hypotenuse) and the angle \(\frac{\pi - \theta_i}{2}\), leading to:
+\begin{equation}
+    \cos\left( \frac{\pi - \theta_i}{2} \right) = \frac{L_{\text{lever},i}}{L},
+\end{equation}
+\noindent
+where \(L_{\text{lever},i}\) is the lever arm corresponding to link \(i\). Using the identity \(\cos\left(\frac{\pi - \theta_i}{2}\right) = \sin\left(\frac{\theta_i}{2}\right)\), we obtain:
+\begin{equation}
+    L_{\text{lever},i} = L \left| \sin\left( \frac{\theta_i}{2} \right) \right|,
+    \label{eq:20}
+\end{equation}
+which represents the effective moment arm of the actuator force.
+
+Finally, the corresponding pressure command \(\mathbf{P}\) to be sent to the proportional valves is computed by dividing the actuator force vector by the piston cross-sectional area \(S\) which is a constant scalar:
+\begin{equation}
+    \mathbf{P} = \frac{\mathbf{F}}{S}.
+		\label{eq:21}
+\end{equation}
+\noindent
+This simplified approach reduces model complexity and enables straightforward real-time implementation while maintaining acceptable control performance. Simulation results indicate that this approximation is sufficient to achieve the desired rolling motion under the considered operating conditions. The computed pressures are converted into a proportion of a maximum pressure \(P_{\text{max}}\) and then saturated, constraining the values between \(-100\%\) and \(100\%\). The resulting signal, denoted as \(\mathbf{u}\), is obtained by combining \eqref{eq:17}, \eqref{eq:18}, and \eqref{eq:21}:
+\begin{equation}
+	\math{u}_i = \frac{I}{L_{\text{lever},i} S} \ddot{\math{q}}_i,
+	\label{eq:22}
+\end{equation}
+\noindent
+where \(\ddot{\math{q}}_i\) is the angular acceleration of link \(i\) from \eqref{eq:16}.
+
+
+\section{Simulation}
+\subsection{Simulink\textsuperscript{\textregistered} Model Architecture}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{isometric_view.png}
+		\caption{Visualization of the annular robot in the MATLAB\textsuperscript{\textregistered} Simulink\textsuperscript{\textregistered} simulation environment. The robot has a height of \(h = 0.7\,\text{m}\) and a width of \(w = 0.3\,\text{m}\).}
+    \label{fig:iso_view}
+\end{figure}
+
+To validate the proposed control strategy and assess the robot’s rolling performance, a simulation environment was developed using MATLAB\textsuperscript{\textregistered} Simulink\textsuperscript{\textregistered} and Simscape\textsuperscript{\textregistered}, as shown in Fig.~\ref{fig:iso_view}. This setup replicates the kinematic and simplified dynamic behavior of the segmented annular robot, allowing rapid testing and tuning of parameters before proceeding with the hardware implementation.
+
+
+The Simulink\textsuperscript{\textregistered} model is divided into three main subsystems representing the physical components and control loops of the robot. A block diagram of the overall structure is shown in Fig.~\ref{fig:Main_subs}, highlighting the main signal flow and interactions between these subsystems. Figs.~\ref{fig:mechanism}, \ref{fig:pneumatic}, and \ref{fig:control} are simplified diagrams of the corresponding Simulink\textsuperscript{\textregistered} blocks.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{Simulink_main_subsystems.png}
+    \caption{Main subsystems of the Simulink\textsuperscript{\textregistered} model.
+		$C$ denotes the cylinders, and $R$ denotes the rods.}
+    \label{fig:Main_subs}
+\end{figure}
+
+The \textit{mechanism subsystem} models the physical interactions among the solid components (Fig.~\ref{fig:mechanism}). It consists of sixteen interconnected units joined by revolute joints. The entire assembly is ''connected'' to the ground via a 6-DOF joint. Every second unit features rods and cylinders attached to right and left axes that enable rotational movement of these units. These rods and cylinders serve as inputs to the \textit{pneumatic subsystem}, where they constitute the pneumatic actuators. The remaining units lack these rods and cylinders but still provide two rotational axes for connecting adjacent units through revolute joints. This subsystem also includes sensors such as the Inertia sensor from the Simscape\textsuperscript{\textregistered} library, which enables obtaining the position of the center of mass (CoM) for groups of connected elements—either directly or through rigid transforms—allowing us to determine the CoM of the entire robot, $\mathbf{G}_\text{mes}$. This information is crucial for our control loop. Additionally, the normal force between the ground and each module is measured, forming a vector $\mathbf{F}_c \in \mathbb{R}^N$ that is sent to the \textit{control subsystem}. Relative angles between units, $\boldsymbol{\theta}_\text{mes}$ and their velocities, $\boldsymbol{\omega}_\text{mes}$, are also directly measured. All these signals are fed into the \textit{control subsystem}.
+
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{Simulink_mechanism.png}
+    \caption{Details of the mechanism subsystem in the Simulink\textsuperscript{\textregistered} model. 
+    The zoomed-in section shows a top view of a single unit. $C$ denotes the cylinders, and $R$ denotes the rods. 
+		Black arrows represent Simulink\textsuperscript{\textregistered} signals (vectors), green lines denote axes used for physical connections, and purple dashed lines indicate air pressure signals.}
+    \label{fig:mechanism}
+\end{figure}
+
+The \textit{pneumatic subsystem} consists of sixteen blocks modeling each of the pneumatic actuators. As shown in Fig.~\ref{fig:pneumatic}, each block represents a springless, single-acting pneumatic cylinder, as mentioned in Sec.~II. Within each block, as illustrated in Fig.~\ref{fig:pneumatic}, the prismatic module connects the rod and cylinder axes using a prismatic joint (from the Simscape\textsuperscript{\textregistered} library), which allows translational motion along the axis. This joint is coupled with a translational mechanical converter and a damper to model the dynamic behavior and resistance within the actuator. The single-acting pneumatic cylinder admits air into one chamber only, and the pneumatic module controls this airflow through proportional valves. When the control signal is positive, the valve opens the supply path to pressurize the chamber, extending the actuator; when negative, the valve opens the exhaust path to release air, allowing retraction.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{Simulink_pneumatic.png}
+    \caption{Details of the pneumatic subsystem in the Simulink\textsuperscript{\textregistered} model. 
+		$C_i$ denotes the $i$-th cylinder, and $R_i$ denotes the $i$-th rod. The color code is the same as Fig.~\ref{fig:mechanism}.}
+    \label{fig:pneumatic}
+\end{figure}
+
+The \textit{control subsystem} consists of two MATLAB\textsuperscript{\textregistered} functions (Fig.~\ref{fig:control}). 
+
+The first step computes the index \(j\) of the unit experiencing the largest normal contact force, expressed as
+\[
+j = \arg\max_{i \in \llbracket 1, N \rrbracket} F_{c,i},
+\]
+where \(F_{c,i}\) denotes the normal contact force measured at the \(i^\text{th}\) unit. The operator is defined by
+\[
+\arg\max_{i \in \llbracket 1, N \rrbracket} F_{c,i}
+= \left\{\, j \in \llbracket 1, N \rrbracket \;\middle|\; F_{c,j} \ge F_{c,i}\ \forall i \in \llbracket 1, N \rrbracket \right\}.
+\]
+
+The second function, called the \textit{Command Function}, takes as inputs the measurements \(\boldsymbol{\theta}_{\text{mes}}\), \(\boldsymbol{\omega}_{\text{mes}}\), and \(\mathbf{G}_{\text{mes}}\) provided by the \textit{mechanism subsystem}, as well as \(Y_{\text{target}}\), which represents the horizontal coordinate of the target position. It also computes the position error \(e\), which is returned to facilitate PD control. To prevent algebraic loops that arise during the calculation of the derivative of the error \(\dot{e}\), a delay block is incorporated in the feedback loop. Finally, the function outputs the control command \(\mathbf{u}\).
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{Simulink_control.png}
+    \caption{Details of the control subsystem in the Simulink\textsuperscript{\textregistered} model. The color code is the same as Fig.~\ref{fig:mechanism}.}
+    \label{fig:control}
+\end{figure}
+
+Algorithm~\ref{alg:command_function} implements the core of the control strategy. It begins by shifting the measured joint angles and angular velocities based on the index \texttt{j} of the unit currently in contact with the ground. This index shifting simplifies the computation of the Jacobian matrix, as the kinematic model considers the link touching the ground to be indexed as \texttt{1}. Using these shifted indexes, the Jacobian matrix \texttt{J} and its time derivative \texttt{J\_dot} are calculated to relate joint velocities and accelerations to the robot's body velocity and acceleration. Next, a desired acceleration \texttt{x\_ddot} is computed from a PD controller using the position error \texttt{e} and its derivative \texttt{e\_dot}. This desired acceleration is then mapped back to joint space through an inverse kinematics command function \eqref{eq:22}, yielding the shifted control inputs \texttt{shifted\_u}. Finally, these control inputs are rearranged to the original indexing and returned along with the updated error. This process enables the controller to consistently generate commands relative to the current ground contact, ensuring smooth and accurate rolling behavior.
+
+
+\begin{algorithm}[t]
+\caption{Command Function}
+\label{alg:command_function}
+\KwIn{\texttt{e}, \texttt{Y\_target}, \texttt{theta\_mes}, \texttt{omega\_mes}, \texttt{G\_mes}, \texttt{j}}
+\KwOut{\texttt{e}, \texttt{u}}
+
+\For{\texttt{k} $\leftarrow 1$ \KwTo \texttt{N}}{
+    \texttt{shifted\_theta(k)} $\leftarrow$ \texttt{theta\_mes[((k + j - 2) mod N) + 1]}\;
+    \texttt{shifted\_omega(k)} $\leftarrow$ \texttt{omega\_mes[((k + j - 2) mod N) + 1]}\; 
+    \tcp*{Convert physical indexing $\hat{i}$ to logical indexing $i$}
+}
+
+\texttt{J} $\leftarrow$ \texttt{jacobian}(\texttt{shifted\_theta}, \texttt{shifted\_omega}) \tcp*{Eq. (9)}
+\texttt{J\_dot} $\leftarrow$ \texttt{jacobian\_dot}(\texttt{shifted\_theta}, \texttt{shifted\_omega}) \tcp*{Eq. (13)}
+
+\texttt{x\_ddot} $\leftarrow \texttt{Kp} \cdot \texttt{e} + \texttt{Kd} \cdot \texttt{e\_dot}$ \tcp*{Eq. (10)}
+
+\texttt{shifted\_u} $\leftarrow$ \texttt{command}(\texttt{x\_ddot}, \texttt{J}, \texttt{J\_dot}, \texttt{shifted\_theta}, \texttt{shifted\_omega}) \tcp*{Eq. (22)}
+
+\For{\texttt{k} $\leftarrow 1$ \KwTo \texttt{N}}{
+    \texttt{u(k)} $\leftarrow$ \texttt{shifted\_u[((k - j) mod N) + 1]}\;
+    \tcp*{Convert logical indexing $i$ back to physical indexing $\hat{i}$}
+}
+\Return{\texttt{e}, \texttt{u}}\;
+
+\end{algorithm}
+
+\subsection{Results}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{plot_right_left.png}
+    \caption{Time evolution of the robot’s displacement for two control configurations. 
+The \textit{No nullspace} strategy corresponds to $K_\text{null} = 0$, whereas the \textit{Nullspace} strategy uses $K_\text{null} \neq 0$.}
+    \label{fig:displacement_RL}
+\end{figure}
+
+Fig.~\ref{fig:displacement_RL} compares the robot’s displacement trajectories for a target displacement of 2.5~m under two control strategies:(i) with nullspace control, and (ii) without nullspace control. The former one, designed to preserve the robot’s circular shape, yields a consistently higher forward velocity in the transient phase. Within the first 5 s, the robot using the \textit{Nullspace} strategy surpasses 2.5~m, whereas by using the \texttit{No nullspace} strategy, it only reaches about 2.3~m over the same period. After the transient response is over, both configurations converge to the 2.5~m target, but their regulation behavior differs: the \textit{No nullspace} case overshoots to nearly 2.9~m and oscillates with slower decay, while the \textit{Nullspace} case exhibits reduced overshoot, faster damping, and smoother convergence. These results highlight that preserving the circular shape via nullspace control not only enhances motion stability but also improves propulsion efficiency.
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{frames.png}
+    \caption{Superimposed frames from the simulation showing the robot’s motion over time. 
+    Each frame corresponds to a 1-second interval, except for the final frame.}
+    \label{fig:Frames}
+\end{figure}
+
+The robot’s motion during the experiment can be divided into three main phases:\\
+1) \textbf{Inflation} – The structure expands to reach a nearly circular shape, improving rolling dynamics.\\
+2) \textbf{Acceleration} – The CoM is intentionally shifted toward the target direction, generating a tipping motion that initiates rolling. This phase produces an elliptical deformation due to the asymmetrical load distribution.\\  
+3) \textbf{Deceleration} – The CoM shift is reduced, stabilizing the robot and slowing down the motion.  \\
+
+The circular shape achieved during the inflation phase is critical, as it minimizes rolling resistance and enables faster displacement. As illustrated in Fig.~\ref{fig:Frames}, and considering the robot’s diameter of approximately 0.7~m, the robot is capable of covering nearly 4~meters in under 6~seconds using this control strategy.
+
+\subsection{Discussion}
+
+The simulation results demonstrate that CoM-Jacobian-based control with null-space optimization significantly improves rolling locomotion. The nullspace controller performed better, with less overshoot (2.6~m vs. 2.9~m) and faster convergence, showing that keeping a near-circular shape is key for efficient rolling \cite{b3}.
+
+\subsubsection{Control Strategy Effectiveness}
+\\
+Our coordinated actuation approach represents a significant improvement. The ability to cover approximately 4~m in under 6~s demonstrates practical potential for space exploration scenarios. The three-phase motion pattern—inflation, acceleration, and deceleration—enables smoother motion profiles compared to traditional methods~\cite{b1}.
+
+Initial experiments revealed directional bias in rolling control, where the robot exhibited easier control in one direction compared to the other. This asymmetry was attributed to the non-uniform distribution of actuator orientations around the loop. To address this limitation, we implemented an alternating pattern for cylinder directions, switching orientation at each joint to create a symmetric geometry. While this design modification significantly reduced the directional bias, the robot remains slightly slower in one direction compared to the other, though both directions are now controllable and functional for practical applications.
+
+The springless pneumatic actuators closely mimic the inflation/deflation behavior of actual inflatable habitat modules, supporting the actuation patterns required for rolling locomotion. This asymmetric actuation profile naturally complements the tipping dynamics required for rolling locomotion, eliminating complex spring-loaded mechanisms that could introduce failure modes in space environments \cite{b13}.
+
+\subsubsection{Model Simplification and Limitations}
+\\
+The simplified torque-to-pressure conversion \eqref{eq:22} represents a practical compromise between model accuracy and computational efficiency. While neglecting Coriolis and gravity effects, the results show adequate performance for moderate-speed rolling. This approach reflects a broader trend in soft robotics, where simplifying actuation models and optimizing structure help reduce the need for additional motors and power devices \cite{b14}.
+
+However, several limitations should be acknowledged: (1) the assumption of perfect ground contact may not hold on uneven terrain, and (2) the simplified dynamic model may not capture all pneumatic-structural interactions. Recent work on discrete approaches for soft manipulator dynamics \cite{b15} and comprehensive control strategies \cite{b16} offer promising directions for addressing these limitations.
+
+
+\section{Conclusions}
+
+This paper presented a CoM-Jacobian-based control strategy combined with null-space optimization for annular pneumatic robots to achieve efficient rolling locomotion. The approach successfully coordinates multiple pneumatic actuators in a segmented structure while maintaining circular shape during motion.
+
+The key contributions include: (1) a simplified rigid-segment robot design that captures the behavior the modular actuation concept of inflatable habitat modules, (2) a second-order inverse-Jacobian control law for converting desired center-of-mass motions into coordinated joint commands, and (3) null-space optimization to maintain near-circular shape during rolling.
+The proposed method demonstrates clear advantages over existing approaches, with the robot achieving approximately 4 meters displacement in under 6 seconds while maintaining structural integrity. Future work will focus on developing a state observer to obtain from real world sensors the same information as used in simulation (joint angles, angular velocities, center of mass position, and contact forces) and building a physical prototype to implement and validate this control strategy.
+
+This work establishes a foundation for advanced control schemes applicable to soft robotic systems and provides a stepping stone toward autonomous deployment of inflatable habitat modules in space exploration missions.
+
+\section*{Acknowledgments}
+This work is supported by JST [Moonshot R\&D] [Grant Number JPMJMS223B].
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
