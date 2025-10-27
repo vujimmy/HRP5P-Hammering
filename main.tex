@@ -143,9 +143,9 @@ Let $\mathbf{R}_{w \to nail} \in SO(3)$ be the rotation matrix of the nail with 
 \end{figure*}
 
 \subsection{Direct impact}
-Let $\mathbf{x}(t)$ and $\mathbf{c}^{nail}(t) \in \mathbb{R}^3$ be the contact points of the hammer tip and the nail expressed in the world frame $w$ respectively, as illustrated by \ref{SCHEMATIC OF THE PROBLEM}. At the instant of contact $t_c$, these points collide and thus have the same coordinates (neglecting the radius of the infinitesimal particle, see Fig. \ref{SCHEMATIC OF THE PROBLEM}) :
+Let $\mathbf{x}_{\nu}(t)$ and $\mathbf{c}^{nail}(t) \in \mathbb{R}^3$ be the contact points of the hammer tip and the nail expressed in the world frame $w$ respectively, as illustrated by \ref{SCHEMATIC OF THE PROBLEM}. At the instant of contact $t_c$, these points collide and thus have the same coordinates (neglecting the radius of the infinitesimal particle, see Fig. \ref{SCHEMATIC OF THE PROBLEM}) :
 \begin{equation}
-    \mathbf{x}(t_c) = \mathbf{c}^{nail}(t_c)
+    \mathbf{x}_{\nu}(t_c) = \mathbf{c}^{nail}(t_c)
 \end{equation}
 The nail is stationary at the beginning, i.e. from the initial time $t_i$ to the instant of contact $t_c$ its velocity is $\mathbf{0}$:
 \begin{equation}
@@ -199,19 +199,19 @@ where $m_n$ is the mass of the nail which is very light compared to the EMR. Bec
 % Let $\mathbf{v_-} \in \mathbb{R}^3$ be the desired pre-impact velocity vector of the hammer tip. 
 For ease of notation, let us introduce : 
 \begin{equation}
-    \mathbf{\dot x}_{t_c} \triangleq \mathbf{\dot x}(t_c)
+    \mathbf{\dot x}_{\nu}^{t_c} \triangleq \mathbf{\dot x}_{\nu}(t_c)
 \end{equation}
 From the particle impact model of Stronge \cite{STRONGE}, 
-the post-impact velocity of the hammer tip 
+the post-impact velocity of the hammer tip $\mathbf{\dot x}_{\nu}^{+}$ 
 %$\mathbf{v_+} \in \mathbb{R}^3$ 
 is given by :
 %\textcolor{red}{\textbf{How to define $t_f$ ?}}
 \begin{equation}
 \begin{split}
-    \mathbf{\dot x}(t) 
+    \mathbf{\dot x}_{\nu}^{+} 
     %&= \mathbf{\dot C}^{h}(t_c) - \frac{m}{m_{e, \mathbf{n}}}(1+e_*) \mathbf{\dot C}^{h}(t_c)\\
-                 &= \left[ 1-\frac{m}{m_{e, \mathbf{n}}} (1+e_*)\right] \mathbf{\dot x}_{t_c} 
-                 % \\ & = \alpha \mathbf{\dot x}_{t_c} 
+                 &= \left[ 1-\frac{m}{m_{e, \mathbf{n}}} (1+e_*)\right] \mathbf{\dot x}_{\nu}^{t_c} 
+                 % \\ & = \alpha \mathbf{\dot x}_{\nu}^{t_c} 
                  %\ \ \ \ \forall t \in [t_c, t_f]
 \label{Post-impact velocity of the hammer tip}
 \end{split}
@@ -220,13 +220,13 @@ is given by :
 % \begin{equation}
 %     \alpha = 1-\frac{m}{m_{e, \mathbf{n}}} (1+e_*)
 % \end{equation}
-From the same model, the velocity of the nail after impact 
+From the same model, the velocity of the nail after impact $\mathbf{\dot c}^{nail, +}$ 
 %$\mathbf{v_+^{nail}} \in \mathbb{R}^3$ 
 is :
 \begin{equation}
 \begin{split}
-    \mathbf{\dot c}^{nail}(t) &= \frac{m}{m_n} (1+e_*) \mathbf{\dot x}_{t_c} 
-                              = (1+e_*) \mathbf{\dot x}_{t_c} 
+    \mathbf{\dot c}^{nail, +} &= \frac{m}{m_n} (1+e_*) \mathbf{\dot x}_{\nu}^{t_c} 
+                              = (1+e_*) \mathbf{\dot x}_{\nu}^{t_c} 
                               %\ \ \ \ \forall t > t_c
 \end{split}
 \label{Post-impact velocity of the nail}
@@ -260,7 +260,7 @@ Equation (\ref{Post-impact velocity of the hammer tip}) shows that the hammer ti
 %     K_+ = \frac{1}{2}m_{e,\mathbf{n}}(\mathbf{v_+^T n})^2
 % \end{equation}
 % \begin{equation}
-%     K_- = \frac{1}{2}m_{e,\mathbf{n}}(\mathbf{n^T }\mathbf{\dot x}_{t_c})^2
+%     K_- = \frac{1}{2}m_{e,\mathbf{n}}(\mathbf{n^T }\mathbf{\dot x}_{\nu}^{t_c})^2
 % \end{equation}
 % Thanks to that, we can compute the penetration $\delta d \in \mathbb{R^+}$ of the nail into the wood. 
 % % The hammer tip is colliding with the nail with some normal kinetic energy $K_- \in \mathbb{R}^+$ : 
@@ -270,8 +270,8 @@ Equation (\ref{Post-impact velocity of the hammer tip}) shows that the hammer ti
 % This kinetic energy is transferred to the nail and makes it moves through the wood. The amount of penetration is given by :
 % \begin{equation}
 % \begin{split}
-%     \delta d &= \frac{1}{2\mathbf{n^T} \mathbf{F}^h} m_{e,\mathbf{n}}\left( (\mathbf{v_+^T n})^2 - (\mathbf{n^T}\mathbf{\dot x}_{t_c})^2 \right)  \\
-%             & = \frac{\alpha^2 -1}{2 \mathbf{n^T} \mathbf{F}^h} m_{e,\mathbf{n}} (\mathbf{n^T} \mathbf{\dot x}_{t_c})^2 \\
+%     \delta d &= \frac{1}{2\mathbf{n^T} \mathbf{F}^h} m_{e,\mathbf{n}}\left( (\mathbf{v_+^T n})^2 - (\mathbf{n^T}\mathbf{\dot x}_{\nu}^{t_c})^2 \right)  \\
+%             & = \frac{\alpha^2 -1}{2 \mathbf{n^T} \mathbf{F}^h} m_{e,\mathbf{n}} (\mathbf{n^T} \mathbf{\dot x}_{\nu}^{t_c})^2 \\
 % \end{split}
 % \end{equation}
 % where $\mathbf{F}^h$ is the force applied to the nail by the hammer which can be obtained thanks to Coulomb's friction law \textcolor{red}{\textbf{GIVE EXPRESSION OF $\mathbf{F}^h$ ?}}. However, as stated in Section \ref{Energy-based model}, we have to remember that we do not take into account the other types of energy, thus this model is only an approximation of the real wood penetration.
@@ -316,13 +316,13 @@ Thus, in order to maximize $m_{e,\mathbf{n}}$, we indeed have to maximize $\ddot
 \end{equation}
 Again, because our decision variable is $\mathbf{\ddot q}$, we can drop the first term which does not depend on the configuration acceleration $\mathbf{\ddot q}$ and we are left with :
 \begin{equation}
-    \arg \max_\mathbf{\ddot q} \nabla m_{e,\mathbf{n}}^\mathbf{T}(\mathbf{q) } \mathbf{\ddot q}
+    \arg \max_\mathbf{\ddot q} \nabla m_{e,\mathbf{n}}^\mathbf{T}(\mathbf{q})  \mathbf{\ddot q}
 \label{max problem}
 \end{equation}
 which saves us the computation of the time derivative of the gradient. \\
 QP is more suited for minimization, we can turn (\ref{max problem}) into a minimization problem :
 \begin{equation}
-    \arg \min_\mathbf{\ddot q} -\nabla m_{e,\mathbf{n}}^\mathbf{T}(\mathbf{q) } \mathbf{\ddot q}
+    \arg \min_\mathbf{\ddot q} -\nabla m_{e,\mathbf{n}}^\mathbf{T}(\mathbf{q})  \mathbf{\ddot q}
 \label{minimization problem}
 \end{equation}
 Let's call this problem the Effective Mass Maximization Task (EMMT). The goal of this task is to increase as much as possible the EMR at the next iteration of the controller without its value dropping down. However, we are cannot assert that the result will be a global maximum because our problem is not convex. If we want to try to find a global maximum, we might need to use other methods, however these methods are generally much slower. 
@@ -390,12 +390,12 @@ where $[t_{i}, t_{c}]$ is the time interval on which $\bm \Gamma$ is defined, $t
         B^N_k \left( \frac{t-t_{i}}{T} \right) \triangleq \binom{N}{k} \left( \frac{t-t_{i}}{T} \right)^k \left(1-\frac{t-t_{i}}{T}\right)^{N-k}
     \label{bernstein polynomial}
 \end{equation}
-The first control point of the curve, $\mathbf{p_0}$, is the 3D initial position of the hammer tip $\mathbf{x}_{t_i} \in \mathbb{R}^3$ (the subscript "\textit{i}" stands for "\textit{initial}") and the last control point, $\mathbf{p_N}$, is the 3D position of the nail $\mathbf{x}^{nail} \in \mathbb{R}^3$, both with respect to the fixed world frame. Thus :
+The first control point of the curve, $\mathbf{p_0}$, is the 3D initial position of the hammer tip $\mathbf{x}_{\nu}^{t_i} \in \mathbb{R}^3$ (the subscript "\textit{i}" stands for "\textit{initial}") and the last control point, $\mathbf{p_N}$, is the 3D position of the nail $\mathbf{c}^{nail} \in \mathbb{R}^3$, both with respect to the fixed world frame. Thus :
 \begin{equation}
-    \mathbf{p_0} = \mathbf{x}_{t_i}
+    \mathbf{p_0} = \mathbf{x}_{\nu}^{t_i}
 \end{equation}
 \begin{equation}
-    \mathbf{p_N} = \mathbf{x}^{nail} 
+    \mathbf{p_N} = \mathbf{c}^{nail} 
 \end{equation}
 These points have the property as acting as waypoints for the trajectory, which is not the case for the potential in-between points. \\
 %\textcolor{red}{\textbf{COST FUNCTION OF THE BSPLINE TASK ?}}\\
@@ -409,10 +409,10 @@ These points have the property as acting as waypoints for the trajectory, which 
 In addition to reaching the nail, we have to orient the hammer tip such that the impact with the nail is \textit{collinear}. Let $\mathbf{G}^{h}$, $\mathbf{G}^{nail} \in \mathbb{R}^3$ be the center of mass of the hammer tip and the center of mass of the nail respectively. A collinear impact is an impact where $\mathbf{G}^h$, $\mathbf{G}^{nail}$ and the contact points $\mathbf{x}$ and $\mathbf{c}^{nail}$ are aligned \cite{STRONGE}, see Fig. \ref{SCHEMATIC OF THE PROBLEM}. We constraint two rotation DoFs : the roll and the pitch of the hammer tip, and we let the yaw be free. Indeed, we want to align three vectors : the vector normal to the contact surface of the hammer tip which we will call $\mathbf{n}^h \in \mathbb{R}^3$ expressed in the hammer tip frame, the $\mathbf{n}$ vector and finally the vector between the hammer tip and the contact point of the nail. The latter is already done by the path to the nail. 
 % Tilt alignment : go from $(\alpha_1, \beta_1)$ to $(\alpha_2, \beta_2)$. The error between the vectors can be the cosine of the angle between them (aligned vectors in the same direction have a cosine equal to 1 or substract the vectors to get the direction of the error).
 \\
-Let $\mathbf{R}_{w \to h}$ be the rotation matrix describing the rotation of the hammer tip from the world frame, $\bm \epsilon = \mathbf{n}^h - \mathbf{n}$ the error vector between the desired vector ($\mathbf{n}$) and the actual vector ($\mathbf{n}^h$), $\bm {\omega}^h_w \in \mathbb{R}^{3}$ the angular velocity vector of the hammer tip in the world frame given by :
+Let $\mathbf{R}_{w \to h}$ be the rotation matrix describing the rotation of the hammer tip from the world frame, $\bm \epsilon = \mathbf{n}^h - \mathbf{n}$ the error vector between the desired vector ($\mathbf{n}$) and the actual vector ($\mathbf{n}^h$), $\mathbf{\dot x}_{\omega} \in \mathbb{R}^{3}$ the angular velocity vector of the hammer tip in the world frame given by :
 % \textcolor{red}{\textbf{what is that}}
 \begin{equation}
-    \bm {\omega}^h_w = -\mathbf{R}_{w \to h}  \left[\mathbf{n}^h \right]_{\times} \mathbf{J_\omega \dot q}
+    \mathbf{\dot x}_{\omega} = -\mathbf{R}_{w \to h}  \left[\mathbf{n}^h \right]_{\times} \mathbf{J_\omega \dot q}
 \label{hammer tip angular velocity}
 \end{equation}
 where $\mathbf{J}_\omega \in \mathbb{R}^{3\times n}$ is the angular part of $ \mathbf{J}$ and $\left[ \cdot \right]_{\times} : \mathbb{R}^3 \to \mathbb{R}^{3 \times 3}$ is an operator defined, for all $\mathbf{a} =(a_x, a_y, a_z)^\mathbf{T} \in \mathbb{R}^3$, as :
@@ -427,7 +427,7 @@ where $\mathbf{J}_\omega \in \mathbb{R}^{3\times n}$ is the angular part of $ \m
 The time derivative of (\ref{hammer tip angular velocity}) is :
 {\small
 \begin{equation}
-    \bm {\dot \omega}^h_w = -\mathbf{\dot R}_{w \to h}\left[\mathbf{n}^h \right]_{\times} \mathbf{J \dot q} - \mathbf{R}_{w \to h}\left[\mathbf{n}^h \right]_{\times}\left( \mathbf{J_{\omega} \ddot q + \dot J_{\omega} \dot q} \right)
+    \mathbf{\ddot x}_{\omega} = -\mathbf{\dot R}_{w \to h}\left[\mathbf{n}^h \right]_{\times} \mathbf{J \dot q} - \mathbf{R}_{w \to h}\left[\mathbf{n}^h \right]_{\times}\left( \mathbf{J_{\omega} \ddot q + \dot J_{\omega} \dot q} \right)
 \end{equation}
 }
 % From the starting orientation of the hammer, the rotation needed $\mathbf{R}_{tot} \in SO(3)$ to have a collinear impact is :
@@ -438,35 +438,35 @@ The time derivative of (\ref{hammer tip angular velocity}) is :
 Let us call this task the Vector Orientation Task (VOT). \\
 The cost function of the task is :
 \begin{equation}
-     C_{VOT}(\mathbf{\ddot q}) = \| K_{p, VOT} \bm \epsilon + K_{d,VOT} \bm {\dot \epsilon}- \bm {\dot \omega}^h_w(\mathbf{\ddot q}) \|^2 
+     C_{VOT}(\mathbf{\ddot q}) = \| K_{p, VOT} \bm \epsilon + K_{d,VOT} \bm {\dot \epsilon}- \mathbf{\ddot x}_{\omega}(\mathbf{\ddot q}) \|^2 
 \end{equation}
 where $K_{p, VOT}$ and $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and damping respectively. 
 \subsection{Curve constraints}
 To make the end-effector reach the desired velocity when hitting the nail, we constrain the curve by adding four control points $\mathbf{p_{c_1}}$, $\mathbf{p_{c_2}}$, $\mathbf{p_{c_{N-1}}}$ and $\mathbf{p_{c_{N-2}}} \in \mathbb{R}^3$ . These added points count towards the degree of the curve. The expression of the added points are given by \cite{NDCURVESLIB}:
 \begin{equation}
-    \mathbf{p_{c_1}} = \mathbf{p_0} + \frac{T}{N} \bm {\kappa}_{\mathbf{\dot x}_{t_i}}
+    \mathbf{p_{c_1}} = \mathbf{p_0} + \frac{T}{N} \bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_i}}
 \end{equation}
 \begin{equation}
-    \mathbf{p_{c_2}} = 2\mathbf{p_{c_1}} - \mathbf{p_0} + \frac{T^2}{\left(N-1 \right) \left(N-2 \right)} \bm {\kappa}_{\mathbf{\ddot x}_{t_i}}
+    \mathbf{p_{c_2}} = 2\mathbf{p_{c_1}} - \mathbf{p_0} + \frac{T^2}{\left(N-1 \right) \left(N-2 \right)} \bm {\kappa}_{\mathbf{\ddot x}_{\nu}^{t_i}}
 \end{equation}
-which are added just after $\mathbf{p_0}$, where $\bm {\kappa}_{\mathbf{\dot x}_{t_i}} \in \mathbb{R}^3$ are the initial linear velocity constraints and $\bm {\kappa}_{\mathbf{\ddot x}_{t_i}} \in \mathbb{R}^3$ are the initial linear acceleration constraints.
+which are added just after $\mathbf{p_0}$, where $\bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_i}} \in \mathbb{R}^3$ are the initial linear velocity constraints and $\bm {\kappa}_{\mathbf{\ddot x}_{\nu}^{t_i}} \in \mathbb{R}^3$ are the initial linear acceleration constraints.
 Also :
 \begin{equation}
-    \mathbf{p_{c_{N-1}}} = \mathbf{p_N} - \frac{T}{N -1} \bm {\kappa}_{\mathbf{\dot x}_{t_c}}
+    \mathbf{p_{c_{N-1}}} = \mathbf{p_N} - \frac{T}{N -1} \bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_c}}
 \end{equation}
 \begin{equation}
-    \mathbf{p_{c_{N-2}}} = 2\mathbf{p_{c_{N-1}}} - \mathbf{p_N} + \frac{T^2}{\left(N-1 \right) \left(N-2 \right)} \bm {\kappa}_{\mathbf{\ddot x}_{t_c}}
+    \mathbf{p_{c_{N-2}}} = 2\mathbf{p_{c_{N-1}}} - \mathbf{p_N} + \frac{T^2}{\left(N-1 \right) \left(N-2 \right)} \bm {\kappa}_{\mathbf{\ddot x}_{\nu}^{t_c}}
 \end{equation}
-where $\bm {\kappa}_{\mathbf{\dot x}_{t_c}} \in \mathbb{R}^3$ are the linear final velocity constraints and $\bm {\kappa}_{\mathbf{\ddot x}_{t_c}} \in \mathbb{R}^3$ are the final linear acceleration constraints.
+where $\bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_c}} \in \mathbb{R}^3$ are the linear final velocity constraints and $\bm {\kappa}_{\mathbf{\ddot x}_{\nu}^{t_c}} \in \mathbb{R}^3$ are the final linear acceleration constraints.
 Thus, if we add the curve constraints, we will have six control points in total, hence a $5^{th}$ order Bezier curve.
 
 \subsection{Hammer tip velocity and acceleration}
-The desired velocity $\mathbf{\dot x}_d$ and acceleration $\mathbf{\ddot x}_d$ of the hammer tip from the initial instant $t_i$ to the instant of contact $t_c$ expressed with respect to the world frame $w$ are given by the first and second time derivative of (\ref{bezier curve}) respectively :
+The desired velocity $\mathbf{\dot x}_{\nu, d}$ and acceleration $\mathbf{\ddot x}_{\nu, d}$ of the hammer tip from the initial instant $t_i$ to the instant of contact $t_c$ expressed with respect to the world frame $w$ are given by the first and second time derivative of (\ref{bezier curve}) respectively :
 \begin{equation}
-    \mathbf{\dot x}_d(t) = \bm {\dot \Gamma}(t) \ \ \ \ \forall t \in [t_i, t_c]
+    \mathbf{\dot x}_{\nu, d}(t) = \bm {\dot \Gamma}(t) \ \ \ \ \forall t \in [t_i, t_c]
 \end{equation}
 \begin{equation}
-    \mathbf{\ddot x}_d(t) = \bm {\ddot \Gamma}(t) \ \ \ \ \forall t \in [t_i, t_c]
+    \mathbf{\ddot x}_{\nu, d}(t) = \bm {\ddot \Gamma}(t) \ \ \ \ \forall t \in [t_i, t_c]
 \end{equation}
 Both the velocity and acceleration of the hammer tip are affected by the curve constraints (more precisely the added control points) defined in the last subsection.
 \section{Simulations with the robot}
@@ -493,20 +493,20 @@ We see that the EMR is growing over time until it converges to a maximum value. 
 % \end{figure}
 \noindent
 Then, we use the already implemented \textit{BSplineTrajectoryTask} and \textit{VectorOrientationTask} of mc\_rtc and we display the tracking of the theoretical trajectory given by the bezier curve (\ref{bezier curve}), with the following curve constraints : 
-$\bm {\kappa}_{\mathbf{\dot x}_{t_i}} = (0, 0, 0)^\mathbf{T}$ 
+$\bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_i}} = (0, 0, 0)^\mathbf{T}$ 
 $,
-\bm {\kappa}_{\mathbf{\ddot x}_{t_i}} = (0, 0, 0)^\mathbf{T}
+\bm {\kappa}_{\mathbf{\ddot x}_{\nu}^{t_i}} = (0, 0, 0)^\mathbf{T}
 $,
 $
-\bm {\kappa}_{\mathbf{\ddot x}_{t_c}} = (0, 0, 0)^\mathbf{T}
+\bm {\kappa}_{\mathbf{\ddot x}_{\nu}^{t_c}} = (0, 0, 0)^\mathbf{T}
 $ and especially
 \begin{equation}
- % \bm {\kappa}_{\mathbf{\dot x}_{t_c}} = {V_{f,in}^w} \mathbf{n}_w
- \bm {\kappa}_{\mathbf{\dot x}_{t_c}} = \mathbf{R}_{w \to nail}^{\mathbf{T}} {}^{nail}\mathbf{\dot x}_{t_c} 
+ % \bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_c}} = {V_{f,in}^w} \mathbf{n}_w
+ \bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_c}} = \mathbf{R}_{w \to nail}^{\mathbf{T}} {}^{nail}\mathbf{\dot x}_{\nu}^{t_c} 
 \end{equation}
 % where ${V_{f,in}^w} \in \mathbb{R}$ is the input final velocity on the nail expressed in the world frame $w$, in meters per second.
-where ${{}^{nail}\mathbf{\dot x}_{t_c}} \in \mathbb{R}^3$ is the input velocity of the hammer tip at the instant of contact $t_c$ expressed in the nail frame. 
-The nail is placed at $\mathbf{x}_\nu^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig. \ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. We set $T = 1$s, $W_{BSTT} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, BSTT} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). We see the tracking of the hammer tip velocity in Fig. \ref{Velocity tracking of the hammer tip}. We remark that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. However, we also see some unwanted oscillations on the $z$ coordinate : this is due to the high stiffness ($1000$) of the VOT. The final orientation error has been recorded to be $4.16$ deg. We decrease the stiffness of the VOT to 250 in Fig. \ref{Velocity tracking of the hammer tip, $K_{p,VOT} = 250$} and we record an orientation error of $11.88$ deg. Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
+where ${{}^{nail}\mathbf{\dot x}_{\nu}^{t_c}} \in \mathbb{R}^3$ is the input velocity of the hammer tip at the instant of contact $t_c$ expressed in the nail frame. 
+The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig. \ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. We set $T = 1$s, $W_{BSTT} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, BSTT} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). We see the tracking of the hammer tip velocity in Fig. \ref{Velocity tracking of the hammer tip}. We remark that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. However, we also see some unwanted oscillations on the $z$ coordinate : this is due to the high stiffness ($1000$) of the VOT. The final orientation error has been recorded to be $4.16$ deg. We decrease the stiffness of the VOT to 250 in Fig. \ref{Velocity tracking of the hammer tip, $K_{p,VOT} = 250$} and we record an orientation error of $11.88$ deg. Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
 
 % \begin{figure}
 %     \centering
