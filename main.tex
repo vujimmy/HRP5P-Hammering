@@ -498,9 +498,9 @@ where $K_{p, VOT}$ and $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and dampi
 \section{Simulations with the robot}
 \label{Simulations}
 \begin{figure*}
-    % \vspace*{-3.5cm}
+    \vspace*{-2.3cm}
     \centering
-    \includesvg[width=0.5\linewidth]{Velocities}
+    \includesvg[width=0.7\linewidth]{Velocities}
     \caption{Velocity tracking of the hammer tip for different $K_{p, VOT}$ values}
     \label{Velocity tracking of the hammer tip}
 \end{figure*}
@@ -510,7 +510,7 @@ The robot is equipped with a hammer in its left gripper and its floating base is
 The hammer used weighs 0.792 kg, has a length of 328 mm and its contact surface is circular with radius 15.5 mm. 
 The nail is fixed and "floating" in the environment because of the current framework limitations, and has a length of 88.03 mm and its head has a radius of 6.95 mm. 
 The tasks at play are the EMMT within the posture task defined in Section \ref{QP formulation of EMMT}, the BSTT defined in Section \ref{BSplineTrajectoryTask} and the VOT defined in Section \ref{VectorOrientationTask}. The gradient of the effective mass $\nabla m_{e, \mathbf{n}}$ is computed by backward difference. In (\ref{PD controller}), we set $K_p = 5$, thus by (\ref{Kp Kd relationship}) we have $K_d = 4.47$. \\ 
-The entire simulation goes as follows : i) the robot starts at its half-sitting posture ii) $t_i$ is recorded and the robot starts the hammering motion until an impact is detected on the nail, then $t_c$ is recorded at the same time, and finally iii) the robot goes back to its half sitting posture. An impact is detected on the nail thanks to a nail sensor plugin written in ROS2 and added to mc\_rtc : there is an impact if the absolute value of one coordinate of the 3D force applied to the nail is at least greater than some value $f_{e}$ which has been chosen to be $1$N to cut off the very small "offset" forces of the simulator, as the magnitude of an impulse is much higher than this value. \\
+The entire simulation goes as follows : i) the robot starts at its half-sitting posture ii) $t_i$ is recorded and the robot starts the hammering motion until an impact is detected on the nail, then $t_c$ is recorded at the same time, and finally iii) the robot goes back to its half-sitting posture. An impact is detected on the nail thanks to a nail sensor plugin written in ROS2 and added to mc\_rtc : there is an impact if the absolute value of one coordinate of the 3D force applied to the nail is at least greater than some value $f_{e}$ which has been chosen to be $1$N to cut off the very small "offset" forces of the simulator, as the magnitude of an impulse is much higher than this value. \\
 We first present the results of Section \ref{Optimization of the effective mass using QP} in Fig. \ref{Time evolution of the effective mass of the robot 1} with $W_m = 1$ and $W_p  = 1$ 
 %and Fig. \ref{Time evolution of the effective mass of the robot 2} with $W_m = 10$ and $W_p = 1$ 
 by isolating the posture task, i.e. we only have the posture task active and no other task active. 
