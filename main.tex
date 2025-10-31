@@ -10,10 +10,14 @@
 \addbibresource{references.bib}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{svg}
+\setsvg{
+  inkscapeexe = {"C:/Program Files/Inkscape/bin/inkscape.exe"}
+}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
-\title{\LARGE \bf QP-based hammering task for a humanoid robot that leverages effective mass maximization for optimizing configuration at impact
+\title{\LARGE \bf QP-based impact momentum maximization for hammering task by a humanoid robot
 \thanks{}
 }
 
@@ -153,6 +157,7 @@ Let $\mathbf{R}_{w \to nail} \in SO(3)$ be the rotation matrix of the nail with 
 % \end{figure*}
 
 \begin{figure*}
+    \vspace*{-2.5cm}
     \centering
     \includegraphics[width=0.7\linewidth]{All phases.png}
     \caption{Particle impact phases}
@@ -492,6 +497,13 @@ The cost function of the task is :
 where $K_{p, VOT}$ and $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and damping respectively. 
 \section{Simulations with the robot}
 \label{Simulations}
+\begin{figure*}
+    \vspace*{-3.5cm}
+    \centering
+    \includesvg[width=0.7\linewidth]{Velocities}
+    \caption{Velocity tracking of the hammer tip for different $K_{p, VOT}$ values}
+    \label{Velocity tracking of the hammer tip}
+\end{figure*}
 In this section, we present the simulations made on our humanoid robot HRP-5P. 
 Simulations were done using mc\_mujoco and mc\_rtc in torque control mode with a timestep $\Delta t = 0.002$s. 
 The robot is equipped with a hammer in its left gripper and its floating base is fixed. 
@@ -531,7 +543,7 @@ $ and especially
 \end{equation}
 % where ${V_{f,in}^w} \in \mathbb{R}$ is the input final velocity on the nail expressed in the world frame $w$, in meters per second.
 where ${{}^{nail}\mathbf{\dot x}_{\nu}^{t_c}} \in \mathbb{R}^3$ is the input velocity of the hammer tip at the instant of contact $t_c$ expressed in the nail frame. 
-The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig. \ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. We set $T = 1$s, $W_{BSTT} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, BSTT} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). We see the tracking of the hammer tip velocity in Fig. \ref{Velocity tracking of the hammer tip}. We remark that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. However, we also see some unwanted oscillations on the $z$ coordinate : this is due to the high stiffness ($1000$) of the VOT. The final orientation error has been recorded to be $4.16$ deg. We decrease the stiffness of the VOT to 250 in Fig. \ref{Velocity tracking of the hammer tip, $K_{p,VOT} = 250$} and we record an orientation error of $11.88$ deg. Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
+The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig. \ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. We set $T = 1$s, $W_{BSTT} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, BSTT} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). We see the tracking of the hammer tip velocity in Fig. \ref{Velocity tracking of the hammer tip} (a). We remark that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. However, we also see some unwanted oscillations on the $z$ coordinate : this is due to the high stiffness ($1000$) of the VOT. The final orientation error has been recorded to be $4.16$ deg. We decrease the stiffness of the VOT to 250 in Fig. \ref{Velocity tracking of the hammer tip} (b) and we record an orientation error of $11.88$ deg. Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
 
 % \begin{figure}
 %     \centering
@@ -539,18 +551,20 @@ The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from t
 %     \caption{Velocity tracking of the hammer tip}
 %     \label{Velocity tracking of the hammer tip}
 % \end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{Velocity with VOT.png}
-    \caption{Velocity tracking of the hammer tip, $K_{p, VOT} = 1000$}
-    \label{Velocity tracking of the hammer tip}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\linewidth]{Velocity graph VOT 250.png}
-    \caption{Velocity tracking of the hammer tip, $K_{p, VOT} = 250$}
-    \label{Velocity tracking of the hammer tip, $K_{p,VOT} = 250$}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.75\linewidth]{Velocity with VOT.png}
+%     \caption{Velocity tracking of the hammer tip, $K_{p, VOT} = 1000$}
+%     \label{Velocity tracking of the hammer tip}
+% \end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.75\linewidth]{Velocity graph VOT 250.png}
+%     \caption{Velocity tracking of the hammer tip, $K_{p, VOT} = 250$}
+%     \label{Velocity tracking of the hammer tip, $K_{p,VOT} = 250$}
+% \end{figure}
+
+
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=0.75\linewidth]{Velocity graph with VOT.png}
@@ -762,8 +776,9 @@ In this work, we presented a way to implement a hammering task on a humanoid rob
 
 % For papers published in translation journals, please give the English 
 % citation first, followed by the original foreign-language citation \cite{b6}.
-
+{\footnotesize
 \printbibliography
+}
 % \begin{thebibliography}{00}
 % \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
 % \bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
