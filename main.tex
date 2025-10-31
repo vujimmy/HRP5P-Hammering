@@ -17,7 +17,7 @@
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
-\title{\LARGE \bf QP-based impact momentum maximization for hammering task by a humanoid robot
+\title{\LARGE \bf QP-based impact momentum maximization for a hammering task by a humanoid robot
 \thanks{}
 }
 
@@ -390,7 +390,7 @@ The relationship between $K_p$ and $K_d$ is given by :
     K_d = 2\sqrt{K_p}
 \label{Kp Kd relationship}
 \end{equation}
-To implement our EMMT task in mc\_rtc, we will modify (\ref{Global QP}) to include the EMMT within the posture task and we finally have :
+To implement our EMMT task in mc\_rtc, we will modify (\ref{Global QP}) in the following way :
 \begin{equation}
      \arg \min_{\mathbf{\ddot q}} \frac{1}{2}W_p \|\mathbf{\ddot q +b} - \frac{W_m}{W_p^2} \nabla m_{e, \mathbf{n}}(\mathbf{q}) \|^2 + C(\mathbf{\ddot q})
 \label{Trick}
@@ -500,7 +500,7 @@ where $K_{p, VOT}$ and $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and dampi
 \begin{figure*}
     \vspace*{-3.5cm}
     \centering
-    \includesvg[width=0.7\linewidth]{Velocities}
+    \includesvg[width=0.5\linewidth]{Velocities}
     \caption{Velocity tracking of the hammer tip for different $K_{p, VOT}$ values}
     \label{Velocity tracking of the hammer tip}
 \end{figure*}
