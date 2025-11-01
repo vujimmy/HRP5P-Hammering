@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{428.15759277bp}%
+    \setlength{\unitlength}{421.66647339bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,10 +50,11 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.90256409)%
+  \begin{picture}(1,0.85610972)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{Projected_momentum_svg-tex.pdf}}%
-    \put(0.74358794,0.10968298){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Time [s]\end{tabular}}}}%
+    \put(0.75135139,0.05275605){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Time [s]\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{Projected_momentum_svg-tex.pdf}}%
   \end{picture}%
 \endgroup%

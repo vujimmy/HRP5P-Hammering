@@ -144,3 +144,67 @@
   langid = {english},
   keywords = {Computer Science - Robotics},
 }
+
+@article{cisnerosImpulsivePedipulationSpherical2016,
+  title = {Impulsive {{Pedipulation}} of a {{Spherical Object}} with {{3D Goal Position}} by a {{Humanoid Robot}}: {{A 3D Targeted Kicking Motion Generator}}},
+  shorttitle = {Impulsive {{Pedipulation}} of a {{Spherical Object}} with {{3D Goal Position}} by a {{Humanoid Robot}}},
+  author = {Cisneros, Rafael and Yokoi, Kazuhito and Yoshida, Eiichi},
+  year = 2016,
+  month = jun,
+  journal = {International Journal of Humanoid Robotics},
+  volume = {13},
+  number = {02},
+  pages = {1650003},
+  urldate = {2025-11-01},
+  abstract = {This paper describes an algorithm that enables a humanoid robot to perform an impulsive pedipulation task on a spherical object in the environment; that is, by using its feet to exert an impulsive force capable of driving the object to a 3D goal position while achieving certain motion characteristics. This is done by planning a suitable motion for the legs of the humanoid, capable to exert the required impact conditions on the spherical object while maintaining the dynamic stability of the robot. As an example of this algorithm implementation we consider the free kick in soccer and take it as a case study. Finally, we provide some simulation and experimental results that intend to show the validity of this algorithm.},
+  langid = {english},
+}
+@inproceedings{steenRobotControlSimultaneous2022,
+  title = {Robot Control for Simultaneous Impact Tasks via {{Quadratic Programming-based}} Reference Spreading},
+  booktitle = {2022 {{American Control Conference}} ({{ACC}})},
+  author = {van Steen, Jari J. and van de Wouw, Nathan and Saccon, Alessandro},
+  year = 2022,
+  month = jun,
+  eprint = {2111.05211},
+  primaryclass = {cs},
+  pages = {3865--3872},
+  abstract = {With the aim of further enabling the exploitation of impacts in robotic manipulation, a control framework is presented that directly tackles the challenges posed by tracking control of robotic manipulators that are tasked to perform nominally simultaneous impacts associated to multiple contact points. To this end, we extend the framework of reference spreading, which uses an extended ante- and post-impact reference coherent with a rigid impact map, determined under the assumption of an inelastic simultaneous impact. In practice, the robot will not reside exactly on the reference at the impact moment; as a result a sequence of impacts at the different contact points will typically occur. Our new approach extends reference spreading in this context via the introduction of an additional interim control mode. In this mode, a torque command is still based on the ante-impact reference with the goal of reaching the target contact state, but velocity feedback is disabled as this can be potentially harmful due to rapid velocity changes. With an eye towards real implementation, the approach is formulated using a quadratic programming (QP) control framework and is validated using numerical simulations both on a rigid robot model and on a realistic robot model with flexible joints.},
+  archiveprefix = {arXiv},
+  langid = {english},
+  keywords = {Computer Science - Robotics,Computer Science - Systems and Control,Electrical Engineering and Systems Science - Systems and Control},
+}
+
+@article{tassiIMAcatcherIMpactawareNonprehensile2025,
+  title = {{{IMA-catcher}}: {{An IMpact-aware}} Nonprehensile Catching Framework Based on Combined Optimization and Learning},
+  shorttitle = {{{IMA-catcher}}},
+  author = {Tassi, Francesco and Zhao, Jianzhuang and Lahr, Gustavo JG and Gava, Luna and Monforte, Marco and Glover, Arren and Bartolozzi, Chiara and Ajoudani, Arash},
+  year = 2025,
+  month = jun,
+  journal = {The International Journal of Robotics Research},
+  pages = {02783649251345851},
+  publisher = {SAGE Publications Ltd STM},
+  abstract = {Robotic catching of flying objects typically generates high-impact forces that might lead to task failure and potential hardware damages. This is accentuated when the object mass to robot payload ratio increases, given the strong inertial components characterizing this task. This paper aims to address this problem by proposing an implicitly impact-aware framework that accomplishes the catching task in both pre- and post-catching phases. In the first phase, a motion planner generates optimal trajectories that minimize catching forces, while in the second, the object's energy is dissipated smoothly, minimizing bouncing. In particular, in the pre-catching phase, a real-time optimal planner is responsible for generating trajectories of the end-effector that minimize the velocity difference between the robot and the object to reduce impact forces during catching. In the post-catching phase, the robot's position, velocity, and stiffness trajectories are generated based on human demonstrations when catching a series of free-falling objects with unknown masses. A hierarchical quadratic programming-based controller is used to enforce the robot's constraints (i.e., joint and torque limits) and create a stack of tasks that minimizes the reflected mass at the end-effector as a secondary objective. The initial experiments isolate the problem along one dimension to accurately study the effects of each contribution on the metrics proposed. We show how the same task, without velocity matching, would be infeasible due to excessive joint torques resulting from the impact. The addition of reflected mass minimization is then investigated, and the catching height is increased to evaluate the method's robustness. Finally, the setup is extended to catching along multiple Cartesian axes, to prove its generalization in space.},
+  langid = {english}
+}
+
+@inproceedings{wangImpactFriendlyRobustControl2019,
+  title = {Impact-{{Friendly Robust Control Design}} with {{Task-Space Quadratic Optimization}}},
+  booktitle = {Robotics: {{Science}} and {{Systems XV}}},
+  author = {Wang, Yuquan and Kheddar, Abderrahmane},
+  year = 2019,
+  month = jun,
+  publisher = {{Robotics: Science and Systems Foundation}},
+  abstract = {Almost all known robots fear impacts. Unlike humans, robots keep guarded motions to near zero-velocity prior to establishing contacts with their surroundings. This significantly slows down robotic tasks involving physical interaction. Two main ingredients are necessary to remedy this limitation: impactfriendly hardware design, and impact-friendly controllers. Our work focuses on the controller aspect. Task-space controllers formulated as quadratic programming (QP) are widely used in robotics to generate modular and reactive motion for a large range of task specifications under various constraints. We explicitly introduce discrete impact dynamics model into the QP-based controllers to generate robot motions that are robust to impactinduced state jumps in the joint velocities and joint torques. Our simulations, validate that our proposed impact-friendly QP controller is robust to contact impacts, shall they be expected or not. Therefore, we can exploit it for establishing contacts with high velocities, and explicitly generate task-purpose impulsive forces.},
+  langid = {english},
+}
+
+@inproceedings{bjerkengNewCoriolisMatrix2012,
+  title = {A New {{Coriolis}} Matrix Factorization},
+  booktitle = {2012 {{IEEE International Conference}} on {{Robotics}} and {{Automation}}},
+  author = {Bjerkeng, Magnus and Pettersen, Kristin Y.},
+  year = 2012,
+  month = may,
+  pages = {4974--4979},
+  abstract = {This paper presents a novel Coriolis/centripetal matrix factorization applicable to serial link rigid manipulators. The computationally efficient Coriolis matrix factorization is explicitly given as a function of the robot's kinematic matrices and their time derivatives which are easily obtained using the Denavit-Hartenberg-convention. The factorization is different from the popular Christoffel symbol representation, but the important skew-symmetry property is preserved. The proposed factorization is used to determine the class of manipulators for which a particular non-minimal representation of the manipulator dynamics exists.},
+  keywords = {Force,Jacobian matrices,Joints,Manipulators,Mathematical model,Symmetric matrices,Transmission line matrix methods}
+}

@@ -49,7 +49,8 @@
 
 \begin{abstract}
 Humanoid robots have the potential to relieve manual workers from wearing and exhausting tasks that may cause chronic joint damage over time.
-In this paper, we focus on a hammering task with our humanoid robot HRP-5P and we propose a method to hit a nail placed on a wood table with a given impact for a desired hitting velocity based on effective mass maximization and Quadratic Programming. Moreover, we implement a 5\textsuperscript{th} order Bézier curve as the trajectory to attain the nail at any reachable pose.
+In this paper, we focus on a hammering task with our humanoid robot HRP-5P and we propose a method to hit a nail with a given impact for a desired hitting velocity based on Quadratic Programming and the maximization of both the effective mass of the robot and impact momentum. 
+Moreover, we implement a 5\textsuperscript{th} order Bézier curve as the trajectory to attain the nail at any reachable pose.
 \end{abstract}
 
 \begin{keywords}
@@ -69,7 +70,11 @@ However, it is not always possible to be at this height due to the variable work
 
 To relieve these workers from such joint-stressing activites, AIST developed the HRP-5P humanoid robot \cite{kanekoHumanoidRobotHRP5P2019} which can take care of the wearing and exhausting tasks, such as carrying heavy loads or hammering a nail.
 The task of hammering a nail is the topic of this article with the goal of hitting the nail and driving it into a wooden surface. 
-We will use the mc\_rtc open-source framework \cite{mcrtc} and its Quadratic Programming (QP) solver to develop this task.
+Other impact tasks have been extensively studied, Cisneros, et al. focused on impulsive pedipulation \cite{cisnerosImpulsivePedipulationSpherical2016} on a spherical object with a humanoid robot,
+van Steen et al. \cite{steenRobotControlSimultaneous2022} proposed a control framework using Quadratic Programming (QP) to work with simultaneous impacts,
+Tassi, et al. \cite{tassiIMAcatcherIMpactawareNonprehensile2025} developed a method using velocity matching and a motion planner to catch high-impact flying objects to reduce hardware damage to the robot. 
+Furthermore, Wang and Kheddar \cite{wangImpactFriendlyRobustControl2019} worked on robot damage mitigation by designing a conservative, robust and impact-friendly robust controller using QP.
+For our work, we will use the mc\_rtc open-source framework \cite{mcrtc} and its QP solver to develop the hammering task.
 Section \ref{Robot dynamic model} recalls the robot dynamic model that we use, 
 in Section \ref{Impact modeling} we propose a model for the nail-hammer impact, 
 Section \ref{Optimization of the effective mass using QP} details the usage of QP in our work to maximize the impact momentum, 
@@ -86,7 +91,7 @@ Let $n$ be the number of Degrees Of Freedom (DOF) of the humanoid robot. The dyn
 \label{RDE}
 \end{equation}
 where $\mathbf{q, \dot q, \ddot q} \in \mathbb{R}^n$ are the configuration, configuration velocity and configuration acceleration of the robot, respectively, $\mathbf{M(q)} \in \mathbb{R}^{n \times n}$ is the symmetric mass matrix or inertia matrix of the robot,
-     $\mathbf{C(q, \dot q)} \in \mathbb{R}^{n \times n}$ is a factorization of the Coriolis matrix,
+     $\mathbf{C(q, \dot q)} \in \mathbb{R}^{n \times n}$ is a factorization of the Coriolis matrix \cite{bjerkengNewCoriolisMatrix2012},
      $\mathbf{g(q)} \in \mathbb{R}^n $ is the vector of gravitational effects,
     % \item $\mathbf{\tau} \in \mathbb{R}^n $ is the vector of applied torques
      $\mathbf{u} \in \mathbb{R}^{n}$ is the input vector of torques,
@@ -137,7 +142,7 @@ Let us define $m_{e,\mathbf{n}}(\mathbf{q}) \in \mathbb{R^+}$ (the "e" stands fo
     m_{e,\mathbf{n}}(\mathbf{q}) \triangleq \left(\mathbf{n^T} \bm \Lambda (\mathbf{q}) \mathbf{n} \right)^{-1}
 \label{effective mass}
 \end{equation}
-with $\bm \Lambda \in \mathbb{R}^{3 \times 3}$ defined as :
+with $\bm \Lambda \in \mathbb{R}^{3 \times 3}$ being the mobility matrix defined as :
 \begin{equation}
     \bm \Lambda(\mathbf{q}) \triangleq \mathbf{J_\nu(\mathbf{q}) M^{-1}(\mathbf{q})J_\nu^T(q)}
 \end{equation}
@@ -178,7 +183,7 @@ In this model, an infinitesimal particle (i.e. with negligible size) models the 
 
 \begin{figure}
     \centering
-    \includegraphics[width=1.2\linewidth]{Schematic of the problem.png}
+    \includegraphics[width=1\linewidth]{Schematic of the problem.png}
     \caption{Schematic of the collision between the hammer tip and the nail modeled as a particle impact}
     \label{SCHEMATIC OF THE PROBLEM}
 \end{figure}
@@ -198,13 +203,13 @@ In this model, an infinitesimal particle (i.e. with negligible size) models the 
 %     \label{RESTITUTION PHASE}
 % \end{figure*}
 
-\begin{figure*}
-    \vspace*{-2.5cm}
-    \centering
-    \includegraphics[width=0.7\linewidth]{All phases.png}
-    \caption{Particle impact phases}
-    \label{Particle impact phases}
-\end{figure*}
+% \begin{figure*}
+%     \vspace*{-2.5cm}
+%     \centering
+%     \includesvg[width=0.9\linewidth]{All_phases.svg}
+%     \caption{Particle impact phases}
+%     \label{Particle impact phases}
+% \end{figure*}
 
 \subsection{Direct impact}
 \noindent
@@ -556,15 +561,28 @@ The cost function of the task is :
      A_{VOT}(\mathbf{\ddot q}) = \| K_{p, VOT} \bm \epsilon + K_{d,VOT} \bm {\dot \epsilon}- \mathbf{\ddot x}_{\omega}(\mathbf{\ddot q}) \|^2 
 \end{equation}
 where $K_{p, VOT}$, $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and damping, respectively. 
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{EMMT 1_1}
+    \caption{Time evolution of the EMR with only a posture task active}
+    \label{Time evolution of the effective mass of the robot 1}
+\end{figure}
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{Projected_momentum}
+    \caption{Time evolution of the projected momentum along the normal $\mathbf{n}$}
+    \label{Time evolution of the momentum projected along the normal n}
+\end{figure}
 \section{Simulations with the robot}
 \label{Simulations}
 \begin{figure*}
     \vspace*{-2.3cm}
     \centering
-    \includesvg[width=1\linewidth]{Velocities}
+    \includesvg[width=0.8\linewidth]{Velocities}
     \caption{Velocity tracking of the hammer tip for different $K_{p, VOT}$ values}
     \label{Velocity tracking of the hammer tip}
 \end{figure*}
+
 \noindent
 In this section, we present the simulations made on our humanoid robot HRP-5P. The setting is a fixed hammer in one of the robots' grippers (the left one in our case), a fully known position and orientation of the nail and a prefixed desired hitting velocity of the hammer tip on the nail.  
 Simulations were done using mc\_mujoco and mc\_rtc \cite{singhMcmujocoSimulatingArticulated2022} in torque control mode with a timestep $\Delta t = 0.002$s 
@@ -580,18 +598,7 @@ We first assess the effectiveness of the EMMT (Section \ref{Optimization of the 
 by isolating the augmented posture task (with EMMT), i.e. we only have the posture task and EMMT active and no other task is active. 
 %We set $\mathbf{n} = (0, 0, 1)^\mathbf{T}$. 
 We see that the EMR is growing over time until it converges to a maximum value. As expected from (\ref{Trick}), increasing $W_m$ induces a larger joint acceleration, thus the EMR converges faster and to a larger value, however it can lead to stability issues with the robot. 
-\begin{figure}
-    \centering
-    \includesvg[width=1\linewidth]{EMMT 1_1}
-    \caption{Time evolution of the EMR with only a posture task active}
-    \label{Time evolution of the effective mass of the robot 1}
-\end{figure}
-\begin{figure}
-    \centering
-    \includesvg[width=0.9\linewidth]{Projected_momentum}
-    \caption{Time evolution of the projected momentum along the normal $\mathbf{n}$}
-    \label{Time evolution of the momentum projected along the normal n}
-\end{figure}
+
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=0.9\linewidth]{EMMT_1_10.png}
