@@ -526,9 +526,15 @@ by isolating the posture task, i.e. we only have the posture task active and no 
 We see that the EMR is growing over time until it converges to a maximum value. As expected from (\ref{Trick}), increasing $W_m$ induces a larger joint acceleration, thus the EMR converges faster and to a larger value, however it can lead to stability issues with the robot. 
 \begin{figure}
     \centering
-    \includegraphics[width=0.55\linewidth]{EMMT_1_1.png}
+    \includesvg[width=0.9\linewidth]{EMMT 1_1}
     \caption{Time evolution of the EMR with only a posture task active}
     \label{Time evolution of the effective mass of the robot 1}
+\end{figure}
+\begin{figure}
+    \centering
+    \includesvg[width=0.9\linewidth]{Projected_momentum}
+    \caption{Time evolution of the projected momentum along the normal $\mathbf{n}$}
+    \label{Time evolution of the momentum projected along the normal n}
 \end{figure}
 % \begin{figure}
 %     \centering
@@ -551,8 +557,14 @@ $ and especially
 \end{equation}
 % where ${V_{f,in}^w} \in \mathbb{R}$ is the input final velocity on the nail expressed in the world frame $w$, in meters per second.
 where ${{}^{nail}\mathbf{\dot x}_{\nu}^{t_c}} \in \mathbb{R}^3$ is the input velocity of the hammer tip at the instant of contact $t_c$ expressed in the nail frame. 
-The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig. \ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. We set $T = 1$s, $W_{BSTT} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, BSTT} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). We see the tracking of the hammer tip velocity in Fig. \ref{Velocity tracking of the hammer tip} (a). We remark that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. However, we also see some unwanted oscillations on the $z$ coordinate : this is due to the high stiffness ($1000$) of the VOT. The final orientation error has been recorded to be $4.16$ deg. We decrease the stiffness of the VOT to 250 in Fig. \ref{Velocity tracking of the hammer tip} (b) and we record an orientation error of $11.88$ deg. Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
-
+The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig. \ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. 
+We set $T = 1$s, $W_{BSTT} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, BSTT} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). 
+We see the tracking of the hammer tip velocity in Fig. \ref{Velocity tracking of the hammer tip} (a). We remark that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. 
+However, we also see some unwanted oscillations on the $z$ coordinate : this is due to the high stiffness ($1000$) of the VOT. 
+The final orientation error has been recorded to be $4.16$ deg. 
+We decrease the stiffness of the VOT to 250 in Fig. \ref{Velocity tracking of the hammer tip} (b) and we record an orientation error of $11.88$ deg. 
+Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
+The projected momentum of the hammer tip is computed using (\ref{Momentum end effector}) and is shown in Fig .\ref{Time evolution of the momentum projected along the normal n}. 
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=0.85\linewidth]{Velocity graph.png}
