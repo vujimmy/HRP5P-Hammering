@@ -127,3 +127,20 @@
   abstract = {We describe the research and integration methods we developed to give the HRP-2 humanoid robot the capability to climb vertical industrial-norm ladders. Our approach makes use of our multi-contact planner and multiobjective closed-loop control formulated as a QP (quadratic program). First, a set of contacts to climb the ladder is planned off-line (automatically or by the user). These contacts are provided as an input for a finite state machine. The latter builds additional intermediary tasks accounting for geometric uncertainties and specific grasps procedures to be realized by our multi-objective model-based QP controller. This controller provides instant desired states in terms of joint accelerations and contact forces to be tracked by the embedded low-level motor controllers. Our trials revealed that hardware changes are to be made on the HRP-2, and parts of software are to be made more robust. Yet, we confirmed that HRP-2 has the kinematic and power capabilities to climb real industrial ladders, which can be found in nuclear power plants and large scale manufacturing such as shipyards, aircraft factories and construction sites.},
   langid = {english},
 }
+
+@misc{singhMcmujocoSimulatingArticulated2022,
+  title = {Mc-Mujoco: {{Simulating Articulated Robots}} with {{FSM Controllers}} in {{MuJoCo}}},
+  shorttitle = {Mc-Mujoco},
+  author = {Singh, Rohan P. and Gergondet, Pierre and Kanehiro, Fumio},
+  year = 2022,
+  month = sep,
+  number = {arXiv:2209.00274},
+  eprint = {2209.00274},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  urldate = {2025-11-01},
+  abstract = {For safe and reliable deployment of any robot controller on the real hardware platform, it is generally a necessary practice to comprehensively assess the performance of the controller with the specific robot in a realistic simulation environment beforehand. While there exist several software solutions that can provide the core physics engine for this purpose, it is often a cumbersome and error-prone effort to interface the simulation environment with the robot controller being evaluated. The controller may have a complex structure consisting of multiple states and transitions within a finite-state machine (FSM), and may even require input through a GUI.},
+  archiveprefix = {arXiv},
+  langid = {english},
+  keywords = {Computer Science - Robotics},
+}
