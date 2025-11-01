@@ -208,3 +208,16 @@
   abstract = {This paper presents a novel Coriolis/centripetal matrix factorization applicable to serial link rigid manipulators. The computationally efficient Coriolis matrix factorization is explicitly given as a function of the robot's kinematic matrices and their time derivatives which are easily obtained using the Denavit-Hartenberg-convention. The factorization is different from the popular Christoffel symbol representation, but the important skew-symmetry property is preserved. The proposed factorization is used to determine the class of manipulators for which a particular non-minimal representation of the manipulator dynamics exists.},
   keywords = {Force,Jacobian matrices,Joints,Manipulators,Mathematical model,Symmetric matrices,Transmission line matrix methods}
 }
+
+@inproceedings{cisnerosRobustHumanoidControl2018,
+  title = {Robust {{Humanoid Control Using}} a {{QP Solver}} with {{Integral Gains}}},
+  booktitle = {2018 {{IEEE}}/{{RSJ International Conference}} on {{Intelligent Robots}} and {{Systems}} ({{IROS}})},
+  author = {Cisneros, Rafael and Benallegue, Mehdi and Benallegue, Abdelaziz and Morisawa, Mitsuharu and Audren, Herve and Gergondet, Pierre and Escande, Adrien and Kheddar, Abderrahmane and Kanehiro, Fumio},
+  year = 2018,
+  month = oct,
+  pages = {7472--7479},
+  publisher = {IEEE},
+  address = {Madrid},
+  abstract = {We propose a control framework for torque controlled humanoid robots that efficiently minimizes the tracking error in a Quadratic Programming (QP) formulated as a multiobjective weighted tasks with constraints. It results in an optimal dynamically-feasible reference that can be tracked robustly, with exponential convergence, without joint torque feedback, in the presence of non modelled torque bias and low-frequency bounded disturbances. This is achieved by introducing integral gains in a Lyapunov-stable torque control, which exploit the passivity properties of the dynamical model of the robot and their effect on the dynamic constraints of the QP solver. The robustness of this framework is demonstrated in simulation by commanding our robot, the HRP-5P, to achieve simultaneously several objectives in the configuration and the Cartesian spaces, in the presence of non-modeled static and kinetic joint friction, as well as an uncertain torque scale.},
+  langid = {english},
+}

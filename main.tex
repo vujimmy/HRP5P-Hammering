@@ -60,21 +60,22 @@ quadratic programming, hammering, humanoid robot, effective mass, end-effector t
 \section{Introduction}
 \noindent
 Manual workers in physically difficult and wearing industries, such as the construction industry, have a 50\% higher risk of developing musculoskeletal disorders than people in other industries \cite{schneiderMusculoskeletalInjuriesConstruction2001}. 
-Inadequate working posture and repetitive movements have been identified to contribute to musculoskeletal disorders \cite{coteDifferencesMultijointKinematic2005}, which is the case for a hammering task. 
-Furthermore, \cite{coteDifferencesMultijointKinematic2005} demonstrated that fatigue affects elbow motion and shoulder injury affects both wrist and elbow motions during hammering. 
-Balendra, et al. \cite{balendraEffectHammerMass2017} showed that the increased moment exerted on joints during hammering can lead to more injuries, where a larger hammer causes a bigger increased moment. 
+Inadequate working posture and repetitive movements have been identified by Côté et al. \cite{coteDifferencesMultijointKinematic2005} to contribute to musculoskeletal disorders, which is the case for a hammering task. 
+Furthermore, they demonstrated that fatigue affects elbow motion and shoulder injury affects both wrist and elbow motions during hammering. 
+Balendra et al. \cite{balendraEffectHammerMass2017} showed that the increased moment exerted on joints during hammering can lead to more injuries, where a larger hammer causes a bigger increased moment. 
 Unfortunately, larger hammers are often the preferred choice to accomplish such task.
-Indeed, as a result from \cite{petricHammeringDoesNot2017} indicates, hammers themselves are one of the non-powered handtools that cause the most injury \cite{aghazadehInjuriesDueHandtools1987}, especially to the fingers which are the most injured body part. 
-Another cause of potential physical damage to workers is that the hammering task has to be carried out with: \cite{chenOptimalEffectiveWorking2018} studied the optimal height to realize this task and concluded should be between 25 cm and 35 cm below the elbow height. 
+Indeed, as a result from Petrič et al. \cite{petricHammeringDoesNot2017} indicates, hammers themselves are one of the non-powered handtools that cause the most injury \cite{aghazadehInjuriesDueHandtools1987}, especially to the fingers which are the most injured body part. 
+Another cause of potential physical damage to workers is that the hammering task has to be carried out with: Yuan-Ho Chen and Yi-Lang Chen \cite{chenOptimalEffectiveWorking2018} studied the optimal height to realize this task and concluded should be between 25 cm and 35 cm below the elbow height. 
 However, it is not always possible to be at this height due to the variable working area in construction.
 
 To relieve these workers from such joint-stressing activites, AIST developed the HRP-5P humanoid robot \cite{kanekoHumanoidRobotHRP5P2019} which can take care of the wearing and exhausting tasks, such as carrying heavy loads or hammering a nail.
 The task of hammering a nail is the topic of this article with the goal of hitting the nail and driving it into a wooden surface. 
-Other impact tasks have been extensively studied, Cisneros, et al. focused on impulsive pedipulation \cite{cisnerosImpulsivePedipulationSpherical2016} on a spherical object with a humanoid robot,
+Other impact tasks have been extensively studied: Cisneros et al. \cite{cisnerosImpulsivePedipulationSpherical2016} focused on impulsive pedipulation on a spherical object with a humanoid robot,
 van Steen et al. \cite{steenRobotControlSimultaneous2022} proposed a control framework using Quadratic Programming (QP) to work with simultaneous impacts,
-Tassi, et al. \cite{tassiIMAcatcherIMpactawareNonprehensile2025} developed a method using velocity matching and a motion planner to catch high-impact flying objects to reduce hardware damage to the robot. 
+Tassi et al. \cite{tassiIMAcatcherIMpactawareNonprehensile2025} developed a method using velocity matching and a motion planner to catch high-impact flying objects to reduce hardware damage to the robot. 
 Furthermore, Wang and Kheddar \cite{wangImpactFriendlyRobustControl2019} worked on robot damage mitigation by designing a conservative, robust and impact-friendly controller using QP.
-For our work, we will use the mc\_rtc open-source framework \cite{mcrtc} and its QP solver to develop the hammering task.
+In our work, we will use the mc\_rtc open-source framework \cite{mcrtc} and its QP solver to develop the hammering task. The overall objective is to hammer a target (a nail in our case) with the maximum impact and mitigate the recoil damage on the robot's joints: 
+this paper focuses on the impact maximization and the trajectory of the hammer tip to the nail. 
 Section \ref{Robot dynamic model} recalls the robot dynamic model that we use, 
 in Section \ref{Impact modeling} we propose a model for the nail-hammer impact, 
 Section \ref{Optimization of the effective mass using QP} details the usage of QP in our work to maximize the impact momentum, 
@@ -177,17 +178,6 @@ As such, we use the momentum model in the following part of the paper. \\
 More precisely, we use a model based on particle impact. A schematic depicting the problem is proposed in Fig. \ref{SCHEMATIC OF THE PROBLEM}. 
 In this model, an infinitesimal particle (i.e. with negligible size) models the local deformations of the hammer tip and the nail.
 
-
-
-
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{Schematic of the problem.png}
-    \caption{Schematic of the collision between the hammer tip and the nail modeled as a particle impact}
-    \label{SCHEMATIC OF THE PROBLEM}
-\end{figure}
-
 % \begin{figure*}
 %     \centering
 %     \includegraphics[width=0.5\linewidth]{Contact phase.png}
@@ -210,8 +200,13 @@ In this model, an infinitesimal particle (i.e. with negligible size) models the 
 %     \caption{Particle impact phases}
 %     \label{Particle impact phases}
 % \end{figure*}
-
 \subsection{Direct impact}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Schematic of the problem.png}
+    \caption{Schematic of the collision between the hammer tip and the nail modeled as a particle impact}
+    \label{SCHEMATIC OF THE PROBLEM}
+\end{figure}
 \noindent
 Let $\mathbf{x}_{\nu}(t)$ and $\mathbf{c}^{nail}(t) \in \mathbb{R}^3$ be the contact points of the hammer tip and the nail expressed in the world frame $w$, respectively, as illustrated by Fig. \ref{SCHEMATIC OF THE PROBLEM}. 
 At the instant of contact $t_c$, these points collide and thus share the same coordinates (neglecting the radius of the infinitesimal particle, see Fig. \ref{SCHEMATIC OF THE PROBLEM}) :
@@ -353,7 +348,10 @@ For a fixed given target normal velocity $\mathbf{\dot x_\nu^T n}$, we see that 
 \section{Optimization of the effective mass using QP}
 \noindent
 \label{Optimization of the effective mass using QP}
-In this section, we will describe how to maximize the EMR using Quadratic Programming (QP). 
+In this section, we will describe how to maximize the EMR using Quadratic Programming (QP).
+\subsection{Tasks}
+Let us first introduce what we call a "task". A task is an objective that the robot has to accomplish, for instance maintaining a posture or moving its end-effector to a desired position.
+To realize a task, we compute a desired configuration acceleration $\mathbf{\ddot q}_d$, then we track how well the robot realizes this task using a cost function expressed as a function of the actual configuration acceleration $\mathbf{\ddot q}$.
 \subsection{Formulation of the problem to solve}
 \noindent
 \label{QP formulation of EMMT}
@@ -372,7 +370,7 @@ From (\ref{double time derivative of m}), we can reconstruct $m_{e,\mathbf{n}}$ 
     %m_{e,\mathbf{n}}(\mathbf{q}) = \int_{t_i} ^{t_f} \int_{t_i}^{t_f} \ddot m_{e,\mathbf{n}}(\mathbf{q}(t), \mathbf{\dot q}(t), \mathbf{\ddot q}(t)) dt
     m_{e,\mathbf{n}}(\mathbf{q}(t + \Delta t)) =  m_{e,\mathbf{n}} + \dot m_{e,\mathbf{n}}\Delta t+ \ddot m_{e,\mathbf{n}}\frac{\Delta t^2}{2}
 \end{equation}
-Taking $\arg \max_{\mathbf{\ddot q}}$ on both sides, the two first terms the of right hand side of the equation are discarded because they do not depend on $\mathbf{\ddot q}$ by (\ref{effective mass}) and (\ref{time derivative of the effective mass}) :
+Taking $\arg \max_{\mathbf{\ddot q}}$ on both sides, the two first terms of the right hand side of the equation are discarded because they do not depend on $\mathbf{\ddot q}$ by (\ref{effective mass}) and (\ref{time derivative of the effective mass}) :
 \begin{equation}
     \arg \max_{\mathbf{\ddot q}}m_{e,\mathbf{n}}(\mathbf{q}(t + \Delta t)) =  \arg \max_{\mathbf{\ddot q}} \ddot m_{e,\mathbf{n}}
 \end{equation}
@@ -421,14 +419,13 @@ Our linear constraints for the QP solver are described as i) joint limits, ii) j
 \label{Dynamic constraints}
 \end{equation}
 where the subscripts $\mathbf{LB}$ and $\mathbf{UB}$ mean "Lower Bound" and "Upper Bound", respectively, $\bm \tau \in \mathbb{R}^n$ is the actual vector of joint torques and the $\preceq$ operator is the term-by-term comparison operator between two vectors of $\mathbb{R}^n$.
-For the dynamic constraints (\ref{Dynamic constraints}), $d_i$ is the interaction distance, $d_s$ is the security distance and $\xi_{offset}$ is a fixed offset, all developed in Vaillant, et al.
-\cite{vaillantMulticontactVerticalLadder2016}
-.
+For the dynamic constraints (\ref{Dynamic constraints}), $d_i$ is the interaction distance, $d_s$ is the security distance and $\xi_{offset}$ is a fixed offset, all developed in Vaillant et al.
+\cite{vaillantMulticontactVerticalLadder2016}.
 
 
 \subsection{Implementation of the EMMT}
 \noindent
-The posture task is a task where the robot has to maintain a given configuration $\mathbf{q}$. 
+The posture task is a task where the robot has to maintain a given configuration $\mathbf{q}$, the paper from Cisneros et al. \cite{cisnerosRobustHumanoidControl2018} gives a deeper look into it. 
 From the complete cost function in our QP formulation :
 \begin{equation}
     \arg \min_{\mathbf{\ddot q}} \frac{1}{2}W_{p}\| \mathbf{\ddot q} + \mathbf{b}\|^2 - W_m \nabla m_{e,\mathbf{n}}^
@@ -480,7 +477,7 @@ The first control point of the curve, $\mathbf{p_0}$, is the 3D initial position
 \begin{equation}
     \mathbf{p_N} = \mathbf{c}^{nail} 
 \end{equation}
-These points have the property as acting as waypoints for the trajectory, which is not the case for the potential in-between points. \\
+These points have the property as acting as waypoints for the trajectory, which is not the case for the potential in-between points.
 %\textcolor{red}{\textbf{COST FUNCTION OF THE BSPLINE TASK ?}}\\
 % Let $\bm \epsilon_{\mathbf{x}}(t) = \mathbf{x_\nu}(t) - \bm \Gamma (t) \in \mathbb{R}^3$ be the position error vector of the end-effector between its current position and its desired position given by the Bézier curve at time $t$. The cost function of the BSTT is :
 % \begin{equation}
@@ -569,7 +566,7 @@ where $K_{p, VOT}$, $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and damping,
 \end{figure}
 \begin{figure}
     \centering
-    \includesvg[width=1\linewidth]{Projected_momentum}
+    \includesvg[width=0.8\linewidth]{Projected_momentum}
     \caption{Time evolution of the projected momentum along the normal $\mathbf{n}$}
     \label{Time evolution of the momentum projected along the normal n}
 \end{figure}
