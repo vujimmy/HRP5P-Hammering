@@ -236,10 +236,14 @@ To quantify an impact, we define the normal impulse $i \in \mathbb{R}$ given by 
     \mathbf{n^T} \mathbf{F}^hdt
 \label{impulse}
 \end{equation}
-To maximize the impact, we want to maximize the impulse given by (\ref{impulse}) which is equivalent to maximizing the projected momentum $P(t) \in \mathbb{R}$ of the hammer tip along the normal $\mathbf{n}$ defined as :
+To maximize the impact, we want to maximize the impulse given by (\ref{impulse}) which is equivalent to maximizing the projected momentum $P(t) \in \mathbb{R}$ of the hammer tip along the normal $\mathbf{n}$ \cite{SinglePointParticle} defined as :
 \begin{equation}
     P(t) \triangleq m_{e,\mathbf{n}}(\mathbf{q})  \mathbf{\dot x_{\nu}^T} \mathbf{n} 
 \label{Momentum end effector}
+\end{equation}
+Then, from (\ref{impulse}) and (\ref{Momentum end effector}), we have : 
+\begin{equation}
+    i = \Delta P = P(t_c + \delta t) - P(t_c)
 \end{equation}
 For a fixed given target normal velocity $\mathbf{\dot x_\nu^T n}$, we see that in order to maximize the projected momentum of the hammer tip, we have to maximize the EMR, which is explained in Section \ref{Optimization of the effective mass using QP}.
 
