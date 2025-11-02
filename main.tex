@@ -109,19 +109,19 @@ where $\mathbf{\dot x} \in \mathbb{R}^6$ is the task space velocity (translation
 \begin{equation}
     \mathbf{x} = \left[\mathbf{x}_\nu^\mathbf{T} \ \ \ \mathbf{x}_\omega^\mathbf{T} \right]^\mathbf{T}
 \end{equation}
-The $\mathbf{J}$ matrix can be computed using forward kinematics and written using two matrices :
+The $\mathbf{J}$ matrix can be computed using forward kinematics and written using two matrices $\mathbf{J}_\nu$, $\mathbf{J}_\omega \in \mathbb{R}^{3 \times n}$ :
 \begin{equation}
     \mathbf{J} = \frac{\partial \mathbf{x}}{ \partial \mathbf{q}} 
             =\left[\mathbf{J}_\nu^{\mathbf{T}} \ \ \ \mathbf{J}_\omega^{\mathbf{T}}\right]^{\mathbf{T}}
 \end{equation}
-where $\mathbf{J}_\nu \in \mathbb{R}^{3 \times n}$ is its translational part and $\mathbf{J}_\omega \in \mathbb{R}^{3 \times n}$ is its angular part.
+where $\mathbf{J}_\nu$ is its translational part and $\mathbf{J}_\omega$ is its angular part.
 \section{Impact modeling}
 \label{Impact modeling}
 \noindent
 In this section, we propose a mathematical model of the impact between the hammer tip and the nail. This part is heavily inspired by Stronge \cite{STRONGE} and his particle impact model. 
 \subsection{Common tangent plane of collision}
 \noindent
-From Stronge \cite{STRONGE}, we define the common tangent plane of collision as the plane passing through the contact point at the instant of collision that is tangent to both surfaces involved in the collision and the normal unit vector to the collision $\mathbf{n} \in \mathbb{R}^3$ as a vector orthogonal to that plane, see the schematic on Fig. \ref{SCHEMATIC OF THE PROBLEM}.
+From Stronge \cite{STRONGE}, we define the common tangent plane of collision as the plane passing through the contact point at the instant of collision that is tangent to both surfaces involved in the collision and the normal unit vector to the collision $\mathbf{n} \in \mathbb{R}^3$ as a vector orthogonal to that plane, see the schematic on Fig. ~\ref{SCHEMATIC OF THE PROBLEM}.
 % The schematic given by Fig. \ref{Frames} displays the fixed world frame $w$, the hammer tip frame and the nail frame.
 % \begin{figure}
 %     \centering
@@ -175,7 +175,7 @@ The momentum based model does not have the problems of the force-based model and
 %Furthermore, another advantage of using this model is its ability to deal with discontinuous velocities, which occur when hitting a nail with a hammer. 
 The main advantage of using this model is its ability to deal with discontinuous velocities, which occur when hitting a nail with a hammer. 
 Furthermore, with momentum, the microscopic interactions between the hammer tip and the nail are taken into account through a scalar number $e_*$ called \textit{coefficient of restitution}, which measures the elasticity of the collision.
-This coefficient can be used to study the post-impact dynamics of the colliding objects, however this is out of the scope of this article and currently being studied.
+This coefficient can be used to study the post-impact dynamics of the colliding objects, however this is out of the scope of this article and currently under study.
 As such, we use the momentum model in the following part of the paper. \\
 More precisely, we use a model based on particle impact. A schematic depicting the problem is proposed in Fig. \ref{SCHEMATIC OF THE PROBLEM}. 
 In this model, an infinitesimal particle (i.e. with negligible size) models the local deformations of the hammer tip and the nail.
