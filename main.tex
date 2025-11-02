@@ -172,8 +172,10 @@ Thus, although the model is still usable, we would either have to estimate the l
 \subsubsection{Momentum-based model}
 \noindent
 The momentum based model does not have the problems of the force-based model and the energy-based model. 
-With momentum, the microscopic interactions between the hammer tip and the nail are taken into account through a scalar number $e_*$ called \textit{coefficient of restitution}, which measures the elasticity of the collision. 
-Furthermore, another advantage of using this model is its ability to deal with discontinuous velocities, which occur when hitting a nail with a hammer. 
+%Furthermore, another advantage of using this model is its ability to deal with discontinuous velocities, which occur when hitting a nail with a hammer. 
+The main advantage of using this model is its ability to deal with discontinuous velocities, which occur when hitting a nail with a hammer. 
+Furthermore, with momentum, the microscopic interactions between the hammer tip and the nail are taken into account through a scalar number $e_*$ called \textit{coefficient of restitution}, which measures the elasticity of the collision.
+This coefficient can be used to study the post-impact dynamics of the colliding objects, however this is out of the scope of this article and currently being studied.
 As such, we use the momentum model in the following part of the paper. \\
 More precisely, we use a model based on particle impact. A schematic depicting the problem is proposed in Fig. \ref{SCHEMATIC OF THE PROBLEM}. 
 In this model, an infinitesimal particle (i.e. with negligible size) models the local deformations of the hammer tip and the nail.
@@ -213,10 +215,10 @@ At the instant of contact $t_c$, these points collide and thus share the same co
 \begin{equation}
     \mathbf{x}_{\nu}(t_c) = \mathbf{c}^{nail}(t_c)
 \end{equation}
-The nail is stationary before impact, i.e. from the initial time $t_i$ to the instant of contact $t_c$ its velocity is $\mathbf{0}$:
-\begin{equation}
-    \mathbf{\dot c}^{nail}(t) = \mathbf{0} \ \ \ \  \forall t \in [t_i, t_c]
-\end{equation}
+% The nail is stationary before impact, i.e. from the initial time $t_i$ to the instant of contact $t_c$ its velocity is $\mathbf{0}$:
+% \begin{equation}
+%     \mathbf{\dot c}^{nail}(t) = \mathbf{0} \ \ \ \  \forall t \in [t_i, t_c]
+% \end{equation}
 The velocity and acceleration of the hammer tip is given by the trajectory that will be introduced in Section \ref{Hammer tip velocity and acceleration}. \\
 % When the colliding bodies first interact, the contact points $C$ and $C'$ have an initial relative velocity $v_0$ :
 % \begin{equation}
