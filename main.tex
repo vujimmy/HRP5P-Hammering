@@ -80,7 +80,7 @@ Section \ref{Robot dynamic model} recalls the robot dynamic model that we use,
 in Section \ref{Impact modeling} we propose a model for the nail-hammer impact, 
 Section \ref{Optimization of the effective mass using QP} details the usage of QP in our work to maximize the impact momentum, 
 in Section \ref{Trajectory of the end-effector} we explain how to generate the trajectory of the end-effector to the nail, 
-then we present simulations in Section \ref{Simulations} and finally we conclude our paper in Section \ref{Conclusion}.
+then we present simulations using the mc\_rtc framework \cite{mcrtc} in Section \ref{Simulations} and finally we conclude our paper in Section \ref{Conclusion}.
 
 \section{Robot dynamic model}
 \label{Robot dynamic model}
@@ -586,7 +586,7 @@ where $K_{p, VOT}$, $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and damping,
 
 \noindent
 In this section, we present the simulations made on our humanoid robot HRP-5P. The setting is a fixed hammer in one of the robots' grippers (the left one in our case), a fully known position and orientation of the nail and a prefixed desired hitting velocity of the hammer tip on the nail.  
-Simulations were done using mc\_mujoco and mc\_rtc with its QP solver \cite{singhMcmujocoSimulatingArticulated2022} \cite{mcrtc} in torque control mode with a timestep $\Delta t = 0.002$s 
+Simulations were done using mc\_mujoco \cite{singhMcmujocoSimulatingArticulated2022} and mc\_rtc with its QP solver in torque control mode with a timestep $\Delta t = 0.002$s 
 % and dynamic constraints set to $\bm \kappa_{\xi} = (0.1, 0.01, 0.5)^\mathbf{T}$
 . 
 The robot is equipped with a hammer in its left gripper and its floating base is fixed. 
