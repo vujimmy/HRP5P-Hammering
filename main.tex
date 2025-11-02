@@ -492,7 +492,6 @@ These points have the property as acting as waypoints for the trajectory, which 
 %     C_{BSTT}(\mathbf{\ddot q}) = \|K_{p, B} \bm \epsilon_{\mathbf{x}} + K_{d, B} \bm{ \dot \epsilon_{\mathbf{x}}} - \mathbf{\dot J_\nu \dot q} - \mathbf{J_\nu \ddot q}\|^2
 % \end{equation}
 % where $K_{p, B}$ and $K_{d, B} \in \mathbb{R^+}$ are respectively the stiffness and damping coefficient of the BSTT.
-where $W_B$ is the relative weight associated to the BSTT and $K_{p, B}$, $K_{d, B} \in \mathbb{R}^+$ are its stiffness and damping, respectively.
 \subsection{Curve constraints}
 \label{Curve constraints}
 \noindent
@@ -531,6 +530,7 @@ Let $\epsilon_{\mathbf{x}_\nu} = \mathbf{x}_\nu - \mathbf{x}_{\nu, d}$ where $\m
     A_{B}(\mathbf{\ddot q}) = W_{B}\| K_{p, B} \bm \epsilon_{\mathbf{x}_\nu}+ K_{d, B} \bm {\dot \epsilon_{\mathbf{x}_\nu}} + \mathbf{\ddot x}_{\nu, d} - \mathbf{\dot J_\nu \dot q} - \mathbf{J_\nu \ddot q} \|^2
 \end{equation}
 }
+where $W_B$ is the relative weight associated to the BSTT and $K_{p, B}$, $K_{d, B} \in \mathbb{R}^+$ are its stiffness and damping, respectively.
 
 \subsection{Orientation of the hammer tip}
 \label{VectorOrientationTask}
