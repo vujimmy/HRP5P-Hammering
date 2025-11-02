@@ -485,19 +485,13 @@ The first control point of the curve, $\mathbf{p_0}$, is the 3D initial position
 \begin{equation}
     \mathbf{p_N} = \mathbf{c}^{nail} 
 \end{equation}
-These points have the property as acting as waypoints for the trajectory, which is not the case for the potential in-between points. \\
+These points have the property as acting as waypoints for the trajectory, which is not the case for the potential in-between points.
 %\textcolor{red}{\textbf{COST FUNCTION OF THE BSPLINE TASK ?}}\\
 % Let $\bm \epsilon_{\mathbf{x}}(t) = \mathbf{x_\nu}(t) - \bm \Gamma (t) \in \mathbb{R}^3$ be the position error vector of the end-effector between its current position and its desired position given by the Bézier curve at time $t$. The cost function of the BSTT is :
 % \begin{equation}
 %     C_{BSTT}(\mathbf{\ddot q}) = \|K_{p, B} \bm \epsilon_{\mathbf{x}} + K_{d, B} \bm{ \dot \epsilon_{\mathbf{x}}} - \mathbf{\dot J_\nu \dot q} - \mathbf{J_\nu \ddot q}\|^2
 % \end{equation}
 % where $K_{p, B}$ and $K_{d, B} \in \mathbb{R^+}$ are respectively the stiffness and damping coefficient of the BSTT.
-Let $\epsilon_{\mathbf{x}_\nu} = \mathbf{x}_\nu - \mathbf{x}_{\nu, d}$ where $\mathbf{x}_{\nu, d}$ is the desired end-effector position given by $\bm \Gamma$. The cost function of this task, $A_{B}(\mathbf{\ddot q})$, is :
-{\small
-\begin{equation}
-    A_{B}(\mathbf{\ddot q}) = W_{B}\| K_{p, B} \bm \epsilon_{\mathbf{x}_\nu}+ K_{d, B} \bm {\dot \epsilon_{\mathbf{x}_\nu}} + \mathbf{\ddot x}_{\nu, d} - \mathbf{\dot J_\nu \dot q} - \mathbf{J_\nu \ddot q} \|^2
-\end{equation}
-}
 where $W_B$ is the relative weight associated to the BSTT and $K_{p, B}$, $K_{d, B} \in \mathbb{R}^+$ are its stiffness and damping, respectively.
 \subsection{Curve constraints}
 \label{Curve constraints}
@@ -530,7 +524,14 @@ The desired velocity $\mathbf{\dot x}_{\nu, d}$ and acceleration $\mathbf{\ddot 
 \begin{equation}
     \mathbf{\ddot x}_{\nu, d}(t) = \bm {\ddot \Gamma}(t) \ \ \ \ \forall t \in [t_i, t_c]
 \end{equation}
-Both the velocity and acceleration of the hammer tip are affected by the curve constraints (more precisely, the added control points) defined in Section \ref{Curve constraints}.
+Both the velocity and acceleration of the hammer tip are affected by the curve constraints (more precisely, the added control points) defined in Section \ref{Curve constraints}. \\
+Let $\epsilon_{\mathbf{x}_\nu} = \mathbf{x}_\nu - \mathbf{x}_{\nu, d}$ where $\mathbf{x}_{\nu, d}$ is the desired end-effector position given by $\bm \Gamma$. The cost function of the BSTT, $A_{B}(\mathbf{\ddot q})$, is :
+{\small
+\begin{equation}
+    A_{B}(\mathbf{\ddot q}) = W_{B}\| K_{p, B} \bm \epsilon_{\mathbf{x}_\nu}+ K_{d, B} \bm {\dot \epsilon_{\mathbf{x}_\nu}} + \mathbf{\ddot x}_{\nu, d} - \mathbf{\dot J_\nu \dot q} - \mathbf{J_\nu \ddot q} \|^2
+\end{equation}
+}
+
 \subsection{Orientation of the hammer tip}
 \label{VectorOrientationTask}
 \noindent
