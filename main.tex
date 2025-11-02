@@ -356,7 +356,7 @@ For a fixed given target normal velocity $\mathbf{\dot x_\nu^T n}$, we see that 
 \section{Maximization of the effective mass of the robot using QP}
 \noindent
 \label{Optimization of the effective mass using QP}
-In this section, we will describe how to maximize the EMR using Quadratic Programming (QP).
+The following section presents our QP formulation, in which EMR maximization is included as a weighted objective.
 \subsection{Tasks}
 Let us first introduce what we call a "task". A task is an objective that the robot has to accomplish, for instance maintaining a posture or moving its end-effector to a desired position.
 To realize a task, we compute a desired configuration acceleration $\mathbf{\ddot q}_d$, then we track how well the robot realizes this task using a cost function expressed as a function of the actual configuration acceleration $\mathbf{\ddot q}$.
