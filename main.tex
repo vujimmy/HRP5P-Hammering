@@ -74,8 +74,8 @@ Other impact tasks have been extensively studied: Cisneros et al. \cite{cisneros
 van Steen et al. \cite{steenRobotControlSimultaneous2022} proposed a control framework using Quadratic Programming (QP) to work with simultaneous impacts,
 Tassi et al. \cite{tassiIMAcatcherIMpactawareNonprehensile2025} developed a method using velocity matching and a motion planner to catch high-impact flying objects to reduce hardware damage to the robot. 
 Furthermore, Wang and Kheddar \cite{wangImpactFriendlyRobustControl2019} worked on robot damage mitigation by designing a conservative, robust and impact-friendly controller using QP.
-In our work, we will use the mc\_rtc open-source framework \cite{mcrtc} and its QP solver to develop the hammering task. The overall objective is to hammer a target (a nail in our case) with the maximum impact and mitigate the recoil damage on the robot's joints: 
-this paper focuses on the impact maximization and the trajectory of the hammer tip to the nail. 
+Our overall objective is to hammer a target (a nail in our case) with the maximum impact and mitigate the recoil damage on the robot's joints: 
+this paper focuses on the impact maximization and the trajectory of the hammer tip to the nail using QP.
 Section \ref{Robot dynamic model} recalls the robot dynamic model that we use, 
 in Section \ref{Impact modeling} we propose a model for the nail-hammer impact, 
 Section \ref{Optimization of the effective mass using QP} details the usage of QP in our work to maximize the impact momentum, 
@@ -586,7 +586,7 @@ where $K_{p, VOT}$, $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and damping,
 
 \noindent
 In this section, we present the simulations made on our humanoid robot HRP-5P. The setting is a fixed hammer in one of the robots' grippers (the left one in our case), a fully known position and orientation of the nail and a prefixed desired hitting velocity of the hammer tip on the nail.  
-Simulations were done using mc\_mujoco and mc\_rtc \cite{singhMcmujocoSimulatingArticulated2022} in torque control mode with a timestep $\Delta t = 0.002$s 
+Simulations were done using mc\_mujoco and mc\_rtc with its QP solver \cite{singhMcmujocoSimulatingArticulated2022} \cite{mcrtc} in torque control mode with a timestep $\Delta t = 0.002$s 
 % and dynamic constraints set to $\bm \kappa_{\xi} = (0.1, 0.01, 0.5)^\mathbf{T}$
 . 
 The robot is equipped with a hammer in its left gripper and its floating base is fixed. 
