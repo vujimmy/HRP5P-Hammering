@@ -38,8 +38,10 @@
     jimmyvu2016@yahoo.fr, 
     ruud.erens@solarteameindhoven.nl, 
     hstefanelli@student.ethz.ch, 
+    rafael.cisneros@aist.go.jp, 
+    mehdi.benallegue@aist.go.jp, 
     abdelaziz.benallegue@uvsq.fr
-    \{rafael.cisneros, mehdi.benallegue\}@aist.go.jp} 
+    }
     %
 	%
 }
@@ -66,22 +68,22 @@ Furthermore, they demonstrated that fatigue affects elbow motion and shoulder in
 Balendra et al. \cite{balendraEffectHammerMass2017} showed that the increased moment exerted on joints during hammering can lead to more injuries, where a larger hammer causes a bigger increased moment. 
 Unfortunately, larger hammers are often the preferred choice to accomplish such task.
 Indeed, as a result from Petrič et al. \cite{petricHammeringDoesNot2017} indicates, hammers themselves are one of the non-powered handtools that cause the most injury \cite{aghazadehInjuriesDueHandtools1987}, especially to the fingers which are the most injured body part. 
-Another cause of potential physical damage to workers is the posture that the hammering task has to be carried out with: Yuan-Ho Chen and Yi-Lang Chen \cite{chenOptimalEffectiveWorking2018} studied the optimal height to realize this task and concluded should be between 25 cm and 35 cm below the elbow height. 
+Another cause of potential physical damage to workers is the posture that the hammering task has to be carried out with: Yuan-Ho Chen and Yi-Lang Chen \cite{chenOptimalEffectiveWorking2018} studied the optimal height to realize this task and concluded that it should be between 25 cm and 35 cm below the elbow height. 
 However, it is not always possible to be at this height due to the variable working area in construction.
 
 To relieve these workers from such joint-stressing activites, AIST developed the HRP-5P humanoid robot \cite{kanekoHumanoidRobotHRP5P2019} which can take care of the wearing and exhausting tasks, such as carrying heavy loads or hammering a nail.
-The task of hammering a nail is the topic of this article with the goal of hitting the nail and driving it into a wooden surface. 
+The task of hammering a nail is the topic of this article with the goal of hitting a nail and driving it into a wooden surface. 
 Other impact tasks have been extensively studied: Cisneros et al. \cite{cisnerosImpulsivePedipulationSpherical2016} focused on impulsive pedipulation on a spherical object with a humanoid robot,
 van Steen et al. \cite{steenRobotControlSimultaneous2022} proposed a control framework using Quadratic Programming (QP) to work with simultaneous impacts,
-Tassi et al. \cite{tassiIMAcatcherIMpactawareNonprehensile2025} developed a method using velocity matching and a motion planner to catch high-impact flying objects to reduce hardware damage to the robot. 
+Tassi et al. \cite{tassiIMAcatcherIMpactawareNonprehensile2025} developed a method using velocity matching and a motion planner for catching high-impact flying objects to reduce hardware damage to the robot. 
 Furthermore, Wang and Kheddar \cite{wangImpactFriendlyRobustControl2019} worked on robot damage mitigation by designing a conservative, robust and impact-friendly controller using QP.
-Our overall objective is to hammer a target (a nail in our case) with the maximum impact and mitigate the recoil damage on the robot's joints: 
-this paper focuses on the impact maximization and the trajectory of the hammer tip to the nail using QP.
+Our overall objective is to hammer a target (a nail in our case) with the maximum impact and mitigate the recoil damage on the robot's joints.
+This paper focuses on the impact maximization and the trajectory of the hammer tip to the nail using QP and a $5^{th}$ order Bézier curve.
 Section \ref{Robot dynamic model} recalls the robot dynamic model that we use, 
 in Section \ref{Impact modeling} we propose a model for the nail-hammer impact, 
 Section \ref{Optimization of the effective mass using QP} details the usage of QP in our work to maximize the impact momentum, 
 in Section \ref{Trajectory of the end-effector} we explain how to generate the trajectory of the end-effector to the nail, 
-then we present simulations using the mc\_rtc framework \cite{mcrtc} in Section \ref{Simulations} and finally we conclude our paper in Section \ref{Conclusion}.
+then we present simulations using the mc\_rtc framework \cite{mcrtc} in Section \ref{Simulations} and we conclude our paper in Section \ref{Conclusion}.
 
 \section{Robot dynamic model}
 \label{Robot dynamic model}
@@ -98,7 +100,7 @@ where $\mathbf{q, \dot q, \ddot q} \in \mathbb{R}^n$ are the configuration, conf
     % \item $\mathbf{\tau} \in \mathbb{R}^n $ is the vector of applied torques
      $\mathbf{u} \in \mathbb{R}^{n}$ is the input vector of torques,
      $\mathbf{F_i} \in \mathbb{R}^{6}$ is the vector of the $i$-th external wrench (or generalized forces), i.e. forces and torques on each axis, 
-     $\mathbf{J_i(q)} \in \mathbb{R}^{6 \times n}$ is the absolute Jacobian of the point of application of $\mathbf{F_i}$ and $\{ \cdot \}^\mathbf{T}$ is the matrix transpose operator.
+     $\mathbf{J_i(q)} \in \mathbb{R}^{6 \times n}$ is the absolute Jacobian of the point of application of $\mathbf{F_i}$, and $\{ \cdot \}^\mathbf{T}$ is the matrix transpose operator.
      
 \subsection{Jacobian of the end-effector pose}
 Let $\mathbf{J} \in \mathbb{R}^{6 \times n}$ be the Jacobian matrix of the end-effector pose defined such that :
@@ -123,7 +125,7 @@ where $\mathbf{J}_\nu$ is its translational part and $\mathbf{J}_\omega$ is its 
 In this section, we propose a mathematical model of the impact between the hammer tip and the nail. This part is heavily inspired by Stronge \cite{STRONGE} and his particle impact model. 
 \subsection{Common tangent plane of collision}
 \noindent
-In the sense of Stronge \cite{STRONGE}, we define the common tangent plane of collision as the plane passing through the contact point at the instant of collision that is tangent to both surfaces involved in the collision and the normal unit vector to the collision $\mathbf{n} \in \mathbb{R}^3$ as a vector orthogonal to that plane, see the schematic on Fig. ~\ref{SCHEMATIC OF THE PROBLEM}.
+In the sense of Stronge \cite{STRONGE}, we define the common tangent plane of collision as the plane passing through the contact point at the instant of collision that is tangent to both surfaces involved in the collision and the normal unit vector to the collision $\mathbf{n} \in \mathbb{R}^3$ as a vector orthogonal to that plane; see the schematic on Fig. ~\ref{SCHEMATIC OF THE PROBLEM}.
 % The schematic given by Fig. \ref{Frames} displays the fixed world frame $w$, the hammer tip frame and the nail frame.
 % \begin{figure}
 %     \centering
@@ -134,13 +136,13 @@ In the sense of Stronge \cite{STRONGE}, we define the common tangent plane of co
 % Without loss of generality, let's express $\mathbf{n}$ in the nail frame such that :\begin{equation}
 %     \mathbf{n} = \left(0, 0, 1 \right)^{\mathbf{T}}
 % \end{equation}
-Let $\mathbf{R}_{w \to nail} \in SO(3)$ be the rotation matrix of the nail with respect to the world frame $w$. Then the normal vector expressed in the world frame $\mathbf{n}_w$ is :
+Let $\mathbf{R}_{w \to nail} \in SO(3)$ be the rotation matrix of the nail with respect to the world frame $w$. Then, the normal vector expressed in the world frame $\mathbf{n}_w$ is :
 \begin{equation}
     \mathbf{n}_w = \mathbf{R}_{w \to nail}^{\mathbf{T}} \mathbf{n}
 \end{equation}
 \subsection{Effective mass of the robot}
 \noindent
-Let us define $m_{e,\mathbf{n}}(\mathbf{q}) \in \mathbb{R^+}$ (the "e" stands for "effective"), the configuration dependant Effective Mass of the Robot (EMR), as :
+Let us define $m_{e,\mathbf{n}}(\mathbf{q}) \in \mathbb{R^+}$ (the "e" stands for "effective"), the configuration dependent Effective Mass of the Robot (EMR), as :
 \begin{equation}
     m_{e,\mathbf{n}}(\mathbf{q}) \triangleq \left(\mathbf{n^T} \bm \Lambda (\mathbf{q}) \mathbf{n} \right)^{-1}
 \label{effective mass}
@@ -163,7 +165,7 @@ The force-based model relies on Newton's second law :
 where $\mathbf{\dot x_{\nu}} \in \mathbb{R}^3$ is the translational part of $\mathbf{\dot x}$ defined in (\ref{map xdot qdot}), $\mathbf{F}^h \in \mathbb{R}^3$ is the force applied to the nail by the hammer (the superscript "h" stands for "hammer") and $m_{e,\mathbf{n}}$ is the Effective Mass of the Robot (EMR) at the point of impact.
 %  in the normal of the impact plane defined in (\ref{effective mass}). 
 % The issue with this model is the well-definedness of the acceleration of the end-effector, which is the time derivative of $\mathbf{\dot x_\nu}$. 
-The problem with this model is that the discontinuous velocity of the hammer tip at the instant of collision, $t_c$, as the time derivative at this point in time does not exist. We can not use a force-based model.
+The problem with this model is that the discontinuous velocity of the hammer tip at the instant of collision, $t_c$, as the time derivative at this point in time does not exist. Therefore, we can not use a force-based model.
 \\
 \subsubsection{Energy-based model}
 \noindent
@@ -178,7 +180,7 @@ The momentum based model does not have the problems of the force-based model and
 %Furthermore, another advantage of using this model is its ability to deal with discontinuous velocities, which occur when hitting a nail with a hammer. 
 The main advantage of using this model is its ability to deal with discontinuous velocities, which occur when hitting a nail with a hammer. 
 Furthermore, with momentum, the microscopic interactions between the hammer tip and the nail are taken into account through a scalar number $e_*$ called \textit{coefficient of restitution}, which measures the elasticity of the collision.
-This coefficient can be used to study the post-impact dynamics of the colliding objects, however this is out of the scope of this article and currently under study.
+This coefficient can be used to study the post-impact dynamics of the colliding objects; however, this is out of the scope of this article and currently under study.
 As such, we use the momentum model in the following part of the paper. \\
 More precisely, we use a model based on particle impact. A schematic depicting the problem is proposed in Fig. \ref{SCHEMATIC OF THE PROBLEM}. 
 In this model, an infinitesimal particle (i.e. with negligible size) models the local deformations of the hammer tip and the nail.
@@ -209,7 +211,7 @@ In this model, an infinitesimal particle (i.e. with negligible size) models the 
 \begin{figure}
     \centering
     \includegraphics[width=1\linewidth]{Schematic of the problem.png}
-    \caption{Schematic of the collision between the hammer tip and the nail modeled as a particle impact}
+    \caption{Schematic of the collision between the hammer tip and the nail modeled as a particle impact.}
     \label{SCHEMATIC OF THE PROBLEM}
 \end{figure}
 \noindent
@@ -222,7 +224,7 @@ At the instant of contact $t_c$, these points collide and thus share the same co
 % \begin{equation}
 %     \mathbf{\dot c}^{nail}(t) = \mathbf{0} \ \ \ \  \forall t \in [t_i, t_c]
 % \end{equation}
-The velocity and acceleration of the hammer tip is given by the trajectory that will be introduced in Section \ref{Hammer tip velocity and acceleration}. \\
+The velocity and acceleration of the hammer tip are given by the trajectory that will be introduced in Section \ref{Hammer tip velocity and acceleration}. \\
 % When the colliding bodies first interact, the contact points $C$ and $C'$ have an initial relative velocity $v_0$ :
 % \begin{equation}
 %     \mathbf{v_{0}} = \mathbf{V}_C(0) - \mathbf{V}_{C'}(0)
@@ -241,16 +243,16 @@ To quantify an impact, we define the normal impulse $i \in \mathbb{R}$ given by 
     \mathbf{n^T} \mathbf{F}^hdt
 \label{impulse}
 \end{equation}
-To maximize the impact, we want to maximize the impulse given by (\ref{impulse}) which is equivalent to maximizing the projected momentum $P(t) \in \mathbb{R}$ of the hammer tip along the normal $\mathbf{n}$ \cite{SinglePointParticle} defined as :
+To maximize the impact, we want to maximize the impulse given by (\ref{impulse}) which is equivalent to maximizing the projected momentum $P(t) \in \mathbb{R}$ of the hammer tip along the normal $\mathbf{n}$ \cite{SinglePointParticle} defined as:
 \begin{equation}
     P(t) \triangleq m_{e,\mathbf{n}}(\mathbf{q})  \mathbf{\dot x_{\nu}^T} \mathbf{n} 
 \label{Momentum end effector}
 \end{equation}
-Then, from (\ref{impulse}) and (\ref{Momentum end effector}), we have : 
+This is because: 
 \begin{equation}
     i = \Delta P = P(t_c + \delta t) - P(t_c)
 \end{equation}
-For a fixed given target normal velocity $\mathbf{\dot x_\nu^T n}$, we see that in order to maximize the projected momentum of the hammer tip, we have to maximize the EMR, which is explained in Section \ref{Optimization of the effective mass using QP}.
+For a fixed given target normal velocity $\mathbf{\dot x_\nu^T n}$, we see that in order to maximize the projected momentum of the hammer tip, we have to maximize the EMR. This procedure is explained in Section \ref{Optimization of the effective mass using QP}.
 
 % \subsection{Particle impact}
 % \noindent
@@ -364,7 +366,7 @@ To realize a task, we compute a desired configuration acceleration $\mathbf{\ddo
 \subsection{Formulation of the problem to solve}
 \noindent
 \label{QP formulation of EMMT}
-For this part, our decision variable is the configuration acceleration $\mathbf{\ddot q}$. In order to make it appear on the expression of the effective mass, we differentiate the EMR twice with respect to time :
+For this part, our decision variable is the configuration acceleration $\mathbf{\ddot q}$. In order to make it appear at the expression of the effective mass, we differentiate the EMR twice with respect to time :
 \begin{equation}
         \dot m_{e,\mathbf{n}} (\mathbf{q}, \mathbf{\dot q}) = \frac{d m_{e,\mathbf{n}}}  {d\mathbf{q} } \frac{d\mathbf{q}}{dt} 
     = \nabla m_{e,\mathbf{n}}^\mathbf{T}(\mathbf{q})  \mathbf{\dot q}
@@ -379,7 +381,7 @@ From (\ref{double time derivative of m}), we can reconstruct $m_{e,\mathbf{n}}$ 
     %m_{e,\mathbf{n}}(\mathbf{q}) = \int_{t_i} ^{t_f} \int_{t_i}^{t_f} \ddot m_{e,\mathbf{n}}(\mathbf{q}(t), \mathbf{\dot q}(t), \mathbf{\ddot q}(t)) dt
     m_{e,\mathbf{n}}(\mathbf{q}(t + \Delta t)) =  m_{e,\mathbf{n}} + \dot m_{e,\mathbf{n}}\Delta t+ \ddot m_{e,\mathbf{n}}\frac{\Delta t^2}{2}
 \end{equation}
-Taking $\arg \max_{\mathbf{\ddot q}}$ on both sides, the two first terms of the right hand side of the equation are discarded because they do not depend on $\mathbf{\ddot q}$ by (\ref{effective mass}) and (\ref{time derivative of the effective mass}) :
+Taking $\arg \max_{\mathbf{\ddot q}}$ on both sides, the two first terms of the right hand side of the equation are discarded because they do not depend on $\mathbf{\ddot q}$, then  by (\ref{effective mass}) and (\ref{time derivative of the effective mass}) we have:
 \begin{equation}
     \arg \max_{\mathbf{\ddot q}}m_{e,\mathbf{n}}(\mathbf{q}(t + \Delta t)) =  \arg \max_{\mathbf{\ddot q}} \ddot m_{e,\mathbf{n}}
 \end{equation}
@@ -400,53 +402,55 @@ As the QP is defined as a minimization problem, we can rewrite (\ref{max problem
     \arg \min_\mathbf{\ddot q} -\nabla m_{e,\mathbf{n}}^\mathbf{T}(\mathbf{q})  \mathbf{\ddot q}
 \label{minimization problem}
 \end{equation}
-Let's call this objective function the Effective Mass Maximization Task (EMMT). 
-The goal of this task is to increase as much as possible the EMR at the next iteration of the controller without its value dropping down. 
+Let us call this objective function the Effective Mass Maximization Task (EMMT). 
+The goal of this task is to increase as much as possible the EMR at the next iteration of the controller. 
 However, we cannot assert that the result will be a global maximum because our problem is not necessarily convex. 
 %If we want to try to find a global maximum, we might need to use other methods, although these ones are generally much slower. 
 \subsection{Linear QP constraints to be respected}
+\label{QP constraints}
 \noindent
-Our linear constraints for the QP solver are described as i) joint limits, ii) joint velocity limits, iii) joint acceleration limits, iv) joint torque limits, and v) dynamic constraints :
-\begin{equation}
-    \mathbf{q_{LB}} \preceq \mathbf{q} \preceq \mathbf{q_{UB}}
-\label{Joint limits}
-\end{equation}
-\begin{equation}
-    \mathbf{\dot q_{LB}} \preceq \mathbf{\dot q} \preceq \mathbf{\dot q_{UB}}
-\label{Joint velocity limits}
-\end{equation}
-\begin{equation}
-    \mathbf{\ddot q_{LB}} \preceq \mathbf{\ddot q} \preceq \mathbf{\ddot q_{UB}}
-\label{Joint acceleration limits}
-\end{equation}
-\begin{equation}
-    \bm \tau_{\mathbf{LB}} \preceq \bm \tau \preceq \bm \tau_{\mathbf{UB}}
-\label{Torque limits}
-\end{equation}
-\begin{equation}
-    \bm \kappa_{\xi} = \left(d_i, d_s, \xi_{offset}\right)^\mathbf{T}
-\label{Dynamic constraints}
-\end{equation}
-where the subscripts $\mathbf{LB}$ and $\mathbf{UB}$ mean "Lower Bound" and "Upper Bound", respectively, $\bm \tau \in \mathbb{R}^n$ is the actual vector of joint torques and the $\preceq$ operator is the term-by-term comparison operator between two vectors of $\mathbb{R}^n$.
-For the dynamic constraints (\ref{Dynamic constraints}), $d_i$ is the interaction distance, $d_s$ is the security distance and $\xi_{offset}$ is a fixed offset, all developed in Vaillant et al.
+Our linear constraints for the QP solver are described as i) joint limits, ii) joint velocity limits, and iii) joint torque limits.
+% \begin{equation}
+%     \mathbf{q_{LB}} \preceq \mathbf{q} \preceq \mathbf{q_{UB}}
+% \label{Joint limits}
+% \end{equation}
+% \begin{equation}
+%     \mathbf{\dot q_{LB}} \preceq \mathbf{\dot q} \preceq \mathbf{\dot q_{UB}}
+% \label{Joint velocity limits}
+% \end{equation}
+% % \begin{equation}
+% %     \mathbf{\ddot q_{LB}} \preceq \mathbf{\ddot q} \preceq \mathbf{\ddot q_{UB}}
+% % \label{Joint acceleration limits}
+% % \end{equation}
+% \begin{equation}
+%     \bm \tau_{\mathbf{LB}} \preceq \bm \tau \preceq \bm \tau_{\mathbf{UB}}
+% \label{Torque limits}
+% \end{equation}
+% \begin{equation}
+%     \bm \kappa_{\xi} = \left(d_i, d_s, \xi_{offset}\right)^\mathbf{T}
+% \label{Dynamic constraints}
+% \end{equation}
+% where the subscripts $\mathbf{LB}$ and $\mathbf{UB}$ mean "Lower Bound" and "Upper Bound", respectively, $\bm \tau \in \mathbb{R}^n$ is the actual vector of joint torques and the $\preceq$ operator is the term-by-term comparison operator between two vectors of $\mathbb{R}^n$.
+% For the dynamic constraints (\ref{Dynamic constraints}), $d_i$ is the interaction distance, $d_s$ is the security distance and $\xi_{offset}$ is a fixed offset, 
+These are all defined in the sense of Vaillant et al.
 \cite{vaillantMulticontactVerticalLadder2016}.
 
 
 \subsection{Implementation of the EMMT}
 \noindent
-The posture task is a task where the robot has to maintain a given configuration $\mathbf{q}$, the paper from Cisneros et al. \cite{cisnerosRobustHumanoidControl2018} gives a deeper look into it. 
+The posture task is a task where the robot has to maintain a given configuration $\mathbf{q}$. Cisneros et al. \cite{cisnerosRobustHumanoidControl2018} gives a deeper look into it. 
 From the complete cost function in our QP formulation :
 \begin{equation}
     \arg \min_{\mathbf{\ddot q}} \frac{1}{2}W_{p}\| \mathbf{\ddot q} + \mathbf{b}\|^2 - W_m \nabla m_{e,\mathbf{n}}^
 \mathbf{T}(\mathbf{q}) \mathbf{\ddot q} + A(\mathbf{\ddot q})
 \label{Global QP}
 \end{equation}
-the first term represents the posture task, the second term is the EMMT and $A(\mathbf{\ddot q}) \in \mathbb{R}$ is the cost function associated to the other possible tasks that the robot has to realize (for instance a trajectory task). $W_p$, $W_m \in \mathbb{R^+}$  are the relative weights associated to the posture task and the EMMT, respectively, and $\mathbf{b} \in \mathbb{R}^n$ is a PD controller written as: 
+the first term represents the posture task, the second term is the EMMT and $A(\mathbf{\ddot q}) \in \mathbb{R}$ is the cost function associated to the other possible tasks that the robot has to realize (for instance, a trajectory task). $W_p$, $W_m \in \mathbb{R^+}$  are the relative weights associated to the posture task and the EMMT, respectively, and $\mathbf{b} \in \mathbb{R}^n$ is a PD controller written as: 
 \begin{equation}
     \mathbf{b} = K_p(\mathbf{q - q_d}) + K_d(\mathbf{\dot q - \dot q_d}) - \mathbf{\ddot  q_d}
 \label{PD controller}
 \end{equation}
-where $K_p$ and $K_d$ are the proportional (stiffness) and derivative (damping) gains of the posture task, respectively, $\mathbf{q_d}$, $\mathbf{\dot q_d}$ and $\mathbf{\ddot q_d} \in \mathbb{R}^n$ are the desired configuration, desired configuration velocity and desired configuration acceleration, respectively.\\
+where $K_p$ and $K_d$ are the proportional (stiffness) and derivative (damping) gains of the posture task, respectively, $\mathbf{q_d}$, $\mathbf{\dot q_d}$, $\mathbf{\ddot q_d} \in \mathbb{R}^n$ are the desired configuration, desired configuration velocity and desired configuration acceleration, respectively.\\
 The relationship between $K_p$ and $K_d$ is given by :
 \begin{equation}
     K_d = 2\sqrt{K_p}
@@ -457,8 +461,14 @@ To implement our EMMT task, we will modify (\ref{Global QP}) in the following wa
      \arg \min_{\mathbf{\ddot q}} \frac{1}{2}W_p \|\mathbf{\ddot q +b} - \frac{W_m}{W_p} \nabla m_{e, \mathbf{n}}(\mathbf{q}) \|^2 + A(\mathbf{\ddot q})
 \label{Trick}
 \end{equation}
-subject to (\ref{Joint limits}), (\ref{Joint velocity limits}), (\ref{Joint acceleration limits}), (\ref{Torque limits}) and (\ref{Dynamic constraints}). \\
-This approach allows us to maximize the EMR online instead of optimizing offline. Using an offline method implies knowing the pose of the hitting target in advance everytime, and this would not work if we were to change the pose of the nail. 
+subject to the constraints presented in Section ~\ref{QP constraints}.
+% (\ref{Joint limits}), 
+% (\ref{Joint velocity limits}), 
+% % (\ref{Joint acceleration limits}), 
+% (\ref{Torque limits}) 
+% and (\ref{Dynamic constraints}). 
+\\
+This approach allows us to maximize the EMR online instead of optimizing offline. Using an offline method implies knowing the pose of the hitting target in advance every time, and this would not work if we were to change the pose of the nail. 
 
 \section{Trajectory of the end-effector}
 \noindent
@@ -468,7 +478,7 @@ In this section, we present how the end-effector of the robot reaches the nail w
 \subsection{B-Spline trajectory task}
 \noindent
 \label{BSplineTrajectoryTask}
-The primary task of the end-effector is to reach the nail with the given velocity. To do that, we use a continuous Bézier curve as our trajectory, which is a B-Spline (the B-Spline is a generalization of the Bézier curve). Let us call that task the B-Spline trajectory task (BSTT). \\
+The primary task of the end-effector is to reach the nail with a given velocity. To do that, we use a continuous Bézier curve as our trajectory, which is a specific case of a B-Spline. Let us call that task the B-Spline trajectory task (BSTT). \\
 A $(N+1)$-points Bézier curve $\bm \Gamma: \mathbb{R} \to \mathbb{R}^3$, or $N$-th order Bézier curve, is defined as: 
 \begin{equation}
     \bm \Gamma(t) \triangleq \sum_{k=0}^{N} B^N_k \left( \frac{t-t_{i}}{T} \right) \mathbf{p}_k \ \ \ \ \forall t \in [t_i, t_c]
@@ -486,7 +496,7 @@ The first control point of the curve, $\mathbf{p_0}$, is the 3D initial position
 \begin{equation}
     \mathbf{p_N} = \mathbf{c}^{nail} 
 \end{equation}
-These points have the property as acting as waypoints for the trajectory, which is not the case for the potential in-between points.
+These points have the property of acting as waypoints for the trajectory, which is not the case for the potential in-between points.
 %\textcolor{red}{\textbf{COST FUNCTION OF THE BSPLINE TASK ?}}\\
 % Let $\bm \epsilon_{\mathbf{x}}(t) = \mathbf{x_\nu}(t) - \bm \Gamma (t) \in \mathbb{R}^3$ be the position error vector of the end-effector between its current position and its desired position given by the Bézier curve at time $t$. The cost function of the BSTT is :
 % \begin{equation}
@@ -539,8 +549,8 @@ where $W_B$ is the relative weight associated to the BSTT and $K_{p, B}$, $K_{d,
 In addition to reaching the nail, we have to orient the hammer tip such that the impact with the nail axis is \textit{collinear}. Let $\mathbf{G}^{h}$, $\mathbf{G}^{nail} \in \mathbb{R}^3$ be the center of mass of the hammer tip and the center of mass of the nail, respectively. 
 A collinear impact is an impact where $\mathbf{G}^h$, $\mathbf{G}^{nail}$ and the contact points $\mathbf{x}_\nu$ and $\mathbf{c}^{nail}$ are aligned \cite{STRONGE}, see Fig. \ref{SCHEMATIC OF THE PROBLEM}. 
 We constraint two rotation DoFs: the roll and the pitch of the hammer tip, and we let the yaw be free. 
-Indeed, we want to align three vectors: the vector normal to the contact surface of the hammer tip which we will call $\mathbf{n}^h \in \mathbb{R}^3$ (expressed in the hammer tip frame), the $\mathbf{n}$ vector and finally the vector between the hammer tip and the contact point of the nail. 
-The latter is already done by the path to the nail. 
+Indeed, we want to align three vectors: the vector normal to the contact surface of the hammer tip which we will call $\mathbf{n}^h \in \mathbb{R}^3$ (expressed in the hammer tip frame), and the normal vector at the top of the nail. 
+% The latter is already done by the path to the nail. 
 % Tilt alignment: go from $(\alpha_1, \beta_1)$ to $(\alpha_2, \beta_2)$. The error between the vectors can be the cosine of the angle between them (aligned vectors in the same direction have a cosine equal to 1 or substract the vectors to get the direction of the error).
 \\
 Let $\mathbf{R}_{w \to h}$ be the rotation matrix describing the rotation of the hammer tip from the world frame, $\bm \epsilon = \mathbf{n}^h - \mathbf{n}$ the error vector between the desired vector ($\mathbf{n}$) and the actual vector ($\mathbf{n}^h$), $\mathbf{\dot x}_{\omega} \in \mathbb{R}^{3}$ the angular velocity vector of the hammer tip in the world frame given by :
@@ -578,13 +588,13 @@ where $W_{VOT}$ is the relative weight associated to the VOT and $K_{p, VOT}$, $
 \begin{figure}
     \centering
     \includesvg[width=1\linewidth]{EMMT 1_1}
-    \caption{Time evolution of the EMR with only a posture task active}
+    \caption{Time evolution of the EMR with only a posture task active.}
     \label{Time evolution of the effective mass of the robot 1}
 \end{figure}
 \begin{figure}
     \centering
     \includesvg[width=0.75\linewidth]{Projected_momentum}
-    \caption{Time evolution of the projected momentum along the normal $\mathbf{n}$}
+    \caption{Time evolution of the projected momentum along the normal $\mathbf{n}$.}
     \label{Time evolution of the momentum projected along the normal n}
 \end{figure}
 \section{Simulations with the robot}
@@ -593,25 +603,25 @@ where $W_{VOT}$ is the relative weight associated to the VOT and $K_{p, VOT}$, $
     \vspace*{-2.3cm}
     \centering
     \includesvg[width=0.8\linewidth]{Velocities}
-    \caption{Velocity tracking of the hammer tip for different $K_{p, VOT}$ values}
+    \caption{Velocity tracking of the hammer tip for different $K_{p, VOT}$ values.}
     \label{Velocity tracking of the hammer tip}
 \end{figure*}
 
 \noindent
-In this section, we present the simulations made on our humanoid robot HRP-5P. The setting is a fixed hammer in one of the robots' grippers (the left one in our case), a fully known position and orientation of the nail and a prefixed desired hitting velocity of the hammer tip on the nail.  
-Simulations were done using mc\_mujoco \cite{singhMcmujocoSimulatingArticulated2022} and mc\_rtc with its QP solver in torque control mode with a timestep $\Delta t = 0.002$s 
+In this section, we present the simulations made on our humanoid robot HRP-5P. The setting is a fixed hammer attached to one of the robots' grippers (the left one in our case), a fully known position and orientation of the nail and a prefixed desired hitting velocity of the hammer tip on the nail.  
+Simulations were done using mc\_mujoco \cite{singhMcmujocoSimulatingArticulated2022} and mc\_rtc with its QP solver in torque control mode, and a timestep $\Delta t = 0.002$s 
 % and dynamic constraints set to $\bm \kappa_{\xi} = (0.1, 0.01, 0.5)^\mathbf{T}$
 . 
-The robot is equipped with a hammer in its left gripper and its floating base is fixed. 
+The floating base of the robot is fixed as keeping balance after the impact is out of the scape of this paper. 
 The hammer used weighs 0.792 kg, has a length of 328 mm and its contact surface is circular with radius 15.5 mm. 
-The nail is fixed and "floating" in the environment because of the current framework limitations, and has a length of 88.03 mm and its head has a radius of 6.95 mm. 
-The tasks at play are the EMMT within the posture task defined in Section \ref{QP formulation of EMMT}, the BSTT defined in Section ~\ref{BSplineTrajectoryTask} and Section ~\ref{Curve constraints} and the VOT defined in Section \ref{VectorOrientationTask}. The gradient of the effective mass $\nabla m_{e, \mathbf{n}}$ is computed by backward difference. In (\ref{PD controller}), we set $K_p = 5$, thus by (\ref{Kp Kd relationship}) we have $K_d = 4.47$. \\ 
-The entire simulation goes as follows: i) the robot starts at its half-sitting posture ii) $t_i$ is recorded and the robot starts the hammering motion until an impact is detected on the nail, then $t_c$ is recorded at the same time, and finally iii) the robot goes back to its half-sitting posture. An impact is detected on the nail thanks to a nail sensor plugin written in ROS2 and added to mc\_rtc: there is an impact if the absolute value of one coordinate of the 3D force applied to the nail is at least greater than some threshold $f_{e}$ which has been chosen to be $1$N to cut off the very small "offset" forces of the simulator, as the magnitude of an impulse is much higher than this value. \\
+The nail is fixed and "floating" in the environment to avoid earlier or post-impact collisions with an object (such as a table), and it has a length of 88.03 mm and its head has a radius of 6.95 mm. 
+The tasks at play are the EMMT within the posture task defined in Section \ref{QP formulation of EMMT}, the BSTT defined in Section ~\ref{BSplineTrajectoryTask} and Section ~\ref{Curve constraints}, and the VOT defined in Section \ref{VectorOrientationTask}. The gradient of the effective mass $\nabla m_{e, \mathbf{n}}$ is computed by backward difference. In (\ref{PD controller}), we set $K_p = 5$, thus by (\ref{Kp Kd relationship}) we have $K_d = 4.47$. \\ 
+The entire simulation goes as follows: i) the robot starts at its half-sitting posture ii) $t_i$ is recorded and the robot starts the hammering motion until an impact is detected on the nail, then $t_c$ is recorded, and finally iii) the robot goes back to its half-sitting posture. An impact is detected on the nail thanks to a nail sensor plugin written in ROS2 and added to mc\_rtc: there is an impact if the absolute value of one coordinate of the 3D force applied to the nail is at least greater than some threshold $f_{e}$ which has been chosen to be $1$N to cut off the very small "offset" forces of the simulator, as the magnitude of an impulse is much higher than this value. \\
 We first assess the effectiveness of the EMMT (Section \ref{Optimization of the effective mass using QP}) in Fig. \ref{Time evolution of the effective mass of the robot 1} with $W_m = 1$ and $W_p  = 1$ 
 %and Fig. \ref{Time evolution of the effective mass of the robot 2} with $W_m = 10$ and $W_p = 1$ 
 by isolating the augmented posture task (with EMMT), i.e. we only have the posture task and EMMT active and no other task is active. 
 %We set $\mathbf{n} = (0, 0, 1)^\mathbf{T}$. 
-We see that the EMR is growing over time until it converges to a maximum value. As expected from (\ref{Trick}), increasing $W_m$ induces a larger joint acceleration, thus the EMR converges faster and to a larger value, however it can lead to stability issues with the robot. 
+We see that the EMR is growing over time until it converges to a maximum value. As expected from (\ref{Trick}), increasing $W_m$ induces a larger joint acceleration, thus the EMR converges faster and to a larger value; however, it can lead to stability issues with the robot. 
 
 % \begin{figure}
 %     \centering
@@ -627,7 +637,7 @@ $,
 $,
 $
 \bm {\kappa}_{\mathbf{\ddot x}_{\nu}^{t_c}} = (0, 0, 0)^\mathbf{T}
-$ and especially
+$, and especially
 \begin{equation}
  % \bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_c}} = {V_{f,in}^w} \mathbf{n}_w
  \bm {\kappa}_{\mathbf{\dot x}_{\nu}^{t_c}} = \mathbf{R}_{w \to nail}^{\mathbf{T}} {}^{nail}\mathbf{\dot x}_{\nu}^{t_c} 
@@ -636,12 +646,13 @@ $ and especially
 where ${{}^{nail}\mathbf{\dot x}_{\nu}^{t_c}} \in \mathbb{R}^3$ is the input velocity of the hammer tip at the instant of contact $t_c$ expressed in the nail frame. 
 The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig. \ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. 
 We set $T = 1$s, $W_{B} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, B} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). 
-We see the tracking of the hammer tip velocity in Fig. \ref{Velocity tracking of the hammer tip} (a). We remark that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. 
+We see the tracking of the hammer tip velocity in Fig. \ref{Velocity tracking of the hammer tip} (a). 
+It is worth to mention that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. 
 However, we also see some unwanted oscillations on the $z$ coordinate: this is due to the high stiffness ($1000$) of the VOT. 
 The final orientation error has been recorded to be $4.16$ deg. 
 We decrease the stiffness of the VOT to 250 in Fig. \ref{Velocity tracking of the hammer tip} (b) and we record an orientation error of $11.88$ deg. 
 Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
-The projected momentum of the hammer tip is computed using (\ref{Momentum end effector}) and is shown in Fig. \ref{Time evolution of the momentum projected along the normal n}. 
+The projected momentum of the hammer tip is computed using (\ref{Momentum end effector}) and is shown in Fig. ~\ref{Time evolution of the momentum projected along the normal n}. 
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=0.85\linewidth]{Velocity graph.png}
@@ -671,10 +682,10 @@ The projected momentum of the hammer tip is computed using (\ref{Momentum end ef
 \section{Conclusion}
 In this work, we presented a way to implement a hammering task on a humanoid robot. 
 % We used a momentum based model to estimate the dynamics of the robot and the nail after impact. 
-Then, we proposed our method to maximize the EMR using its gradient and QP and we suggested an end-effector trajectory built from a constrained $5^{th}$ order Bézier curve. 
+Then, we proposed our method to maximize the EMR using its gradient and QP, then we suggested an end-effector trajectory built from a constrained $5^{th}$ order Bézier curve. 
 Simulations showed that the EMR is getting maximized and the trajectory given by the Bézier curve is properly followed by the end-effector. 
-Possible improvements include an estimation of the nail penetration in the wood along with a simulation of the dynamics of the nail, a way to build our path and orientation to the nail by efficiently considering collision constraints with the environment or a post-impact that utilizes the post-impact velocity of the hammer tip to prepare for the next hit, as the robot only goes back to its initial posture for now. 
-In the future, we want to work on the stability problem of the robot potentially induced by the post-impact rebounce of the hammer, minimizing the damage that the robot must endure on its joints during the hit to avoid damage as much as possible and detection of the nail via computer vision. 
+Possible improvements include an estimation of the nail penetration in the wood along with a simulation of the dynamics of the nail, a way to build our path and orientation to the nail by efficiently considering collision constraints with the environment or a post-impact reference that utilizes the post-impact velocity of the hammer tip to prepare for the next hit, as the robot only goes back to its initial posture for now. 
+In the future, we want to work on the stability problem of the robot potentially induced by the post-impact rebounce of the hammer, minimizing the damage that the robot must endure on its joints and detection of the nail via computer vision. 
 \label{Conclusion}
 
 % \section{Prepare Your Paper Before Styling}
@@ -878,6 +889,8 @@ In the future, we want to work on the stability problem of the robot potentially
 
 % For papers published in translation journals, please give the English 
 % citation first, followed by the original foreign-language citation \cite{b6}.
+\section*{Acknowledgment}
+This research was funded by JSPS KAKENHI, grant number 24K00836.
 \printbibliography
 % \begin{thebibliography}{00}
 % \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
