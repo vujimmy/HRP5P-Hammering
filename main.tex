@@ -1,5 +1,5 @@
-% \documentclass[conference]{IEEEtran}
-\documentclass[a4paper, 10pt, conference]{ieeeconf}
+\documentclass[conference]{IEEEtran}
+% \documentclass[a4paper, 10pt, conference]{ieeeconf}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 %\usepackage{cite}
@@ -12,12 +12,18 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{svg}
+% \usepackage[svgnames]{xcolor}
+% \usepackage[hidelinks]{hyperref}
+% \usepackage[a-1b]{pdfx}
+\providecommand{\keywords}[1]{\textbf{\textit{Index terms---}} #1}
+
 \setsvg{
   inkscapeexe = {"C:/Program Files/Inkscape/bin/inkscape.exe"}
 }
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
+
 \title{\LARGE \bf QP-based impact momentum maximization for a hammering task \\
                     by a humanoid robot
 \thanks{}
@@ -56,9 +62,10 @@ In this paper, we focus on a hammering task with our humanoid robot HRP-5P and w
 Moreover, we implement a 5\textsuperscript{th} order Bézier curve as the trajectory, which ensures smooth, jerk-bounded motions from any reachable initial pose.
 \end{abstract}
 
-\begin{keywords}
-quadratic programming, hammering, humanoid robot, effective mass, end-effector trajectory
-\end{keywords}
+% \begin{keywords}
+    \keywords{
+quadratic programming, hammering, humanoid robot, effective mass, end-effector trajectory}
+% \end{keywords}
 
 \section{Introduction}
 \noindent
@@ -215,7 +222,7 @@ In this model, an infinitesimal particle (i.e. with negligible size) models the 
 \subsection{Direct impact}
 \begin{figure}
     \centering
-    \includegraphics[width=1\linewidth]{Schematic of the problem.png}
+    \includegraphics[width=0.84\linewidth]{Schematic of the problem.png}
     \caption{Schematic of the collision between the hammer tip and the nail modeled as a particle impact.}
     \label{SCHEMATIC OF THE PROBLEM}
 \end{figure}
@@ -599,26 +606,39 @@ The cost function of this task is:
 where $W_{VOT}$ is the relative weight associated to the VOT and $K_{p, VOT}$, $K_{d, VOT} \in \mathbb{R}^+$ are its stiffness and damping, respectively. 
 \begin{figure}
     \centering
-    \includesvg[width=1\linewidth]{EMMT 1_1}
+    \includesvg[width=0.7\linewidth]{EMMT 1_1}
     \caption{Time evolution of the EMR with only a posture task active.}
     \label{Time evolution of the effective mass of the robot 1}
 \end{figure}
 \begin{figure}
     \centering
-    \includesvg[width=0.75\linewidth]{Projected_momentum}
+    \includesvg[width=0.7\linewidth]{Projected_momentum}
     \caption{Time evolution of the projected momentum along the normal $\mathbf{n}$.}
     \label{Time evolution of the momentum projected along the normal n}
 \end{figure}
 \section{Simulations with the robot}
 \label{Simulations}
 \begin{figure*}
-    \vspace*{-2.3cm}
+    % \vspace*{-2.3cm}
     \centering
-    \includesvg[width=0.8\linewidth]{Velocities}
+    \includesvg[width=0.68\linewidth]{Velocities}
     \caption{Velocity tracking of the hammer tip for different $K_{p, VOT}$ values.}
     \label{Velocity tracking of the hammer tip}
 \end{figure*}
-
+% \begin{figure}
+%     % \vspace*{-2.3cm}
+%     \centering
+%     \includesvg[width=0.8\linewidth]{VelocityA}
+%     \caption{Velocity tracking of the hammer tip for $K_{p, VOT} = 1000$.}
+%     \label{VelocityA tracking of the hammer tip}
+% \end{figure}
+% \begin{figure}
+%     % \vspace*{-2.3cm}
+%     \centering
+%     \includesvg[width=0.8\linewidth]{VelocityB}
+%     \caption{Velocity tracking of the hammer tip for $K_{p, VOT} = 250$.}
+%     \label{VelocityB tracking of the hammer tip}
+% \end{figure}
 \noindent
 In this section, we present the simulations made on our humanoid robot HRP-5P. The setting is a fixed hammer attached to one of the robots' grippers (the left one in our case), a fully known position and orientation of the nail and a prefixed desired hitting velocity of the hammer tip on the nail.  
 Simulations were done using mc\_mujoco \cite{singhMcmujocoSimulatingArticulated2022} and mc\_rtc with its QP solver in torque control mode, and a timestep $\Delta t = 0.002$s 
@@ -660,11 +680,11 @@ $, and especially
 where ${{}^{nail}\mathbf{\dot x}_{\nu}^{t_c}} \in \mathbb{R}^3$ is the input velocity of the hammer tip at the instant of contact $t_c$ expressed in the nail frame. 
 The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig.~\ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. 
 We set $T = 1$s, $W_{B} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, B} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). 
-We see the tracking of the hammer tip velocity in Fig.~\ref{Velocity tracking of the hammer tip} (a). 
+We see the tracking of the hammer tip velocity in Fig.~\ref{Velocity tracking of the hammer tip}(a). 
 It is worth to mention that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. 
 However, we also see some unwanted oscillations on the $z$ coordinate: this is due to the high stiffness ($1000$) of the VOT. 
 The final orientation error has been recorded to be $4.16$ deg. 
-We decrease the stiffness of the VOT to 250 in Fig.~\ref{Velocity tracking of the hammer tip} (b) and we record an orientation error of $11.88$ deg. 
+We decrease the stiffness of the VOT to 250 in Fig.~\ref{Velocity tracking of the hammer tip}(b) and we record an orientation error of $11.88$ deg. 
 Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
 The projected momentum of the hammer tip is computed using (\ref{Momentum end effector}) and is shown in Fig.~\ref{Time evolution of the momentum projected along the normal n}, 
 with the impulse displayed with the sudden jump in projected momentum. 
