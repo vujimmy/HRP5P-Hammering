@@ -558,7 +558,7 @@ The desired velocity $\mathbf{\dot x}_{\nu, d}$ and acceleration $\mathbf{\ddot 
 \end{equation}
 Both the velocity and acceleration of the hammer tip are affected by the curve constraints (more precisely, the added control points) defined in Section \ref{Curve constraints}. 
 
-Let $\epsilon_{\mathbf{x}_\nu} = \mathbf{x}_\nu - \mathbf{x}_{\nu, d}$ where $\mathbf{x}_{\nu, d}$ is the desired end-effector position given by $\bm \Gamma$. The cost function of the BSTT, $A_{B}(\mathbf{\ddot q})$, is:
+Let $\epsilon_{\mathbf{x}_\nu} = \mathbf{x}_{\nu, d} - \mathbf{x}_\nu$ where $\mathbf{x}_{\nu, d}$ is the desired end-effector position given by $\bm \Gamma$. The cost function of the BSTT, $A_{B}(\mathbf{\ddot q})$, is:
 \begin{small}
     \begin{equation}
         A_{B}(\mathbf{\ddot q}) = W_{B}\| K_{p, B} \bm \epsilon_{\mathbf{x}_\nu}+ K_{d, B} \bm {\dot \epsilon_{\mathbf{x}_\nu}} + \mathbf{\ddot x}_{\nu, d} - \mathbf{\dot J_\nu \dot q} - \mathbf{J_\nu \ddot q} \|^2
