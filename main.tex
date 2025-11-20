@@ -103,7 +103,7 @@ Let $n$ be the number of Degrees Of Freedom (DOF) of the humanoid robot. The dyn
 \label{RDE}
 \end{equation}
 where $\mathbf{q, \dot q, \ddot q} \in \mathbb{R}^n$ are the configuration, configuration velocity and configuration acceleration of the robot, respectively, $\mathbf{M(q)} \in \mathbb{R}^{n \times n}$ is the symmetric mass matrix or inertia matrix of the robot,
-     $\mathbf{C(q, \dot q)} \in \mathbb{R}^{n \times n}$ is a factorization of the Coriolis matrix \cite{bjerkengNewCoriolisMatrix2012},
+     $\mathbf{C(q, \dot q)} \in \mathbb{R}^{n \times n}$ is the dynamic factorization of the Coriolis matrix \cite{bjerkengNewCoriolisMatrix2012},
      $\mathbf{g(q)} \in \mathbb{R}^n $ is the vector of gravitational effects,
     % \item $\mathbf{\tau} \in \mathbb{R}^n $ is the vector of applied torques
      $\mathbf{u} \in \mathbb{R}^{n}$ is the input vector of torques,
@@ -114,14 +114,16 @@ where $\mathbf{q, \dot q, \ddot q} \in \mathbb{R}^n$ are the configuration, conf
 \noindent
 Let $\mathbf{J} \in \mathbb{R}^{6 \times n}$ be the Jacobian matrix of the end-effector pose defined such that:
 \begin{equation}
-    \mathbf{\dot x} = \mathbf{J(q) \dot q}
+    \mathbf{\dot x} = \mathbf{J(q) \dot q} = \left[\mathbf{\dot x}_\nu^\mathbf{T} \ \ \ \mathbf{\dot x}_\omega^\mathbf{T} \right]^\mathbf{T}
 \label{map xdot qdot}
 \end{equation}
-where $\mathbf{\dot x} \in \mathbb{R}^6$ is the task space velocity (translational and angular velocities) of the end-effector and the time derivative of the end-effector pose $\mathbf{x} \in \mathbb{R}^6$:
-\begin{equation}
-    \mathbf{x} = \left[\mathbf{x}_\nu^\mathbf{T} \ \ \ \mathbf{x}_\omega^\mathbf{T} \right]^\mathbf{T}
-\end{equation}
-where $\mathbf{x}_\nu$, $\mathbf{x}_\omega \in \mathbb{R}^3$ are the translational and angular part of $\mathbf{x}$, respectively.
+where $\mathbf{\dot x} \in \mathbb{R}^6$ is the task space velocity (translational and angular velocities) of the end-effector,  
+% and the time derivative of the end-effector pose $\mathbf{x} \in \mathbb{R}^6$:
+% \begin{equation}
+%     \mathbf{x} = \left[\mathbf{x}_\nu^\mathbf{T} \ \ \ \mathbf{x}_\omega^\mathbf{T} \right]^\mathbf{T}
+% \end{equation}
+% where 
+$\mathbf{\dot x}_\nu$, $\mathbf{\dot x}_\omega \in \mathbb{R}^3$ are the translational and angular part of $\mathbf{\dot x}$, respectively.
 
 The $\mathbf{J}$ matrix can be computed using forward kinematics and written using two matrices $\mathbf{J}_\nu$, $\mathbf{J}_\omega \in \mathbb{R}^{3 \times n}$:
 \begin{equation}
@@ -154,7 +156,7 @@ Let $\mathbf{R}_{w \to nail} \in SO(3)$ be the rotation matrix of the nail with 
 \end{equation}
 \subsection{Effective mass of the robot}
 \noindent
-Let us define $m_{e,\mathbf{n}}(\mathbf{q}) \in \mathbb{R^+}$ (the "e" stands for "effective"), the configuration dependent Effective Mass of the Robot (EMR), as:
+Let us define $m_{e,\mathbf{n}}(\mathbf{q}) \in \mathbb{R^+}$ (the ``e" stands for ``effective"), the configuration dependent Effective Mass of the Robot (EMR), as:
 \begin{equation}
     m_{e,\mathbf{n}}(\mathbf{q}) \triangleq \left(\mathbf{n^T} \bm \Lambda (\mathbf{q}) \mathbf{n} \right)^{-1}
 \label{effective mass}
@@ -174,17 +176,17 @@ The force-based model relies on Newton's second law:
 \begin{equation}
     \mathbf{F}^h= m_{e,\mathbf{n}} \frac{d \mathbf{\dot x_\nu}}{dt}
 \end{equation}
-where $\mathbf{\dot x_{\nu}} \in \mathbb{R}^3$ is the translational part of $\mathbf{\dot x}$ defined in (\ref{map xdot qdot}), $\mathbf{F}^h \in \mathbb{R}^3$ is the force applied to the nail by the hammer (the superscript "h" stands for "hammer").
+where $\mathbf{\dot x_{\nu}} \in \mathbb{R}^3$ is the translational part of $\mathbf{\dot x}$ defined in (\ref{map xdot qdot}), $\mathbf{F}^h \in \mathbb{R}^3$ is the force applied to the nail by the hammer (the superscript ``h" stands for ``hammer").
 %  in the normal of the impact plane defined in (\ref{effective mass}). 
 % The issue with this model is the well-definedness of the acceleration of the end-effector, which is the time derivative of $\mathbf{\dot x_\nu}$. 
-The problem with this model is the discontinuous velocity of the hammer tip at the instant of collision, $t_c$, as the time derivative at this point in time does not exist. Therefore, we can not use a force-based model.
+The problem with this model is the discontinuous velocity of the hammer tip at the instant of collision, $t_c$, as the time derivative at this point in time does not exist. Therefore, we can not use a force-based model, except if we relax the instantanous nature of the impact model which is currently under study.
 \\
 \subsubsection{Energy-based model}
 \label{Energy-based model}
 \noindent
 An energy-based model could be used to overcome the problem of discontinuity of the hammer tip velocity. 
 However, during impact, the kinetic energy of the hammer tip is not fully transmitted to the nail: some of the energy is converted into heat, sound and deformation energy, which are difficult to estimate. 
-Thus, although the model is still usable, we would either have to estimate the losses or neglect them, making the model less precise.
+Thus, although the model is still usable, we would have to estimate the losses, making the model less precise.
 \\
 \subsubsection{Momentum-based model}
 \noindent
@@ -219,7 +221,7 @@ In this model, an infinitesimal particle (i.e. with negligible size) models the 
 %     \caption{Particle impact phases}
 %     \label{Particle impact phases}
 % \end{figure*}
-\subsection{Direct impact}
+\subsection{Direct impact model}
 \begin{figure}
     \centering
     \includegraphics[width=0.84\linewidth]{Schematic of the problem.png}
@@ -375,7 +377,7 @@ For a fixed given target normal velocity $\mathbf{\dot x_\nu^T n}$, we see that 
 The following section presents our QP formulation, in which EMR maximization is included as a weighted objective.
 \subsection{Tasks}
 \noindent
-Let us first introduce what we call a "task". A task is an objective that the robot has to accomplish, for instance maintaining a posture or moving its end-effector to a desired position.
+Let us first introduce what we call a ``task". A task is an objective that the robot has to accomplish, for instance maintaining a posture or moving its end-effector to a desired position.
 To realize a task, we compute a desired configuration acceleration $\mathbf{\ddot q_d}$, then we track how well the robot realizes this task using a cost function expressed as a function of the actual configuration acceleration $\mathbf{\ddot q}$.
 \subsection{Formulation of the problem to solve}
 \label{QP formulation of EMMT}
@@ -418,7 +420,9 @@ As the QP is defined as a minimization problem, we can rewrite (\ref{max problem
 \end{equation}
 Let us call this objective function the Effective Mass Maximization Task (EMMT). 
 The goal of this task is to increase as much as possible the EMR at the next iteration of the controller. 
-However, we cannot assert that the result will be a global maximum because our problem is not necessarily convex. 
+However, we cannot assert that the result will be a global maximum because our problem is not necessarily convex.
+Note that this scheme shares some similarities with the work of Wang and Kheddar~\cite{wangImpactFriendlyRobustControl2019}, where the momentum of the impact is maximized using a QP. 
+However, in that work the effective mass was considered constant and its maximization was not part of the objectives 
 %If we want to try to find a global maximum, we might need to use other methods, although these ones are generally much slower. 
 \subsection{Linear QP constraints to be respected}
 \label{QP constraints}
@@ -474,16 +478,18 @@ To implement our EMMT task, we will modify (\ref{Global QP}) in the following wa
      \arg \min_{\mathbf{\ddot q}} \frac{1}{2}W_p \|\mathbf{\ddot q +b} - \frac{W_m}{W_p} \nabla m_{e, \mathbf{n}}(\mathbf{q}) \|^2 + A(\mathbf{\ddot q})
 \label{Trick}
 \end{equation}
-subject to the constraints presented in Section~\ref{QP constraints}.
+subject to the constraints presented in Section~\ref{QP constraints}. 
+This guarantees the problem is strictly convex and can be solved with least square solvers.
 % (\ref{Joint limits}), 
 % (\ref{Joint velocity limits}), 
 % % (\ref{Joint acceleration limits}), 
 % (\ref{Torque limits}) 
 % and (\ref{Dynamic constraints}). 
 
-This approach allows us to maximize the EMR online instead of optimizing offline. 
-Using an offline method implies knowing the pose of the hitting target in advance every time, and this would not work if we were to change the pose of the nail.
-Furthermore, the feasibility of reaching the desired posture is also an issue with an offline method, as it is not trivial to suggest an appropriate posture due to the high redundancy of the robot.
+This approach allows us to maximize the EMR online instead of optimizing offline.
+More importantly, it would require high tracking gains to strictly follow the planned kinematic trajectory which increases the risks of robot damage. 
+% Using an offline method implies knowing the pose of the hitting target in advance every time, and this would not work if we were to change the pose of the nail.
+% Furthermore, the feasibility of reaching the desired posture is also an issue with an offline method, as it is not trivial to suggest an appropriate posture due to the high redundancy of the robot.
 
 \section{Trajectory of the end-effector}
 \label{Trajectory of the end-effector}
@@ -505,7 +511,7 @@ where $[t_{i}, t_{c}]$ is the time interval on which $\bm \Gamma$ is defined, $t
         B^N_k \left( \frac{t-t_{i}}{T} \right) \triangleq \binom{N}{k} \left( \frac{t-t_{i}}{T} \right)^k \left(1-\frac{t-t_{i}}{T}\right)^{N-k}
     \label{bernstein polynomial}
 \end{equation}
-The first control point of the curve, $\mathbf{p_0}$, is the 3D initial position of the hammer tip, $\mathbf{x}_{\nu}^{t_i} \in \mathbb{R}^3$ (the subscript "\textit{i}" stands for "\textit{initial}"), and the last control point, $\mathbf{p_N}$, is the 3D position of the nail $\mathbf{c}^{nail} \in \mathbb{R}^3$, both with respect to the fixed world frame. Thus:
+The first control point of the curve, $\mathbf{p_0}$, is the 3D initial position of the hammer tip, $\mathbf{x}_{\nu}^{t_i} \in \mathbb{R}^3$ (the subscript ``\textit{i}" stands for ``\textit{initial}"), and the last control point, $\mathbf{p_N}$, is the 3D position of the nail $\mathbf{c}^{nail} \in \mathbb{R}^3$, both with respect to the fixed world frame. Thus:
 \begin{equation}
     \mathbf{p_0} = \mathbf{x}_{\nu}^{t_i}
 \end{equation}
@@ -641,15 +647,15 @@ where $W_{VOT}$ is the relative weight associated to the VOT and $K_{p, VOT}$, $
 % \end{figure}
 \noindent
 In this section, we present the simulations made on our humanoid robot HRP-5P. The setting is a fixed hammer attached to one of the robots' grippers (the left one in our case), a fully known position and orientation of the nail and a prefixed desired hitting velocity of the hammer tip on the nail.  
-Simulations were done using mc\_mujoco \cite{singhMcmujocoSimulatingArticulated2022} and mc\_rtc with its QP solver in torque control mode, and a timestep $\Delta t = 0.002$s 
+Simulations were done using mc\_mujoco and mc\_rtc \cite{singhMcmujocoSimulatingArticulated2022} with its QP solver in torque control mode, and a timestep $\Delta t = 0.002$s 
 % and dynamic constraints set to $\bm \kappa_{\xi} = (0.1, 0.01, 0.5)^\mathbf{T}$
 . 
 The floating base of the robot is fixed as keeping balance after the impact is out of the scope of this paper. 
 The hammer used weighs 0.792 kg, has a length of 328 mm and its contact surface is circular with radius 15.5 mm. 
-The nail is fixed and "floating" in the environment to avoid earlier or post-impact collisions with an object (such as a table), it has a length of 88.03 mm and its head has a radius of 6.95 mm. 
+The nail is fixed and ``floating" in the environment to avoid earlier or post-impact collisions with an object (such as a table), it has a length of 88.03 mm and its head has a radius of 6.95 mm. 
 The tasks at play are the EMMT within the posture task defined in Section \ref{QP formulation of EMMT}, the BSTT defined in Section~\ref{BSplineTrajectoryTask} and Section~\ref{Curve constraints}, and the VOT defined in Section \ref{VectorOrientationTask}. The gradient of the effective mass $\nabla m_{e, \mathbf{n}}$ is computed by backward difference. In (\ref{PD controller}), we set $K_p = 5$, thus by (\ref{Kp Kd relationship}) we have $K_d = 4.47$. 
 
-The entire simulation goes as follows: i) the robot starts at its half-sitting posture ii) $t_i$ is recorded and the robot starts the hammering motion until an impact is detected on the nail, then $t_c$ is recorded, and finally iii) the robot goes back to its half-sitting posture. An impact is detected on the nail thanks to a nail sensor plugin written in ROS2 and added to mc\_rtc: there is an impact if the absolute value of one coordinate of the 3D force applied to the nail is at least greater than some threshold $f_{e}$ which has been chosen to be $1$N to cut off the very small "offset" forces of the simulator, as the magnitude of an impulse is much higher than this value. 
+The entire simulation goes as follows: i) the robot starts at its half-sitting posture ii) $t_i$ is recorded and the robot starts the hammering motion until an impact is detected on the nail, then $t_c$ is recorded, and finally iii) the robot goes back to its half-sitting posture. An impact is detected on the nail thanks to a force sensor plugin written in ROS2 and added to the nail with mc\_rtc: there is an impact if the absolute value of one coordinate of the 3D force applied to the nail is at least greater than some threshold $f_{e}$ which has been chosen to be $1$N to cut off the very small ``offset" forces of the simulator, as the magnitude of an impulse is much higher than this value. 
 
 We first assess the effectiveness of the EMMT (Section~\ref{Optimization of the effective mass using QP}) in Fig.~\ref{Time evolution of the effective mass of the robot 1} with $W_m = 1$ and $W_p  = 1$ 
 %and Fig.~\ref{Time evolution of the effective mass of the robot 2} with $W_m = 10$ and $W_p = 1$ 
