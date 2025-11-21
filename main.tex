@@ -33,11 +33,11 @@
     Jimmy Vu$^{\dagger}$,
     Ruud Erens$^{\dagger}$,
     Hélène Stefanelli$^{\dagger}$$^{}$,
-    Rafael Cisneros-Limón$^{\dagger}$$^{}$,
+    Rafael Cisneros-Limón$^{\dagger}$$^{*}$,
     Mehdi Benallegue$^{\dagger}$ \\
-    and Abdelaziz Benallegue$^{\dagger}$%
-    \thanks{$^
-    {\dagger}$CNRS-AIST JRL (Joint Robotics Laboratory), IRL3218, 
+    and Abdelaziz Benallegue$^{\dagger}$$^{\#}$%
+    \thanks{$^{\dagger}$
+    CNRS-AIST JRL (Joint Robotics Laboratory), IRL3218, 
     National Institute of Advanced Industrial Science and Technology (AIST), 
     Tsukuba, Japan. 
     Emails: 
@@ -46,7 +46,8 @@
     hstefanelli@student.ethz.ch, 
     rafael.cisneros@aist.go.jp, 
     mehdi.benallegue@aist.go.jp, 
-    abdelaziz.benallegue@uvsq.fr
+    abdelaziz.benallegue@uvsq.fr. 
+    $^{*}$ Corresponding author. $^{\#}$ Versailles University.
     }
     %
 	%
@@ -267,7 +268,7 @@ This is because:
 \begin{equation}
     i = \Delta P = P(t_c + \delta t) - P(t_c)
 \end{equation}
-For a fixed given target normal velocity $\mathbf{\dot x_\nu^T n}$, we see that in order to maximize the projected momentum of the hammer tip, we have to maximize the EMR. This procedure is explained in Section \ref{Optimization of the effective mass using QP}.
+For a fixed given target normal velocity $\mathbf{\dot x_\nu^T n}$ (the velocity we want the hammer tip to reach at the nail), we see that in order to maximize the projected momentum of the hammer tip, we have to maximize the EMR. This procedure is explained in Section \ref{Optimization of the effective mass using QP}.
 
 % \subsection{Particle impact}
 % \noindent
@@ -422,7 +423,7 @@ Let us call this objective function the Effective Mass Maximization Task (EMMT).
 The goal of this task is to increase as much as possible the EMR at the next iteration of the controller. 
 However, we cannot assert that the result will be a global maximum because our problem is not necessarily convex.
 Note that this scheme shares some similarities with the work of Wang and Kheddar~\cite{wangImpactFriendlyRobustControl2019}, where the momentum of the impact is maximized using a QP. 
-However, in that work the effective mass was considered constant and its maximization was not part of the objectives 
+However, in that work the effective mass was considered constant and its maximization was not part of the objectives. 
 %If we want to try to find a global maximum, we might need to use other methods, although these ones are generally much slower. 
 \subsection{Linear QP constraints to be respected}
 \label{QP constraints}
@@ -450,7 +451,7 @@ Our linear constraints for the QP solver are described as i) joint limits, ii) j
 % \end{equation}
 % where the subscripts $\mathbf{LB}$ and $\mathbf{UB}$ mean "Lower Bound" and "Upper Bound", respectively, $\bm \tau \in \mathbb{R}^n$ is the actual vector of joint torques and the $\preceq$ operator is the term-by-term comparison operator between two vectors of $\mathbb{R}^n$.
 % For the dynamic constraints (\ref{Dynamic constraints}), $d_i$ is the interaction distance, $d_s$ is the security distance and $\xi_{offset}$ is a fixed offset, 
-These are all defined in the sense of Vaillant et al. ~\cite{vaillantMulticontactVerticalLadder2016}.
+These are all defined in the sense of Vaillant et al.~\cite{vaillantMulticontactVerticalLadder2016}.
 
 
 \subsection{Implementation of the EMMT}
@@ -647,9 +648,8 @@ where $W_{VOT}$ is the relative weight associated to the VOT and $K_{p, VOT}$, $
 % \end{figure}
 \noindent
 In this section, we present the simulations made on our humanoid robot HRP-5P. The setting is a fixed hammer attached to one of the robots' grippers (the left one in our case), a fully known position and orientation of the nail and a prefixed desired hitting velocity of the hammer tip on the nail.  
-Simulations were done using mc\_mujoco and mc\_rtc \cite{singhMcmujocoSimulatingArticulated2022} with its QP solver in torque control mode, and a timestep $\Delta t = 0.002$s 
+Simulations were done using mc\_mujoco and mc\_rtc \cite{singhMcmujocoSimulatingArticulated2022} with its QP solver in torque control mode, and a timestep $\Delta t = 0.002$s, see Fig.~\ref{Snapshots}. 
 % and dynamic constraints set to $\bm \kappa_{\xi} = (0.1, 0.01, 0.5)^\mathbf{T}$
-. 
 The floating base of the robot is fixed as keeping balance after the impact is out of the scope of this paper. 
 The hammer used weighs 0.792 kg, has a length of 328 mm and its contact surface is circular with radius 15.5 mm. 
 The nail is fixed and ``floating" in the environment to avoid earlier or post-impact collisions with an object (such as a table), it has a length of 88.03 mm and its head has a radius of 6.95 mm. 
@@ -720,6 +720,12 @@ with the impulse displayed with the sudden jump in projected momentum.
 %     \caption{Velocity tracking of the hammer tip}
 %     \label{Velocity tracking of the hammer tip}
 % \end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=8cm, height=4cm]{Sim snapshot 2.png}
+    \caption{Snapshots of the simulation in mc\_mujoco}
+    \label{Snapshots}
+\end{figure}
 \section{Conclusion}
 \noindent
 In this work, we presented a way to implement a hammering task on a humanoid robot. 
