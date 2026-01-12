@@ -157,7 +157,7 @@ Let $\mathbf{R}_{w \to nail} \in SO(3)$ be the rotation matrix of the nail with 
 \end{equation}
 \subsection{Effective mass of the robot}
 \noindent
-Let us define $m_{e,\mathbf{n}}(\mathbf{q}) \in \mathbb{R^+}$ (the ``e" stands for ``effective"), the configuration dependent Effective Mass of the Robot (EMR), as:
+We define $m_{e,\mathbf{n}}(\mathbf{q}) \in \mathbb{R^+}$ (the ``e" stands for ``effective"), the configuration dependent Effective Mass of the Robot (EMR), as:
 \begin{equation}
     m_{e,\mathbf{n}}(\mathbf{q}) \triangleq \left(\mathbf{n^T} \bm \Lambda (\mathbf{q}) \mathbf{n} \right)^{-1}
 \label{effective mass}
@@ -419,7 +419,7 @@ As the QP is defined as a minimization problem, we can rewrite (\ref{max problem
     \arg \min_\mathbf{\ddot q} -\nabla m_{e,\mathbf{n}}^\mathbf{T}(\mathbf{q})  \mathbf{\ddot q}
 \label{minimization problem}
 \end{equation}
-Let us call this objective function the Effective Mass Maximization Task (EMMT). 
+This objective function is the Effective Mass Maximization Task (EMMT). 
 The goal of this task is to increase as much as possible the EMR at the next iteration of the controller. 
 However, we cannot assert that the result will be a global maximum because our problem is not necessarily convex.
 Note that this scheme shares some similarities with the work of Wang and Kheddar~\cite{wangImpactFriendlyRobustControl2019}, where the momentum of the impact is maximized using a QP. 
@@ -500,7 +500,7 @@ In this section, we present how the end-effector of the robot reaches the nail w
 \subsection{B-Spline trajectory task}
 \label{BSplineTrajectoryTask}
 \noindent
-The primary task of the end-effector is to reach the nail with a given velocity. To do that, we use a continuous Bézier curve as our trajectory, which is a specific case of a B-Spline. Let us call that task the B-Spline trajectory task (BSTT).
+The primary task of the end-effector is to reach the nail with a given velocity. To do that, we use a continuous Bézier curve as our trajectory, which is a specific case of a B-Spline. That task is called the B-Spline trajectory task (BSTT).
 
 A $(N+1)$-points Bézier curve $\bm \Gamma: \mathbb{R} \to \mathbb{R}^3$, or $N$-th order Bézier curve, is defined as: 
 \begin{equation}
@@ -605,7 +605,7 @@ The time derivative of (\ref{hammer tip angular velocity}) is:
 % \end{equation}
 % where $\mathbf{R}_0 \in SO(3)$ is an "offset" rotation to properly "align the axis, i.e. the normal of the hammer, the normal of the nail and the vector between the hammer tip and the nail" \textcolor{red}{REFORMULATE THAT}. \\
 \noindent
-Let us call this task the Vector Orientation Task (VOT).
+We call this task the Vector Orientation Task (VOT).
 The cost function of this task is:
 \begin{equation}
      A_{VOT}(\mathbf{\ddot q}) = W_{VOT}\| K_{p, VOT} \bm \epsilon + K_{d,VOT} \bm {\dot \epsilon}- \mathbf{\ddot x}_{\omega}(\mathbf{\ddot q}) \|^2 
@@ -628,7 +628,7 @@ where $W_{VOT}$ is the relative weight associated to the VOT and $K_{p, VOT}$, $
 \begin{figure*}
     % \vspace*{-2.3cm}
     \centering
-    \includesvg[width=0.68\linewidth]{Velocities}
+    \includesvg[width=\linewidth]{Figure_1.svg}
     \caption{Velocity tracking of the hammer tip for different $K_{p, VOT}$ values.}
     \label{Velocity tracking of the hammer tip}
 \end{figure*}
@@ -685,12 +685,14 @@ $, and especially
 % where ${V_{f,in}^w} \in \mathbb{R}$ is the input final velocity on the nail expressed in the world frame $w$, in meters per second.
 where ${{}^{nail}\mathbf{\dot x}_{\nu}^{t_c}} \in \mathbb{R}^3$ is the input velocity of the hammer tip at the instant of contact $t_c$ expressed in the nail frame. 
 The nail is placed at $\mathbf{c}^{nail} = (0.75, 0.40, 0.90)^\mathbf{T}$ from the origin of $w$ with the distances given in meters, and oriented as depicted by Fig.~\ref{SCHEMATIC OF THE PROBLEM}, i.e perpendicular to an horizontal plane. 
-We set $T = 1$s, $W_{B} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, B} = 10000$ and the stiffness of the VOT to $K_{p, VOT} = 1000$ with their damping given by (\ref{Kp Kd relationship}). 
-We see the tracking of the hammer tip velocity in Fig.~\ref{Velocity tracking of the hammer tip}(a). 
-It is worth to mention that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$ until the sudden spike in velocity at the end, which is due to a collision with the nail. 
-However, we also see some unwanted oscillations on the $z$ coordinate: this is due to the high stiffness ($1000$) of the VOT. 
-The final orientation error has been recorded to be $4.16$ deg. 
-We decrease the stiffness of the VOT to 250 in Fig.~\ref{Velocity tracking of the hammer tip}(b) and we record an orientation error of $11.88$ deg. 
+We set $T = 1$s, $W_{B} = 100$, $W_{VOT} = 10$, $W_{m} = 100$, $W_{p} = 1$, ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c} = (0, 0 ,  -2.0) ^\mathbf{T}$ m/s, the stiffness of the BSTT to $K_{p, B} = 100000$ and the stiffness of the VOT to $K_{p, VOT} = 250$ with their damping given by (\ref{Kp Kd relationship}). 
+We see the tracking of the hammer tip velocity in Fig.~\ref{Velocity tracking of the hammer tip}(a) and (b). 
+It is worth to mention that the hammer tip properly reaches ${}^{nail}\mathbf{\dot x}_{\nu}^{t_c}$.
+% until the sudden spike in velocity at the end, which is due to a collision with the nail. 
+For $K_{p, VOT} = 250$, we record an orientation error of $11.88$ deg and some oscillations at the beginning. 
+The stiffness of the VOT is decreased to 100 in Fig.~\ref{Velocity tracking of the hammer tip}(b), which removed the oscillations. 
+%However, we also see some unwanted oscillations on the $z$ coordinate: this is due to the higher stiffness ($250$) of the VOT. 
+We also tested $K_{p, VOT} = 1000$: the final orientation error has been recorded to be $4.16$ deg, however we observed large oscillations in the first instants. 
 Increasing $K_{p, VOT}$ decreases the error between the desired and actual final hammer tip orientations at the cost of larger oscillations at the beginning.
 The projected momentum of the hammer tip is computed using (\ref{Momentum end effector}) and is shown in Fig.~\ref{Time evolution of the momentum projected along the normal n}, 
 with the impulse displayed with the sudden jump in projected momentum. 
@@ -733,9 +735,9 @@ In this work, we presented a way to implement a hammering task on a humanoid rob
 We proposed our method to maximize the EMR using its gradient and QP, then we suggested an end-effector trajectory built from a constrained $5^{th}$ order Bézier curve. 
 Simulations showed that the EMR is getting maximized and the trajectory given by the Bézier curve is properly followed by the end-effector. 
 
-Possible improvements include an estimation of the nail penetration in an object (like a wood table) along with a simulation of the dynamics of the nail, a way to build our path and orientation to the nail by efficiently considering collision constraints with the environment or a post-impact reference that utilizes the post-impact velocity of the hammer tip to prepare for the next hit, as the robot only goes back to its initial posture for now. 
+Possible improvements include improvements on modeling errors in the simulator, an estimation of the nail penetration in an object (like a wood table) along with a simulation of the dynamics of the nail, a way to build our path and orientation to the nail by efficiently considering collision constraints with the environment or a post-impact reference that utilizes the post-impact velocity of the hammer tip to prepare for the next hit as the robot only goes back to its initial posture for now, and experiments on the actual robot. 
 
-In the future, we want to work on the stability problem of the robot potentially induced by the post-impact rebounce of the hammer, on minimizing the damage that the robot must endure on its joints and on detection of the nail via computer vision. 
+In the future, we want to work on the stability problem of the robot potentially induced by the post-impact rebounce of the hammer, damage minimization on the robot's joints, feasibility of the hammering task on the free-standing robot and detection of the nail via computer vision. 
 \label{Conclusion}
 
 % \section{Prepare Your Paper Before Styling}
